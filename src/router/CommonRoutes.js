@@ -3,12 +3,12 @@ import { localKeys } from "../constances";
 import pathNames from "../router/pathNames";
 import NotAccess from "../pages/NotAccess";
 
-const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
-const isAdmin = localStorage.getItem(localKeys.ROLE) === "admin";
-const isVolunteer = localStorage.getItem(localKeys.ROLE) === "volunteer";
-const isClinic = localStorage.getItem(localKeys.ROLE) === "clinic";
-
 export const PublicRoute = ({ component: Component, ...remainingProps }) => {
+  const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
+  const isAdmin = localStorage.getItem(localKeys.ROLE) === "admin";
+  const isVolunteer = localStorage.getItem(localKeys.ROLE) === "volunteer";
+  const isClinic = localStorage.getItem(localKeys.ROLE) === "clinic";
+
   return (
     <Route
       {...remainingProps}
@@ -28,6 +28,9 @@ export const PublicRoute = ({ component: Component, ...remainingProps }) => {
 };
 
 export const AdminRoute = ({ component: Component, ...remainingProps }) => {
+  const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
+  const isAdmin = localStorage.getItem(localKeys.ROLE) === "admin";
+
   return (
     <Route
       {...remainingProps}
@@ -45,6 +48,9 @@ export const AdminRoute = ({ component: Component, ...remainingProps }) => {
 };
 
 export const VolunteerRoute = ({ component: Component, ...remainingProps }) => {
+  const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
+  const isVolunteer = localStorage.getItem(localKeys.ROLE) === "volunteer";
+
   return (
     <Route
       {...remainingProps}
@@ -62,6 +68,9 @@ export const VolunteerRoute = ({ component: Component, ...remainingProps }) => {
 };
 
 export const ClinicRoute = ({ component: Component, ...remainingProps }) => {
+  const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
+  const isClinic = localStorage.getItem(localKeys.ROLE) === "clinic";
+
   return (
     <Route
       {...remainingProps}

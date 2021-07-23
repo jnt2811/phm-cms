@@ -1,5 +1,5 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import Login from "../pages/Login";
+import Login from "../pages/login/Login";
 import NotFound from "../pages/NotFound";
 import { Admin, Clinic, Volunteer } from "../roles";
 import {

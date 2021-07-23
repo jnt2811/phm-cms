@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import "~antd/dist/antd.css";
+@import "./colors.scss";
+@import "./responsive.scss";
+
+* {
+  font-family: "Quicksand";
+}
+
+#root {
+  background-color: $orange100;
+}
+
+// common tag
+h1 {
+  font-size: 35px;
+  font-weight: 600;
+}
+label {
+  font-size: 18px !important;
+}
+input {
+  height: 40px !important;
+  border-radius: 10px !important;
+  font-size: 16px !important;
+}
+button {
+  height: 40px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  background-color: $orange500 !important;
+  color: white !important;
+
+  &:hover {
+    background-color: $orange500 !important;
+    color: white !important;
+  }
+}
+
+//common class

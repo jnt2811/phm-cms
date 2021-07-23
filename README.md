@@ -1,5 +1,13 @@
 # Pet House Management CMS
 
+## Install modules
+
+Write the code below in terminal
+
+```bash
+npm install
+```
+
 ## Run app
 
 Write the code below in terminal

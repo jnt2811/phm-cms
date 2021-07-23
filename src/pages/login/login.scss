@@ -1,0 +1,34 @@
+@import "../../style/colors.scss";
+
+.login {
+  width: 1000px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 100%;
+    height: 80vh;
+    object-fit: contain;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+
+  .input-password {
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    border-radius: 10px !important;
+  }
+
+  .ant-input-affix-wrapper > input.ant-input {
+    height: 38px !important;
+  }
+}
