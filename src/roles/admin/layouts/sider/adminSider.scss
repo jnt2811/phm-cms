@@ -13,4 +13,43 @@
       width: 100px;
     }
   }
+
+  .sider-container {
+    margin-top: 50px;
+
+    .sider-item {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      margin-bottom: 15px;
+
+      img {
+        width: 30px;
+        margin-right: 20px;
+      }
+
+      span {
+        color: $orange600;
+        font-weight: 500;
+        font-size: 18px;
+      }
+
+      &:hover,
+      &.active {
+        background-color: $orange100;
+
+        img {
+          filter: invert(57%) sepia(83%) saturate(1867%) hue-rotate(6deg)
+            brightness(93%) contrast(82%);
+        }
+
+        span {
+          color: $orange700;
+        }
+      }
+    }
+  }
 }
