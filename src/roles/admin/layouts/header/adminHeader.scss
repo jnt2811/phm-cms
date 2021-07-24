@@ -1,0 +1,33 @@
+@import "../../../../style/colors.scss";
+
+.admin-header {
+  padding: 10px 50px;
+  background-color: $orange300;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  p {
+    margin-bottom: -5px;
+    color: $orange700;
+  }
+
+  button {
+    background-color: $orange300 !important;
+    color: $orange700 !important;
+    box-shadow: none;
+    font-weight: 400 !important;
+    height: 25px !important;
+    font-size: 18px !important;
+    display: flex;
+    align-items: center;
+    text-decoration: underline;
+
+    &:hover {
+      background-color: $orange300 !important;
+      color: $orange700 !important;
+      text-decoration: underline !important;
+    }
+  }
+}

@@ -1,19 +1,12 @@
 import { Button, Col, Form, Input, Row } from "antd";
-import { useEffect } from "react";
 import { localKeys } from "../../constances";
 import "./login.scss";
 import CorgiImg from "../../assets/corgi.png";
 import { useForm } from "antd/lib/form/Form";
-import { useHistory } from "react-router-dom";
+
 import pathNames from "../../router/pathNames";
 
 const Login = () => {
-  useEffect(() => {
-    localStorage.removeItem(localKeys.ACCESS_TOKEN);
-    localStorage.removeItem(localKeys.ROLE);
-  }, []);
-
-  const history = useHistory();
   const [form] = useForm();
 
   const onFinish = (values) => {
@@ -22,7 +15,7 @@ const Login = () => {
     localStorage.setItem(localKeys.ACCESS_TOKEN, "qwerty");
     localStorage.setItem(localKeys.ROLE, "admin");
 
-    history.push(pathNames.ADMIN);
+    window.location.href = pathNames.MAIN;
   };
 
   return (

@@ -1,0 +1,16 @@
+@import "../../../../style/colors.scss";
+
+.admin-sider {
+  width: 100%;
+  height: 100vh;
+  background-color: $orange400;
+  padding: 50px 25px;
+
+  .logo {
+    text-align: center;
+
+    img {
+      width: 100px;
+    }
+  }
+}
