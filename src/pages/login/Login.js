@@ -1,9 +1,8 @@
 import { Button, Col, Form, Input, Row } from "antd";
-import { localKeys } from "../../constances";
+import localKeys from "../../constances/localKeys";
 import "./login.scss";
 import CorgiImg from "../../assets/corgi.png";
 import { useForm } from "antd/lib/form/Form";
-
 import pathNames from "../../router/pathNames";
 
 const Login = () => {

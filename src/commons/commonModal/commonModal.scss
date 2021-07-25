@@ -1,0 +1,19 @@
+@import "../../style/colors.scss";
+
+.form-modal,
+.info-modal {
+  .ant-modal-content {
+    background-color: $orange100;
+    border-radius: 10px;
+  }
+}
+
+.form-modal {
+  .cancel-btn {
+    color: $orange700 !important;
+    background-color: $orange300 !important;
+  }
+}
+
+.info-modal {
+}

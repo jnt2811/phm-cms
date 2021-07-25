@@ -1,6 +1,6 @@
 import { takeLatest } from "redux-saga/effects";
 import { doLogout } from "../slices/authSlice";
-import { localKeys } from "../../constances";
+import localKeys from "../../constances/localKeys";
 
 export function* watchDoAuth() {
   yield takeLatest(doLogout.type, handleLogout);

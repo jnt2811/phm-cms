@@ -1,4 +1,4 @@
-import { localKeys } from "../../../constances";
+import localKeys from "../../../constances/localKeys";
 
 const Dashboard = () => {
   const handleLogout = () => {

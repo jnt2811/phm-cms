@@ -13,15 +13,22 @@
 
 // common tag
 h1 {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 600;
+  margin: 0;
+}
+h2 {
+  font-size: 25px;
+}
+h3 {
+  font-size: 22px;
 }
 p {
-  font-size: 18px;
+  font-size: 16px;
   color: $dark;
 }
 label {
-  font-size: 18px !important;
+  font-size: 16px !important;
 }
 input {
   height: 40px !important;
@@ -32,18 +39,82 @@ button {
   height: 40px !important;
   border-radius: 10px !important;
   border: none !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 500 !important;
   background-color: $orange500 !important;
-  color: white !important;
+  color: $light !important;
 
   &:hover {
     background-color: $orange500 !important;
-    color: white !important;
+    color: $light !important;
+  }
+
+  &:disabled {
+    background-color: #00000010 !important;
+  }
+}
+table {
+  th {
+    font-size: 16px;
+    color: $dark !important;
+    border-bottom: none !important;
+    background-color: $orange300 !important;
+
+    &::before {
+      background-color: unset !important;
+    }
+  }
+
+  tbody tr {
+    background-color: $orange200;
+    color: $dark;
+    font-size: 16px;
+  }
+
+  .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
+    background: $orange200;
   }
 }
 
 //common class
+.input-password {
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  border-radius: 10px !important;
+}
+.ant-input-affix-wrapper > input.ant-input {
+  height: 38px !important;
+}
 .container {
   padding: 25px 50px;
+}
+.table-container {
+  margin-top: 50px;
+
+  button {
+    height: 30px !important;
+  }
+  .edit-btn {
+    background-color: $green !important;
+
+    &:disabled {
+      background-color: #00000010 !important;
+    }
+  }
+  .password-btn {
+    background-color: $red !important;
+
+    &:disabled {
+      background-color: #00000010 !important;
+    }
+  }
+}
+.select {
+  .ant-select-selector {
+    border-radius: 10px !important;
+    height: 40px !important;
+    align-items: center;
+    font-size: 16px !important;
+  }
 }

@@ -1,5 +1,5 @@
 import { Redirect, Route } from "react-router-dom";
-import { localKeys } from "../constances";
+import localKeys from "../constances/localKeys";
 import pathNames from "../router/pathNames";
 import NotAccess from "../pages/NotAccess";
 
