@@ -45,7 +45,7 @@ const VolunteerForm = ({ volunteer, form, setValidSuccess }) => {
           <Form.Item
             label="Giới tính"
             name="sex"
-            rules={[{ required: true, message: "Hãy điền giới tính" }]}
+            rules={[{ required: true, message: "Hãy chọn giới tính" }]}
           >
             <Select className="select">
               <Select.Option value={sexKeys.MALE}>Nam</Select.Option>

@@ -1,12 +1,11 @@
-import { Button, Col, Row, Table } from "antd";
+import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
-import { volunteerList, sexKeys } from "../../../../constances/data";
-import { GreenTag, RedTag } from "../../../../commons/commonTag/CommonTag";
-import { EditOutlined, SyncOutlined, UnlockOutlined } from "@ant-design/icons";
+import { volunteerList } from "../../../../constances/data";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
 import VolunteerForm from "./VolunteerForm";
 import { useForm } from "antd/lib/form/Form";
 import PasswordForm from "./PasswordForm";
+import VolunteerTable from "./VolunteerTable";
 
 const Volunteer = () => {
   const onNewVolunteer = () => {
@@ -92,91 +91,6 @@ const Volunteer = () => {
     setvolunteers(volunteerList);
   }, []);
 
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Họ và tên",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Ngày sinh",
-      dataIndex: "dob",
-      key: "dob",
-    },
-    {
-      title: "Giới tính",
-      dataIndex: "sex",
-      key: "sex",
-      render: (sex) =>
-        sex === sexKeys.MALE ? "Nam" : sexKeys.FEMALE ? "Nữ" : "Khác",
-    },
-    {
-      title: "Số điện thoại",
-      dataIndex: "phone",
-      key: "phone",
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "collab",
-      key: "collab",
-      render: (collab) =>
-        collab ? <GreenTag>Đang làm</GreenTag> : <RedTag>Nghỉ làm</RedTag>,
-    },
-    {
-      title: "",
-      dataIndex: "collab",
-      key: "collab",
-      render: (collab, record) => (
-        <Row gutter={{ lg: 10 }}>
-          <Col>
-            <Button
-              className="edit-btn"
-              icon={<EditOutlined />}
-              disabled={!collab}
-              onClick={() => onEditVolunteer(record)}
-            ></Button>
-          </Col>
-
-          <Col>
-            <Button
-              className="collab-btn"
-              icon={<SyncOutlined />}
-              onClick={() => onSwitchCollab(record)}
-            ></Button>
-          </Col>
-
-          <Col>
-            <Button
-              className="password-btn"
-              icon={<UnlockOutlined />}
-              disabled={!collab}
-              onClick={() => onUpdatePassword(record)}
-            ></Button>
-          </Col>
-        </Row>
-      ),
-    },
-  ];
-
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     console.log(
-  //       `selectedRowKeys: ${selectedRowKeys}`,
-  //       "selectedRows: ",
-  //       selectedRows
-  //     );
-  //   },
-  //   getCheckboxProps: (record) => ({
-  //     disabled: record.name === "Disabled User",
-  //     name: record.name,
-  //   }),
-  // };
-
   return (
     <div className="volunteer">
       <Row justify="space-between" align="middle" gutter={{ lg: 20 }}>
@@ -198,11 +112,11 @@ const Volunteer = () => {
       </Row>
 
       <div className="table-container">
-        <Table
-          columns={columns}
+        <VolunteerTable
           dataSource={volunteers}
-          pagination={false}
-          // rowSelection={{ type: "checkbox", ...rowSelection }}
+          onEditVolunteer={onEditVolunteer}
+          onUpdatePassword={onUpdatePassword}
+          onSwitchCollab={onSwitchCollab}
         />
       </div>
 

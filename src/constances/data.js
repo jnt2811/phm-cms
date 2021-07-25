@@ -3,7 +3,7 @@ export const sexKeys = {
   FEMALE: "female",
   OTHER: "other",
 };
-export const petTypes = {
+export const petKeys = {
   DOG: "dog",
   CAT: "cat",
 };
@@ -78,7 +78,7 @@ export const petList = [
     id: 101,
     key: 101,
     name: "Tomas",
-    type: petTypes.DOG,
+    type: petKeys.DOG,
     color: "Vàng",
     rescuedAt: "21/07/2021",
     healhStatus: healthStatus.GOOD,
@@ -87,7 +87,7 @@ export const petList = [
     id: 102,
     key: 102,
     name: "Dora",
-    type: petTypes.CAT,
+    type: petKeys.CAT,
     color: "Đen",
     rescuedAt: "21/07/2021",
     healhStatus: healthStatus.UNDEFINED,
@@ -96,7 +96,7 @@ export const petList = [
     id: 103,
     key: 103,
     name: "Dummie",
-    type: petTypes.DOG,
+    type: petKeys.DOG,
     color: "Xám",
     rescuedAt: "21/07/2021",
     healhStatus: healthStatus.BAD,
