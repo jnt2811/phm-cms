@@ -38,7 +38,7 @@ const Pet = () => {
     <div className="pet">
       <Row align="middle" gutter={{ lg: 20 }}>
         <Col>
-          <h1>Danh sách quyên góp</h1>
+          <h1>Danh sách chó mèo</h1>
         </Col>
 
         <Col>

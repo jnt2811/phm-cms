@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import { petKeys } from "../../../../constances/data";
+import { healthStatusKeys, petKeys } from "../../../../constances/data";
 
 const PetTable = ({ dataSource }) => {
   const columns = [
@@ -17,22 +17,28 @@ const PetTable = ({ dataSource }) => {
       title: "Loài",
       dataIndex: "type",
       key: "type",
-      render: (type) => type === petKeys.DOG,
+      render: (type) => (type === petKeys.DOG ? "Chó" : "Mèo"),
     },
     {
-      title: "Giới tính",
-      dataIndex: "sex",
-      key: "sex",
+      title: "Màu lông",
+      dataIndex: "color",
+      key: "color",
     },
     {
-      title: "Ngày quyên góp",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      title: "Ngày cứu trợ",
+      dataIndex: "rescuedAt",
+      key: "rescuedAt",
     },
     {
-      title: "Số tiền",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Tình trạng",
+      dataIndex: "healthStatus",
+      key: "healthStatus",
+      render: (healthStatus) =>
+        healthStatus === healthStatusKeys.GOOD
+          ? "Tốt"
+          : healthStatus === healthStatusKeys.BAD
+          ? "Không tốt"
+          : "---",
     },
   ];
 

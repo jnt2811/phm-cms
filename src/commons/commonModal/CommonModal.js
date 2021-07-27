@@ -33,9 +33,16 @@ export const FormModal = ({
   );
 };
 
-export const InfoModal = ({ children, visible, onClose, ...props }) => {
+export const InfoModal = ({ children, visible, onClose, width, ...props }) => {
   return (
-    <Modal className="info-modal" {...props} visible={visible} footer={null}>
+    <Modal
+      className="info-modal"
+      {...props}
+      visible={visible}
+      footer={null}
+      onCancel={onClose}
+      width={width}
+    >
       {children}
     </Modal>
   );

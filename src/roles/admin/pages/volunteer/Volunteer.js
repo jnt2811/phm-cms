@@ -10,6 +10,7 @@ import VolunteerTable from "./VolunteerTable";
 const Volunteer = () => {
   const onNewVolunteer = () => {
     setVisibleNewModal(true);
+    setFormValidSuccess(false);
   };
   const onOkNewModal = () => {
     newForm.submit();
@@ -27,6 +28,7 @@ const Volunteer = () => {
   const onEditVolunteer = (volunteer) => {
     setSelectedVolunteer(volunteer);
     setVisibleEditModal(true);
+    setFormValidSuccess(false);
   };
   const onOkEditModal = () => {
     editForm.submit();
@@ -46,6 +48,7 @@ const Volunteer = () => {
   const onUpdatePassword = (volunteer) => {
     setSelectedVolunteer(volunteer);
     setVisiblePassModal(true);
+    setFormValidSuccess(false);
   };
   const onOkUpdatePassword = () => {
     passForm.submit();

@@ -7,7 +7,7 @@ export const petKeys = {
   DOG: "dog",
   CAT: "cat",
 };
-export const healthStatus = {
+export const healthStatusKeys = {
   GOOD: "good",
   BAD: "bad",
   UNDEFINED: "undefined",
@@ -81,7 +81,7 @@ export const petList = [
     type: petKeys.DOG,
     color: "Vàng",
     rescuedAt: "21/07/2021",
-    healhStatus: healthStatus.GOOD,
+    healthStatus: healthStatusKeys.GOOD,
   },
   {
     id: 102,
@@ -90,7 +90,7 @@ export const petList = [
     type: petKeys.CAT,
     color: "Đen",
     rescuedAt: "21/07/2021",
-    healhStatus: healthStatus.UNDEFINED,
+    healthStatus: healthStatusKeys.UNDEFINED,
   },
   {
     id: 103,
@@ -99,7 +99,7 @@ export const petList = [
     type: petKeys.DOG,
     color: "Xám",
     rescuedAt: "21/07/2021",
-    healhStatus: healthStatus.BAD,
+    healthStatus: healthStatusKeys.BAD,
   },
 ];
 
@@ -109,6 +109,8 @@ export const clinicList = [
     key: 1001,
     name: "Phòng khám ABC",
     phone: "0812376458",
+    createdAt: "21/07/2021",
+    address: "Việt Nam",
     collab: true,
   },
   {
@@ -116,6 +118,8 @@ export const clinicList = [
     key: 1002,
     name: "Phòng khám XYZ",
     phone: "0357670118",
+    createdAt: "21/07/2021",
+    address: "Việt Nam",
     collab: true,
   },
   {
@@ -123,6 +127,56 @@ export const clinicList = [
     key: 1003,
     name: "Phòng khám BBQ",
     phone: "0468357119",
+    createdAt: "21/07/2021",
+    address: "Việt Nam",
     collab: false,
+  },
+];
+
+export const appointmentList = [
+  {
+    id: 101,
+    key: 101,
+    pet: { name: "Tom" },
+    clinic: { name: "Phòng khám ABC" },
+    datetime: "22/01/2000 10:00",
+  },
+  {
+    id: 102,
+    key: 102,
+    pet: { name: "Jerry" },
+    clinic: { name: "Phòng khám DEF" },
+    datetime: "22/01/2000 10:00",
+  },
+  {
+    id: 103,
+    key: 103,
+    pet: { name: "Doris" },
+    clinic: { name: "Phòng khám ABC" },
+    datetime: "22/01/2000 10:00",
+  },
+];
+
+export const historyList = [
+  {
+    id: 101,
+    key: 101,
+    pet: { name: "Tom" },
+    clinic: { name: "Phòng khám ABC" },
+    datetime: "22/01/2000 10:00",
+  },
+  {
+    id: 102,
+    key: 102,
+    pet: { name: "Jerry" },
+    clinic: { name: "Phòng khám DEF" },
+    datetime: "22/01/2000 10:00",
+  },
+  {
+    id: 103,
+    key: 103,
+    pet: { name: "Doris" },
+    clinic: { name: "Phòng khám ABC" },
+    datetime: "22/01/2000 10:00",
   },
 ];

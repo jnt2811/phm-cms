@@ -21,7 +21,9 @@ const AdminSider = ({ location }) => {
   const isAtDonation = pathname === pathNames.ADMIN_DONATION;
   const isAtPet = pathname === pathNames.ADMIN_PET;
   const isAtClinic = pathname === pathNames.ADMIN_CLINIC;
-  const isAtAppointment = pathname === pathNames.ADMIN_APPOINTMENT;
+  const isAtExamination =
+    pathname === pathNames.ADMIN_APPOINTMENT ||
+    pathname === pathNames.ADMIN_HISTORY;
   const isAtChat = pathname === pathNames.ADMIN_CHAT;
   const isAtAccount = pathname === pathNames.ADMIN_ACCOUNT;
 
@@ -67,7 +69,7 @@ const AdminSider = ({ location }) => {
           </Link>
 
           <Link to={pathNames.ADMIN_APPOINTMENT}>
-            <div className={"sider-item " + (isAtAppointment && "active")}>
+            <div className={"sider-item " + (isAtExamination && "active")}>
               <img src={Appointment_Icon} alt="" />
               <span>Khám bệnh</span>
             </div>

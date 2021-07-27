@@ -1,0 +1,27 @@
+POST https://nha-cho-thu-cung.herokuapp.com/auth/login
+Content-Type: application/json
+
+{
+    "phone": "admin",
+    "password": "admin"
+}
+
+# example below
+
+###
+GET http://localhost:5000/listing/all
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxZDdjYTdhMmQwMGVjM2E3OGE1MCIsImlhdCI6MTYyNDI3MTE3NCwiZXhwIjoxNjI0MzU3NTc0fQ.LO3kM7iXMtwVkOHolKYXqSM3M0vLDtAU2951Ph1A9wU
+
+
+###
+POST http://localhost:5000/listing/new
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxNDk2M2E3MGYxYzFiOTdjMTg4NCIsImlhdCI6MTYyNDI2MTMyOCwiZXhwIjoxNjI0MzQ3NzI4fQ.rEGFR_zrzanYPj-iIT5BD5xn_YqiSobf5RVVPYB0CXE
+Content-Type: application/json
+
+{
+    "name": "Nha ven ho",
+    "description": "Rat nhieu ca nen tha ho cau",
+    "address": "Vinh",
+    "price": 2000,
+    "capacity": 4
+}

@@ -16,4 +16,9 @@
 }
 
 .info-modal {
+  .ant-modal-close-x {
+    background-color: $orange100 !important;
+    color: $orange700;
+    font-size: 20px;
+  }
 }

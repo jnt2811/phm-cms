@@ -15,7 +15,8 @@ const pathNames = {
   ADMIN_DONATION: admin + "/donation",
   ADMIN_PET: admin + "/pet",
   ADMIN_CLINIC: admin + "/clinic",
-  ADMIN_APPOINTMENT: admin + "/appointment",
+  ADMIN_APPOINTMENT: admin + "/examination/appointment",
+  ADMIN_HISTORY: admin + "/examination/history",
   ADMIN_CHAT: admin + "/chat",
   ADMIN_ACCOUNT: admin + "/account",
 

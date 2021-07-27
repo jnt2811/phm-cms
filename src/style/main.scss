@@ -118,3 +118,42 @@ table {
     font-size: 16px !important;
   }
 }
+.date-picker {
+  height: 40px;
+  border-radius: 10px;
+}
+
+.ant-picker-panel-container {
+  .ant-picker-header {
+    button {
+      background-color: #fff !important;
+      color: $orange500 !important;
+    }
+  }
+
+  .ant-picker-body {
+    th {
+      color: $dark !important;
+      border-bottom: none !important;
+      background-color: unset !important;
+
+      &::before {
+        background-color: unset !important;
+      }
+    }
+
+    tbody tr {
+      background-color: unset !important;
+      color: $dark;
+      font-size: 16px;
+    }
+  }
+
+  .ant-picker-footer {
+    button {
+      background-color: #fff !important;
+      color: $orange500 !important;
+      box-shadow: none;
+    }
+  }
+}
