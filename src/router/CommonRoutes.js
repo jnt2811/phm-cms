@@ -5,7 +5,9 @@ import NotAccess from "../pages/NotAccess";
 
 export const PublicRoute = ({ component: Component, ...remainingProps }) => {
   const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
-  const isAdmin = localStorage.getItem(localKeys.ROLE) === "admin";
+  const isAdmin = localStorage.getItem(localKeys.USER_DATA)
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role === null
+    : false;
   const isVolunteer = localStorage.getItem(localKeys.ROLE) === "volunteer";
   const isClinic = localStorage.getItem(localKeys.ROLE) === "clinic";
 
@@ -29,7 +31,9 @@ export const PublicRoute = ({ component: Component, ...remainingProps }) => {
 
 export const AdminRoute = ({ component: Component, ...remainingProps }) => {
   const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
-  const isAdmin = localStorage.getItem(localKeys.ROLE) === "admin";
+  const isAdmin = localStorage.getItem(localKeys.USER_DATA)
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role === null
+    : false;
 
   return (
     <Route

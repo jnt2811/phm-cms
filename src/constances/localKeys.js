@@ -1,7 +1,7 @@
 const localKeys = {
   ACCESS_TOKEN: "accessToken",
   REFRESH_TOKEN: "refreshToken",
-  ROLE: "role",
+  USER_DATA: "userData",
 };
 
 export default localKeys;

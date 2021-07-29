@@ -1,3 +1,5 @@
+import errorCodes from "./constances/errorCodes";
+
 export const addComma = (val) => {
   let tempVal = val;
 
@@ -17,4 +19,9 @@ export const addComma = (val) => {
   }
 
   return tempVal;
+};
+
+export const convertErrorCodeToMessage = (code) => {
+  if (errorCodes[code]) return errorCodes[code];
+  return;
 };

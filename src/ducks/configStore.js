@@ -5,7 +5,7 @@ import rootSaga from "./sagas/rootSaga";
 import authSlice from "./slices/authSlice";
 
 const reducer = combineReducers({
-  login: authSlice,
+  auth: authSlice,
 });
 
 const sagaMiddleware = createSagaMiddleware();

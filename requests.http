@@ -1,4 +1,4 @@
-POST https://nha-cho-thu-cung.herokuapp.com/auth/login
+POST https://nha-cho-thu-cung.herokuapp.com/login
 Content-Type: application/json
 
 {

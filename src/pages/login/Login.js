@@ -1,20 +1,40 @@
-import { Button, Col, Form, Input, Row } from "antd";
-import localKeys from "../../constances/localKeys";
+import { Button, Col, Form, Input, Row, notification } from "antd";
 import "./login.scss";
 import CorgiImg from "../../assets/corgi.png";
 import { useForm } from "antd/lib/form/Form";
 import pathNames from "../../router/pathNames";
+import { useDispatch, useSelector } from "react-redux";
+import { doLogin, resetLogin } from "../../ducks/slices/authSlice";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
+  const authReducer = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (authReducer.isOk === true) {
+      setIsLoading(false);
+      notification.open({ message: authReducer.message });
+      dispatch(resetLogin());
+      history.push(pathNames.MAIN);
+    } else if (authReducer.isOk === false) {
+      setIsLoading(false);
+      notification.open({ message: authReducer.message });
+      dispatch(resetLogin());
+    }
+  }, [authReducer, dispatch, history]);
+
   const [form] = useForm();
 
   const onFinish = (values) => {
-    console.log(values);
-
-    localStorage.setItem(localKeys.ACCESS_TOKEN, "qwerty");
-    localStorage.setItem(localKeys.ROLE, "admin");
-
-    window.location.href = pathNames.MAIN;
+    setIsLoading(true);
+    dispatch(doLogin(values));
   };
 
   return (
@@ -45,7 +65,7 @@ const Login = () => {
             </Form.Item>
 
             <Form.Item>
-              <Button htmlType="submit" block>
+              <Button htmlType="submit" block loading={isLoading}>
                 Đăng nhập
               </Button>
             </Form.Item>
