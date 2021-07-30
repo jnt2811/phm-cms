@@ -23,10 +23,9 @@ const History = () => {
     <div className="history">
       <ExaminationHeader />
 
-      <br />
-      <br />
-
-      <HistoryTable dataSource={history} onInfoHistory={onInfoHistory} />
+      <div className="table-container">
+        <HistoryTable dataSource={history} onInfoHistory={onInfoHistory} />
+      </div>
 
       <InfoModal
         visible={visibleModal}

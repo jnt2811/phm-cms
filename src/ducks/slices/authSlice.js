@@ -12,11 +12,7 @@ const authSlice = createSlice({
   reducers: {
     doLogin() {},
 
-    loginSuccess(state, action) {
-      return action.payload;
-    },
-
-    loginFail(state, action) {
+    doneLogin(state, action) {
       return action.payload;
     },
 
@@ -28,7 +24,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { doLogout, doLogin, loginFail, loginSuccess, resetLogin } =
-  authSlice.actions;
+export const { doLogout, doLogin, doneLogin, resetLogin } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,38 +1,44 @@
 import { Button, Col, Row } from "antd";
-import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
-import { donationList } from "../../../../constances/data";
-import DonationForm from "./DonationForm";
+import { useDispatch, useSelector } from "react-redux";
 import DonationTable from "./DonationTable";
-import { FormModal } from "../../../../commons/commonModal/CommonModal";
+import NewDonation from "./NewDonation";
+import {
+  doGetAllDonations,
+  resetDonation,
+} from "../../../../ducks/slices/donationSlice";
 
 const Donation = () => {
+  const donationReducer = useSelector((state) => state.donation);
+  const dispatch = useDispatch();
+
+  const [donations, setDonations] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [visibleNewModal, setVisibleNewModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(doGetAllDonations());
+    setIsLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (donationReducer.isOk === true) {
+      const { donationList } = donationReducer;
+      setDonations(
+        donationList.map((donation) => ({ ...donation, key: donation.id }))
+      );
+      setIsLoading(false);
+      dispatch(resetDonation());
+    } else if (donationReducer.isOk === false) {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [donationReducer]);
+
   const onNewDonation = () => {
     setVisibleNewModal(true);
   };
-  const onOkNewDonation = () => {
-    form.submit();
-    if (validSuccess) {
-      console.log(form.getFieldsValue());
-      form.resetFields();
-      setVisibleNewModal(false);
-      setValidSuccess(false);
-    }
-  };
-  const onCancelNewDonation = () => {
-    form.resetFields();
-    setVisibleNewModal(false);
-  };
-
-  const [form] = useForm();
-
-  const [donations, setDonations] = useState([]);
-  const [visibleNewModal, setVisibleNewModal] = useState(false);
-  const [validSuccess, setValidSuccess] = useState(false);
-
-  useEffect(() => {
-    setDonations(donationList);
-  }, []);
 
   return (
     <div className="donation">
@@ -47,26 +53,10 @@ const Donation = () => {
       </Row>
 
       <div className="table-container">
-        <DonationTable dataSource={donations} />
+        <DonationTable dataSource={donations} loading={isLoading} />
       </div>
 
-      <div className="donation-modal">
-        <FormModal
-          visible={visibleNewModal}
-          okText="Tạo mới"
-          cancelText="Hủy bỏ"
-          onOk={onOkNewDonation}
-          onCancel={onCancelNewDonation}
-          width={800}
-        >
-          <h1>Tạo mới quyên góp</h1>
-          <br />
-          <DonationForm
-            form={form}
-            setValidSuccess={() => setValidSuccess(true)}
-          />
-        </FormModal>
-      </div>
+      <NewDonation visible={visibleNewModal} setVisible={setVisibleNewModal} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Button, Col, Row, Table } from "antd";
 import { GreenTag, RedTag } from "../../../../commons/commonTag/CommonTag";
 
 const ClinicTable = ({
+  loading = false,
   dataSource,
   onEditClinic,
   onSwitchCollab,
@@ -76,7 +77,14 @@ const ClinicTable = ({
     },
   ];
 
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+      loading={loading}
+    />
+  );
 };
 
 export default ClinicTable;

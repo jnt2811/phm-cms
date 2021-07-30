@@ -27,6 +27,7 @@ export const FormModal = ({
           {okText}
         </Button>,
       ]}
+      getContainer={false}
     >
       {children}
     </Modal>

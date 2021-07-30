@@ -2,7 +2,7 @@ import axios from "axios";
 import localKeys from "../../constances/localKeys";
 
 const initHeaders = {
-  Authorization: localStorage.getItem(localKeys.ACCESS_TOKEN),
+  Authorization: "bearer " + localStorage.getItem(localKeys.ACCESS_TOKEN),
 };
 
 export const httpRequestPost = async (api, data, headers = initHeaders) => {
@@ -18,5 +18,13 @@ export const httpRequestGet = async (api, headers = initHeaders) => {
     return axios.get(api, { headers: headers }, { timeout: 5000 });
   } catch (error) {
     console.log("GET request error: " + JSON.stringify(error));
+  }
+};
+
+export const httpRequestPatch = async (api, data, headers = initHeaders) => {
+  try {
+    return axios.patch(api, data, { headers: headers }, { timeout: 5000 });
+  } catch (error) {
+    console.log("PATCH request error: " + JSON.stringify(error));
   }
 };

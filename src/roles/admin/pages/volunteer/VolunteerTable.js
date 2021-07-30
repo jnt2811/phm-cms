@@ -4,25 +4,12 @@ import { GreenTag, RedTag } from "../../../../commons/commonTag/CommonTag";
 import { sexKeys } from "../../../../constances/data";
 
 const VolunteerTable = ({
+  loading = false,
   dataSource,
   onEditVolunteer,
   onSwitchCollab,
   onUpdatePassword,
 }) => {
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     console.log(
-  //       `selectedRowKeys: ${selectedRowKeys}`,
-  //       "selectedRows: ",
-  //       selectedRows
-  //     );
-  //   },
-  //   getCheckboxProps: (record) => ({
-  //     disabled: record.name === "Disabled User",
-  //     name: record.name,
-  //   }),
-  // };
-
   const columns = [
     {
       title: "ID",
@@ -41,10 +28,14 @@ const VolunteerTable = ({
     },
     {
       title: "Giới tính",
-      dataIndex: "sex",
-      key: "sex",
-      render: (sex) =>
-        sex === sexKeys.MALE ? "Nam" : sexKeys.FEMALE ? "Nữ" : "Khác",
+      dataIndex: "gender",
+      key: "gender",
+      render: (gender) =>
+        gender === sexKeys.MALE
+          ? "Nam"
+          : gender === sexKeys.FEMALE
+          ? "Nữ"
+          : "Khác",
     },
     {
       title: "Số điện thoại",
@@ -99,7 +90,7 @@ const VolunteerTable = ({
       columns={columns}
       dataSource={dataSource}
       pagination={false}
-      // rowSelection={{ type: "checkbox", ...rowSelection }}
+      loading={loading}
     />
   );
 };

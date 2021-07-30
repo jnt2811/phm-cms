@@ -1,7 +1,7 @@
 import { Table } from "antd";
-import { healthStatusKeys, petKeys } from "../../../../constances/data";
+import { petKeys } from "../../../../constances/data";
 
-const PetTable = ({ dataSource }) => {
+const PetTable = ({ dataSource, loading }) => {
   const columns = [
     {
       title: "ID",
@@ -26,23 +26,19 @@ const PetTable = ({ dataSource }) => {
     },
     {
       title: "Ngày cứu trợ",
-      dataIndex: "rescuedAt",
-      key: "rescuedAt",
-    },
-    {
-      title: "Tình trạng",
-      dataIndex: "healthStatus",
-      key: "healthStatus",
-      render: (healthStatus) =>
-        healthStatus === healthStatusKeys.GOOD
-          ? "Tốt"
-          : healthStatus === healthStatusKeys.BAD
-          ? "Không tốt"
-          : "---",
+      dataIndex: "createAt",
+      key: "createAt",
     },
   ];
 
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+      loading={loading}
+    />
+  );
 };
 
 export default PetTable;

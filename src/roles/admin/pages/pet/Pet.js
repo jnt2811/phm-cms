@@ -1,38 +1,41 @@
 import { Button, Col, Row } from "antd";
-import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
-import { petList } from "../../../../constances/data";
-import { FormModal } from "../../../../commons/commonModal/CommonModal";
-import PetForm from "./PetForm";
+import { useDispatch, useSelector } from "react-redux";
+import NewPet from "./NewPet";
 import PetTable from "./PetTable";
+import { doGetAllPets, resetPet } from "../../../../ducks/slices/petSlice";
 
 const Pet = () => {
+  const petReducer = useSelector((state) => state.pet);
+  const dispatch = useDispatch();
+
+  const [pets, setPets] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [visibleNewModal, setVisibleNewModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(doGetAllPets());
+    setIsLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    console.log(petReducer);
+
+    if (petReducer.isOk === true) {
+      const { petList } = petReducer;
+      setPets(petList.map((pet) => ({ ...pet, key: pet.id })));
+      setIsLoading(false);
+      dispatch(resetPet());
+    } else if (petReducer.isOk === false) {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [petReducer]);
+
   const onNewPet = () => {
     setVisibleNewModal(true);
   };
-  const onOkNewPet = () => {
-    form.submit();
-    if (validSuccess) {
-      console.log(form.getFieldsValue());
-      form.resetFields();
-      setVisibleNewModal(false);
-      setValidSuccess(false);
-    }
-  };
-  const onCancelNewPet = () => {
-    form.resetFields();
-    setVisibleNewModal(false);
-  };
-
-  const [form] = useForm();
-
-  const [pets, setPets] = useState([]);
-  const [visibleNewModal, setVisibleNewModal] = useState(false);
-  const [validSuccess, setValidSuccess] = useState(false);
-
-  useEffect(() => {
-    setPets(petList);
-  }, []);
 
   return (
     <div className="pet">
@@ -47,23 +50,10 @@ const Pet = () => {
       </Row>
 
       <div className="table-container">
-        <PetTable dataSource={pets} />
+        <PetTable dataSource={pets} loading={isLoading} />
       </div>
 
-      <div className="pet-modal">
-        <FormModal
-          visible={visibleNewModal}
-          okText="Tạo mới"
-          cancelText="Hủy bỏ"
-          onOk={onOkNewPet}
-          onCancel={onCancelNewPet}
-          width={800}
-        >
-          <h1>Tạo mới quyên góp</h1>
-          <br />
-          <PetForm form={form} setValidSuccess={() => setValidSuccess(true)} />
-        </FormModal>
-      </div>
+      <NewPet visible={visibleNewModal} setVisible={setVisibleNewModal} />
     </div>
   );
 };

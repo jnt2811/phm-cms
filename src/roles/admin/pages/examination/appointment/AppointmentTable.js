@@ -1,4 +1,5 @@
 import { Button, Col, Row, Table } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const AppointmentTable = ({ dataSource, onCancelAppointment }) => {
   const columns = [
@@ -27,11 +28,10 @@ const AppointmentTable = ({ dataSource, onCancelAppointment }) => {
         <Row gutter={{ lg: 10 }}>
           <Col>
             <Button
+              icon={<DeleteOutlined />}
               className="cancel-btn"
               onClick={() => onCancelAppointment(appointment)}
-            >
-              Hủy bỏ
-            </Button>
+            ></Button>
           </Col>
         </Row>
       ),

@@ -30,13 +30,12 @@ const Appointment = () => {
     <div className="appointment">
       <ExaminationHeader />
 
-      <br />
-      <br />
-
-      <AppointmentTable
-        dataSource={appointments}
-        onCancelAppointment={onCancelAppointment}
-      />
+      <div className="table-container">
+        <AppointmentTable
+          dataSource={appointments}
+          onCancelAppointment={onCancelAppointment}
+        />
+      </div>
 
       <FormModal
         visible={visibleModal}

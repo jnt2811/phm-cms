@@ -20,12 +20,12 @@ const Login = () => {
   useEffect(() => {
     if (authReducer.isOk === true) {
       setIsLoading(false);
-      notification.open({ message: authReducer.message });
+      notification.success({ message: authReducer.message });
       dispatch(resetLogin());
       history.push(pathNames.MAIN);
     } else if (authReducer.isOk === false) {
       setIsLoading(false);
-      notification.open({ message: authReducer.message });
+      notification.error({ message: authReducer.message });
       dispatch(resetLogin());
     }
   }, [authReducer, dispatch, history]);

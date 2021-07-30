@@ -1,22 +1,26 @@
 import errorCodes from "./constances/errorCodes";
 
-export const addComma = (val) => {
+export const formatPrice = (val, currency) => {
   let tempVal = val;
 
   if (!isNaN(val)) {
     tempVal = val.toString();
   }
 
-  if (tempVal.length > 4) {
+  if (tempVal.length > 3) {
     let newVal = "";
+    let counter = 0;
 
     for (let i = tempVal.length - 1; i >= 0; i--) {
+      counter++;
       newVal += tempVal.charAt(i);
-      if ((i + 2) % 3 === 0 && i !== 0) newVal += ",";
+      if (counter % 3 === 0 && i !== 0) newVal += ",";
     }
 
-    return newVal.split("").reverse().join("");
+    tempVal = newVal.split("").reverse().join("");
   }
+
+  tempVal += ` ${currency}`;
 
   return tempVal;
 };

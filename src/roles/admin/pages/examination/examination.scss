@@ -22,14 +22,17 @@
 }
 
 .appointment {
-  .cancel-btn {
-    background-color: $red !important;
+  .table-container {
+    .cancel-btn {
+      background-color: $red !important;
+    }
   }
 }
 
 .history {
-  .info-btn {
-    width: 40px;
-    background-color: $green !important;
+  .table-container {
+    .info-btn {
+      background-color: $green !important;
+    }
   }
 }

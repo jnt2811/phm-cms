@@ -9,11 +9,25 @@ Content-Type: application/json
 # example below
 
 ###
-GET http://localhost:5000/listing/all
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxZDdjYTdhMmQwMGVjM2E3OGE1MCIsImlhdCI6MTYyNDI3MTE3NCwiZXhwIjoxNjI0MzU3NTc0fQ.LO3kM7iXMtwVkOHolKYXqSM3M0vLDtAU2951Ph1A9wU
-
+GET https://nha-cho-thu-cung.herokuapp.com/volunteer
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjI3NTI3NDI2LCJleHAiOjE2Mjc2MTM4MjZ9.EYf4J_Q5U1Cj0ssXgWZUcLsR1FbwsfqGl0ie7o_HyA0
 
 ###
+POST https://nha-cho-thu-cung.herokuapp.com/volunteer
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjI3NTI3NDI2LCJleHAiOjE2Mjc2MTM4MjZ9.EYf4J_Q5U1Cj0ssXgWZUcLsR1FbwsfqGl0ie7o_HyA0
+Content-Type: application/json
+
+{
+    "name": "Tran Quang Nguyen",
+    "dob": 975344400000, 
+    "gender": "male",
+    "phone": "0902223120", 
+    "email": "tranquangnguyen2811@gmail.com", 
+    "address": "Le Van Thiem, Thanh Xuan, Ha Noi",
+}
+
+###
+
 POST http://localhost:5000/listing/new
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxNDk2M2E3MGYxYzFiOTdjMTg4NCIsImlhdCI6MTYyNDI2MTMyOCwiZXhwIjoxNjI0MzQ3NzI4fQ.rEGFR_zrzanYPj-iIT5BD5xn_YqiSobf5RVVPYB0CXE
 Content-Type: application/json

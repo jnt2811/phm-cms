@@ -1,10 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  doLogin,
-  doLogout,
-  loginFail,
-  loginSuccess,
-} from "../slices/authSlice";
+import { doLogin, doLogout, doneLogin } from "../slices/authSlice";
 import localKeys from "../../constances/localKeys";
 import { requestDoLogin } from "../requests/authRequest";
 import { convertErrorCodeToMessage } from "../../utils";
@@ -28,7 +23,7 @@ export function* handleLogin(action) {
       );
 
       yield put(
-        loginSuccess({
+        doneLogin({
           isOk: true,
           message: "Đăng nhập thành công",
           userData: response.data.user,
@@ -36,7 +31,7 @@ export function* handleLogin(action) {
       );
     } else {
       yield put(
-        loginFail({
+        doneLogin({
           isOk: false,
           message: convertErrorCodeToMessage(response.data.errorCode),
         })
@@ -46,7 +41,7 @@ export function* handleLogin(action) {
     console.log("Error: " + JSON.stringify(error));
 
     yield put(
-      loginFail({
+      doneLogin({
         isOk: false,
         message: error.message,
       })

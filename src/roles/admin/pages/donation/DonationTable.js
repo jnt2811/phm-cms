@@ -1,8 +1,7 @@
 import { Table } from "antd";
-import { sexKeys } from "../../../../constances/data";
-import { addComma } from "../../../../utils";
+import { formatPrice } from "../../../../utils";
 
-const DonationTable = ({ dataSource }) => {
+const DonationTable = ({ dataSource, loading }) => {
   const columns = [
     {
       title: "Họ và tên",
@@ -15,26 +14,26 @@ const DonationTable = ({ dataSource }) => {
       key: "phone",
     },
     {
-      title: "Giới tính",
-      dataIndex: "sex",
-      key: "sex",
-      render: (sex) =>
-        sex === sexKeys.MALE ? "Nam" : sexKeys.FEMALE ? "Nữ" : "Khác",
-    },
-    {
       title: "Ngày quyên góp",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      dataIndex: "createAt",
+      key: "createAt",
     },
     {
       title: "Số tiền",
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => `${addComma(amount)} đ`,
+      render: (amount) => formatPrice(amount, "đ"),
     },
   ];
 
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+      loading={loading}
+    />
+  );
 };
 
 export default DonationTable;
