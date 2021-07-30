@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import { formatPrice } from "../../../../utils";
+import moment from "moment";
 
 const DonationTable = ({ dataSource, loading }) => {
   const columns = [
@@ -17,6 +18,7 @@ const DonationTable = ({ dataSource, loading }) => {
       title: "Ngày quyên góp",
       dataIndex: "createAt",
       key: "createAt",
+      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
     },
     {
       title: "Số tiền",

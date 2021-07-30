@@ -21,7 +21,7 @@ export const requestEditVolunteer = (requestData) => {
   return httpRequestPatch(apis.VOLUNTEER + "/" + requestData.id, requestData);
 };
 
-export const requestUpdatePassVolunteer = (requestData) => {
+export const requestUpdateAuthVolunteer = (requestData) => {
   return httpRequestPatch(apis.VOLUNTEER + "/" + requestData.id, requestData);
 };
 

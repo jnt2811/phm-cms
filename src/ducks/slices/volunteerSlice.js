@@ -13,8 +13,8 @@ const volunteerSlice = createSlice({
     doGetAllVolunteers() {},
     doCreateVolunteer() {},
     doEditVolunteer() {},
-    doUpdatePassVolunteer() {},
     doSwitchCollabVolunteer() {},
+    doUpdateAuthVolunteer() {},
 
     doneVolunteer(state, action) {
       return {
@@ -33,7 +33,7 @@ export const {
   doGetAllVolunteers,
   doCreateVolunteer,
   doEditVolunteer,
-  doUpdatePassVolunteer,
+  doUpdateAuthVolunteer,
   doSwitchCollabVolunteer,
   doneVolunteer,
   resetVolunteer,

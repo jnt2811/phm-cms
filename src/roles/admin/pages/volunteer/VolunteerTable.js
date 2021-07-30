@@ -1,11 +1,17 @@
-import { EditOutlined, SyncOutlined, UnlockOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  InfoOutlined,
+  SyncOutlined,
+  UnlockOutlined,
+} from "@ant-design/icons";
 import { Button, Col, Row, Table } from "antd";
 import { GreenTag, RedTag } from "../../../../commons/commonTag/CommonTag";
-import { sexKeys } from "../../../../constances/data";
+import { formatPhone } from "../../../../utils";
 
 const VolunteerTable = ({
   loading = false,
   dataSource,
+  onViewVolunteer,
   onEditVolunteer,
   onSwitchCollab,
   onUpdatePassword,
@@ -22,25 +28,15 @@ const VolunteerTable = ({
       key: "name",
     },
     {
-      title: "Ngày sinh",
-      dataIndex: "dob",
-      key: "dob",
-    },
-    {
       title: "Giới tính",
       dataIndex: "gender",
       key: "gender",
-      render: (gender) =>
-        gender === sexKeys.MALE
-          ? "Nam"
-          : gender === sexKeys.FEMALE
-          ? "Nữ"
-          : "Khác",
     },
     {
       title: "Số điện thoại",
       dataIndex: "phone",
       key: "phone",
+      render: (phone) => formatPhone(phone),
     },
     {
       title: "Trạng thái",
@@ -55,6 +51,14 @@ const VolunteerTable = ({
       key: "collab",
       render: (collab, record) => (
         <Row gutter={{ lg: 10 }}>
+          <Col>
+            <Button
+              className="info-btn"
+              icon={<InfoOutlined />}
+              onClick={() => onViewVolunteer(record)}
+            ></Button>
+          </Col>
+
           <Col>
             <Button
               className="edit-btn"

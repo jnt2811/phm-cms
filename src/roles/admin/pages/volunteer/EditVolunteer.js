@@ -1,17 +1,20 @@
 import { Col, Input, notification, Row, Select, Form } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
-import { sexKeys } from "../../../../constances/data";
 import { failMessages, successMessages } from "../../../../constances/messages";
 import { doEditVolunteer } from "../../../../ducks/slices/volunteerSlice";
+import { validateDate } from "../../../../utils";
 
 const EditVolunteer = ({ volunteer, visible, setVisible }) => {
   const volunteerReducer = useSelector((state) => state.volunteer);
   const dispatch = useDispatch();
 
   const [form] = useForm();
+
+  const [oldInputDob, setOldInputDob] = useState();
 
   useEffect(() => {
     if (volunteer) {
@@ -24,7 +27,8 @@ const EditVolunteer = ({ volunteer, visible, setVisible }) => {
         address: volunteer.address,
       });
     }
-  }, [form, volunteer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   useEffect(() => {
     const { isOk, message } = volunteerReducer;
@@ -42,30 +46,36 @@ const EditVolunteer = ({ volunteer, visible, setVisible }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volunteerReducer]);
 
-  const onOk = () => {
-    form.submit();
-  };
-
-  const onCancel = () => {
-    setVisible(false);
-    form.resetFields();
-  };
-
   const onFinish = (values) => {
-    const requestData = {
-      ...values,
-      id: volunteer.id,
-    };
-    dispatch(doEditVolunteer(requestData));
-    notification.open({ message: "Đang xử lý..." });
+    if (!validateDate(values.dob)) {
+      form.setFields([{ name: "dob", errors: ["Ngày sinh không hợp lệ"] }]);
+    } else {
+      const requestData = {
+        ...values,
+        id: volunteer.id,
+      };
+      dispatch(doEditVolunteer(requestData));
+      notification.open({ message: "Đang xử lý..." });
+    }
+  };
+
+  const handleInputDob = (e) => {
+    const { value } = e.target;
+    setOldInputDob(value);
+    if (
+      (value.length === 2 || value.length === 5) &&
+      value.length > oldInputDob.length
+    ) {
+      form.setFieldsValue({ dob: value + "/" });
+    }
   };
 
   return (
     <div className="edit-volunteer">
       <FormModal
         visible={visible}
-        onOk={onOk}
-        onCancel={onCancel}
+        onOk={() => form.submit()}
+        onCancel={() => setVisible(false)}
         okText="Lưu thay đổi"
         cancelText="Quay lại"
         width={800}
@@ -88,9 +98,19 @@ const EditVolunteer = ({ volunteer, visible, setVisible }) => {
               <Form.Item
                 label="Ngày sinh"
                 name="dob"
-                rules={[{ required: true, message: "Hãy điền ngày sinh" }]}
+                rules={[
+                  { required: true, message: "Hãy điền ngày sinh" },
+                  {
+                    pattern: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/,
+                    message: "Hãy nhập đúng định dạng ngày sinh",
+                  },
+                ]}
               >
-                <Input />
+                <Input
+                  onChange={handleInputDob}
+                  placeholder="DD/MM/YYYY"
+                  maxLength={10}
+                />
               </Form.Item>
             </Col>
 
@@ -101,49 +121,26 @@ const EditVolunteer = ({ volunteer, visible, setVisible }) => {
                 rules={[{ required: true, message: "Hãy chọn giới tính" }]}
               >
                 <Select className="select">
-                  <Select.Option value={sexKeys.MALE}>Nam</Select.Option>
-                  <Select.Option value={sexKeys.FEMALE}>Nữ</Select.Option>
-                  <Select.Option value={sexKeys.OTHER}>Khác</Select.Option>
+                  <Select.Option value={"Nam"}>Nam</Select.Option>
+                  <Select.Option value={"Nữ"}>Nữ</Select.Option>
+                  <Select.Option value={"Khác"}>Khác</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
           </Row>
 
-          <Row gutter={{ lg: 20 }}>
-            <Col lg={12}>
-              <Form.Item
-                label="Số điện thoại"
-                name="phone"
-                rules={[
-                  {
-                    required: "true",
-                    message: "Hãy điền số điện thoại",
-                  },
-                  {
-                    pattern: /^[0]?[35789]\d{8}$/,
-                    message: "Hãy nhập đúng định dạng số điện thoại",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-
-            <Col lg={12}>
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  {
-                    pattern: /\S+@\S+\.\S+/,
-                    message: "Hãy nhập đúng định dạng email",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                pattern: /\S+@\S+\.\S+/,
+                message: "Hãy nhập đúng định dạng email",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
           <Form.Item
             label="Địa chỉ"

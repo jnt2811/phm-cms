@@ -5,14 +5,14 @@ import {
   doGetAllVolunteers,
   doneVolunteer,
   doSwitchCollabVolunteer,
-  doUpdatePassVolunteer,
+  doUpdateAuthVolunteer,
 } from "../slices/volunteerSlice";
 import {
   requestCreateVolunteer,
   requestEditVolunteer,
   requestGetAllVolunteers,
   requestSwitchCollabVolunteer,
-  requestUpdatePassVolunteer,
+  requestUpdateAuthVolunteer,
 } from "../requests/volunteerRequest";
 import { failMessages, successMessages } from "../../constances/messages";
 
@@ -20,7 +20,7 @@ export function* watchDoVolunteer() {
   yield takeLatest(doGetAllVolunteers.type, handleGetAllVolunteers);
   yield takeLatest(doCreateVolunteer.type, handleCreateVolunteer);
   yield takeLatest(doEditVolunteer.type, handleEditVolunteer);
-  yield takeLatest(doUpdatePassVolunteer.type, handlePasswordVolunteer);
+  yield takeLatest(doUpdateAuthVolunteer.type, handleAuthVolunteer);
   yield takeLatest(doSwitchCollabVolunteer.type, handleCollabVolunteer);
 }
 
@@ -132,10 +132,10 @@ export function* handleEditVolunteer(action) {
   }
 }
 
-export function* handlePasswordVolunteer(action) {
+export function* handleAuthVolunteer(action) {
   try {
     const responsePass = yield call(() =>
-      requestUpdatePassVolunteer(action.payload)
+      requestUpdateAuthVolunteer(action.payload)
     );
 
     const { status } = responsePass.data;
@@ -146,7 +146,7 @@ export function* handlePasswordVolunteer(action) {
       yield put(
         doneVolunteer({
           isOk: true,
-          message: successMessages.UPDATE_PASSWORD_VOLUNTEER,
+          message: successMessages.UPDATE_AUTH_VOLUNTEER,
           volunteerList: responseGetAll.data.data,
         })
       );
@@ -154,7 +154,7 @@ export function* handlePasswordVolunteer(action) {
       yield put(
         doneVolunteer({
           isOk: false,
-          message: failMessages.UPDATE_PASSWORD_VOLUNTEER,
+          message: failMessages.UPDATE_AUTH_VOLUNTEER,
         })
       );
     }
@@ -171,8 +171,6 @@ export function* handlePasswordVolunteer(action) {
 }
 
 export function* handleCollabVolunteer(action) {
-  console.log(action.payload);
-
   try {
     const responseCollab = yield call(() =>
       requestSwitchCollabVolunteer(action.payload)

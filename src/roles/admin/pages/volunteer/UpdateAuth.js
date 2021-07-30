@@ -1,22 +1,24 @@
-import { Col, Input, notification, Row, Form } from "antd";
+import { Input, notification, Form, Radio } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
 import { failMessages, successMessages } from "../../../../constances/messages";
-import { doUpdatePassVolunteer } from "../../../../ducks/slices/volunteerSlice";
+import { doUpdateAuthVolunteer } from "../../../../ducks/slices/volunteerSlice";
 
-const UpdatePassword = ({ volunteer, visible, setVisible }) => {
+const UpdateAuth = ({ volunteer, visible, setVisible }) => {
   const volunteerReducer = useSelector((state) => state.volunteer);
   const dispatch = useDispatch();
 
   const [form] = useForm();
 
+  const [isPhoneSelected, setIsPhoneSelected] = useState(true);
+
   useEffect(() => {
     const { isOk, message } = volunteerReducer;
 
-    const successMessage = successMessages.UPDATE_PASSWORD_VOLUNTEER;
-    const failMessage = failMessages.UPDATE_PASSWORD_VOLUNTEER;
+    const successMessage = successMessages.UPDATE_AUTH_VOLUNTEER;
+    const failMessage = failMessages.UPDATE_AUTH_VOLUNTEER;
 
     if (isOk === true && message === successMessage) {
       notification.success({ message: successMessage });
@@ -38,39 +40,74 @@ const UpdatePassword = ({ volunteer, visible, setVisible }) => {
   };
 
   const onFinish = (values) => {
-    if (values.password !== values.retype) {
-      form.setFields([
-        { name: "retype", errors: ["Mật khẩu gõ lại không khớp"] },
-      ]);
+    let requestData = {
+      id: volunteer.id,
+    };
+
+    if (!isPhoneSelected) {
+      if (values.password !== values.retype) {
+        form.setFields([
+          { name: "retype", errors: ["Mật khẩu gõ lại không khớp"] },
+        ]);
+      } else {
+        requestData.password = values.password;
+        dispatch(doUpdateAuthVolunteer(requestData));
+        notification.open({ message: "Đang xử lý..." });
+      }
     } else {
-      const requestData = {
-        id: volunteer.id,
-        password: values.password,
-      };
-      dispatch(doUpdatePassVolunteer(requestData));
+      requestData.phone = values.phone;
+      dispatch(doUpdateAuthVolunteer(requestData));
       notification.open({ message: "Đang xử lý..." });
     }
   };
 
   return (
-    <div className="update-password-volunteer">
+    <div className="update-auth-volunteer">
       <FormModal
         visible={visible}
         onOk={onOk}
         onCancel={onCancel}
-        okText="Tạo mới"
-        cancelText="Hủy bỏ"
-        width={800}
+        okText="Cập nhật"
+        cancelText="Quay lại"
+        // width={800}
       >
-        <h1>Đổi mật khẩu</h1>
+        <h1>Cập nhật xác thực</h1>
 
         <h3>Tình nguyện viên: {volunteer && volunteer.name}</h3>
 
         <br />
 
+        <Radio.Group
+          onChange={(e) => setIsPhoneSelected(e.target.value)}
+          value={isPhoneSelected}
+        >
+          <Radio value={true}>Số điện thoại</Radio>
+          <Radio value={false}>Mật khẩu</Radio>
+        </Radio.Group>
+
+        <br />
+        <br />
+
         <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Row gutter={{ lg: 20 }}>
-            <Col lg={12}>
+          {isPhoneSelected ? (
+            <Form.Item
+              label="Số điện thoại mới"
+              name="phone"
+              rules={[
+                {
+                  required: "true",
+                  message: "Hãy điền số điện thoại mới",
+                },
+                {
+                  pattern: /^[0]?[35789]\d{8}$/,
+                  message: "Hãy nhập đúng định dạng số điện thoại",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          ) : (
+            <>
               <Form.Item
                 label="Mật khẩu mới"
                 name="password"
@@ -83,9 +120,7 @@ const UpdatePassword = ({ volunteer, visible, setVisible }) => {
               >
                 <Input.Password className="input-password" />
               </Form.Item>
-            </Col>
 
-            <Col lg={12}>
               <Form.Item
                 label="Nhập lại mật khẩu mới"
                 name="retype"
@@ -98,12 +133,12 @@ const UpdatePassword = ({ volunteer, visible, setVisible }) => {
               >
                 <Input.Password className="input-password" />
               </Form.Item>
-            </Col>
-          </Row>
+            </>
+          )}
         </Form>
       </FormModal>
     </div>
   );
 };
 
-export default UpdatePassword;
+export default UpdateAuth;

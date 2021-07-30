@@ -1,17 +1,19 @@
 import { Col, Input, notification, Row, Select, Form } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
-import { sexKeys } from "../../../../constances/data";
 import { failMessages, successMessages } from "../../../../constances/messages";
 import { doCreateVolunteer } from "../../../../ducks/slices/volunteerSlice";
+import { validateDate } from "../../../../utils";
 
 const NewVolunteer = ({ visible, setVisible }) => {
   const volunteerReducer = useSelector((state) => state.volunteer);
   const dispatch = useDispatch();
 
   const [form] = useForm();
+
+  const [oldInputDob, setOldInputDob] = useState();
 
   useEffect(() => {
     const { isOk, message } = volunteerReducer;
@@ -39,8 +41,23 @@ const NewVolunteer = ({ visible, setVisible }) => {
   };
 
   const onFinish = (values) => {
-    dispatch(doCreateVolunteer(values));
-    notification.open({ message: "Đang xử lý..." });
+    if (!validateDate(values.dob)) {
+      form.setFields([{ name: "dob", errors: ["Ngày sinh không hợp lệ"] }]);
+    } else {
+      dispatch(doCreateVolunteer(values));
+      notification.open({ message: "Đang xử lý..." });
+    }
+  };
+
+  const handleInputDob = (e) => {
+    const { value } = e.target;
+    setOldInputDob(value);
+    if (
+      (value.length === 2 || value.length === 5) &&
+      value.length > oldInputDob.length
+    ) {
+      form.setFieldsValue({ dob: value + "/" });
+    }
   };
 
   return (
@@ -71,9 +88,19 @@ const NewVolunteer = ({ visible, setVisible }) => {
               <Form.Item
                 label="Ngày sinh"
                 name="dob"
-                rules={[{ required: true, message: "Hãy điền ngày sinh" }]}
+                rules={[
+                  { required: true, message: "Hãy điền ngày sinh" },
+                  {
+                    pattern: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/,
+                    message: "Hãy nhập đúng định dạng ngày sinh",
+                  },
+                ]}
               >
-                <Input />
+                <Input
+                  onChange={handleInputDob}
+                  placeholder="DD/MM/YYYY"
+                  maxLength={10}
+                />
               </Form.Item>
             </Col>
 
@@ -84,9 +111,9 @@ const NewVolunteer = ({ visible, setVisible }) => {
                 rules={[{ required: true, message: "Hãy chọn giới tính" }]}
               >
                 <Select className="select">
-                  <Select.Option value={sexKeys.MALE}>Nam</Select.Option>
-                  <Select.Option value={sexKeys.FEMALE}>Nữ</Select.Option>
-                  <Select.Option value={sexKeys.OTHER}>Khác</Select.Option>
+                  <Select.Option value={"Nam"}>Nam</Select.Option>
+                  <Select.Option value={"Nữ"}>Nữ</Select.Option>
+                  <Select.Option value={"Khác"}>Khác</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
