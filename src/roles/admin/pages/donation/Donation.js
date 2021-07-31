@@ -2,7 +2,6 @@ import { Button, Col, Form, Input, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DonationTable from "./DonationTable";
-import NewDonation from "./newDonation/NewDonation";
 import {
   doGetAllDonations,
   resetDonation,
@@ -23,7 +22,6 @@ const Donation = () => {
 
   const [donations, setDonations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [visibleNewModal, setVisibleNewModal] = useState(false);
   const [searchVal, setSearchVal] = useState("");
   const [oldInputDateFrom, setOldInputDateFrom] = useState();
   const [oldInputDateTo, setOldInputDateTo] = useState();

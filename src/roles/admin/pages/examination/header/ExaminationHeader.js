@@ -1,10 +1,8 @@
 import { Button, Col, Row } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import pathNames from "../../../../../router/pathNames";
-import { FormModal } from "../../../../../commons/commonModal/CommonModal";
 import { useState } from "react";
-import { useForm } from "antd/lib/form/Form";
-import NewAppointmentForm from "./NewAppointmentForm";
+import NewAppointment from "./NewAppointment";
 
 const ExaminationHeader = ({ location }) => {
   const { pathname } = location;
@@ -13,28 +11,6 @@ const ExaminationHeader = ({ location }) => {
   const isAtHistory = pathname === pathNames.ADMIN_HISTORY;
 
   const [visibleModal, setVisibleModal] = useState();
-  const [validSuccess, setValidSuccess] = useState(false);
-
-  const [form] = useForm();
-
-  const onNewAppointment = () => {
-    setValidSuccess(false);
-    setVisibleModal(true);
-  };
-
-  const onOkNewAppointment = () => {
-    form.submit();
-    if (validSuccess) {
-      console.log(form.getFieldsValue());
-      form.resetFields();
-      setVisibleModal(false);
-    }
-  };
-
-  const onCancelNewAppointment = () => {
-    form.resetFields();
-    setVisibleModal(false);
-  };
 
   return (
     <div className="examination-header">
@@ -44,7 +20,9 @@ const ExaminationHeader = ({ location }) => {
         </Col>
 
         <Col>
-          <Button onClick={onNewAppointment}>Tạo mới lịch hẹn</Button>
+          <Button onClick={() => setVisibleModal(true)}>
+            Tạo mới lịch hẹn
+          </Button>
         </Col>
       </Row>
 
@@ -69,22 +47,10 @@ const ExaminationHeader = ({ location }) => {
         </Col>
       </Row>
 
-      <FormModal
-        visible={visibleModal}
-        onOk={onOkNewAppointment}
-        onCancel={onCancelNewAppointment}
-        cancelText="Hủy bỏ"
-        okText="Tạo mới"
-      >
-        <h1>Tạo mới lịch hẹn</h1>
+      <br />
+      <br />
 
-        <br />
-
-        <NewAppointmentForm
-          form={form}
-          setValidSuccess={() => setValidSuccess(true)}
-        />
-      </FormModal>
+      <NewAppointment visible={visibleModal} setVisible={setVisibleModal} />
     </div>
   );
 };

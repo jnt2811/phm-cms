@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Col, Divider, Image, List, Row } from "antd";
+import { Button, Col, Divider, Image, Row } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import { useState } from "react";
 import { useEffect } from "react";

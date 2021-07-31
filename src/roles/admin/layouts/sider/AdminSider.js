@@ -28,7 +28,8 @@ const AdminSider = ({ location }) => {
   const isAtClinic = pathname === pathNames.ADMIN_CLINIC;
   const isAtExamination =
     pathname === pathNames.ADMIN_APPOINTMENT ||
-    pathname === pathNames.ADMIN_HISTORY;
+    pathname === pathNames.ADMIN_HISTORY ||
+    pathname === pathNames.ADMIN_NEW_APPOINTMENT;
   const isAtChat = pathname === pathNames.ADMIN_CHAT;
   const isAtAccount = pathname === pathNames.ADMIN_ACCOUNT;
 

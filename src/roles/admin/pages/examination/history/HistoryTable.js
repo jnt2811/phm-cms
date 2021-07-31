@@ -1,5 +1,5 @@
 import { Button, Col, Row, Table } from "antd";
-import { InfoCircleFilled } from "@ant-design/icons";
+import { InfoOutlined } from "@ant-design/icons";
 
 const HistoryTable = ({ dataSource, onInfoHistory }) => {
   const columns = [
@@ -28,8 +28,8 @@ const HistoryTable = ({ dataSource, onInfoHistory }) => {
         <Row gutter={{ lg: 10 }}>
           <Col>
             <Button
-              className="info-btn"
-              icon={<InfoCircleFilled />}
+              className="blue-btn"
+              icon={<InfoOutlined />}
               onClick={() => onInfoHistory(history)}
             ></Button>
           </Col>
