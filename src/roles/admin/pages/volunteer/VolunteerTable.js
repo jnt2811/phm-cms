@@ -53,7 +53,7 @@ const VolunteerTable = ({
         <Row gutter={{ lg: 10 }}>
           <Col>
             <Button
-              className="info-btn"
+              className="blue-btn"
               icon={<InfoOutlined />}
               onClick={() => onViewVolunteer(record)}
             ></Button>
@@ -61,7 +61,7 @@ const VolunteerTable = ({
 
           <Col>
             <Button
-              className="edit-btn"
+              className="green-btn"
               icon={<EditOutlined />}
               disabled={!collab}
               onClick={() => onEditVolunteer(record)}
@@ -70,7 +70,6 @@ const VolunteerTable = ({
 
           <Col>
             <Button
-              className="collab-btn"
               icon={<SyncOutlined />}
               onClick={() => onSwitchCollab(record)}
             ></Button>
@@ -78,7 +77,7 @@ const VolunteerTable = ({
 
           <Col>
             <Button
-              className="password-btn"
+              className="red-btn"
               icon={<UnlockOutlined />}
               disabled={!collab}
               onClick={() => onUpdatePassword(record)}

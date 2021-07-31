@@ -11,6 +11,7 @@ const petSlice = createSlice({
   initialState: initState,
   reducers: {
     doGetAllPets() {},
+    doGetAPet() {},
     doCreatePet() {},
 
     donePet(state, action) {
@@ -26,7 +27,7 @@ const petSlice = createSlice({
   },
 });
 
-export const { doCreatePet, doGetAllPets, donePet, resetPet } =
+export const { doCreatePet, doGetAllPets, donePet, resetPet, doGetAPet } =
   petSlice.actions;
 
 export default petSlice.reducer;

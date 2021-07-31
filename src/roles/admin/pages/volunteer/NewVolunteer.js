@@ -31,10 +31,6 @@ const NewVolunteer = ({ visible, setVisible }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volunteerReducer]);
 
-  const onOk = () => {
-    form.submit();
-  };
-
   const onCancel = () => {
     setVisible(false);
     form.resetFields();
@@ -64,7 +60,7 @@ const NewVolunteer = ({ visible, setVisible }) => {
     <div className="new-volunteer">
       <FormModal
         visible={visible}
-        onOk={onOk}
+        onOk={() => form.submit()}
         onCancel={onCancel}
         okText="Tạo mới"
         cancelText="Hủy bỏ"

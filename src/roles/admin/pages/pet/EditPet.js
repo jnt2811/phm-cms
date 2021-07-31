@@ -1,25 +1,31 @@
 import { Col, Form, Input, Row, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
 import UploadAvatar from "../../../../commons/uploadImage/UploadAvatar";
 import { petKeys } from "../../../../constances/data";
+import { isEmptyData } from "../../../../utils";
 
-const NewPet = ({ visible, setVisible }) => {
+const EditPet = ({ pet, visible, setVisible }) => {
   const [form] = useForm();
 
-  const [avatarUrl, setAvatarUrl] = useState();
+  const [avatarUrl, setAvatarUrl] = useState(
+    !isEmptyData(pet) ? pet.avatar : null
+  );
   const [isUploading, setIsUploading] = useState(false);
 
-  const onOk = () => {
-    form.submit();
-  };
-
-  const onCancel = () => {
-    form.resetFields();
-    setAvatarUrl();
-    setVisible(false);
-  };
+  useEffect(() => {
+    if (!isEmptyData(pet)) {
+      form.setFieldsValue({
+        name: pet.name,
+        type: pet.type,
+        color: pet.color,
+        location: pet.location,
+        description: pet.description,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   const onFinish = (values) => {
     console.log({ ...values, avatar: avatarUrl });
@@ -34,11 +40,11 @@ const NewPet = ({ visible, setVisible }) => {
         visible={visible}
         okText="Tạo mới"
         cancelText="Hủy bỏ"
-        onOk={onOk}
-        onCancel={onCancel}
+        onOk={() => form.submit()}
+        onCancel={() => setVisible(false)}
         width={800}
       >
-        <h1>Tạo mới chó mèo</h1>
+        <h1>Chỉnh sửa chó mèo</h1>
 
         <br />
 
@@ -113,4 +119,4 @@ const NewPet = ({ visible, setVisible }) => {
   );
 };
 
-export default NewPet;
+export default EditPet;

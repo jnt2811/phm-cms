@@ -94,6 +94,10 @@ table {
 .ant-input-affix-wrapper > input.ant-input {
   height: 38px !important;
 }
+.ant-form-item .ant-mentions,
+.ant-form-item textarea.ant-input {
+  border-radius: 10px;
+}
 .container {
   padding: 25px 50px;
 }
@@ -101,17 +105,17 @@ table {
   button {
     height: 30px !important;
   }
-  .info-btn {
+  .blue-btn {
     background-color: #4b99d8 !important;
   }
-  .edit-btn {
+  .green-btn {
     background-color: $green !important;
 
     &:disabled {
       background-color: #00000010 !important;
     }
   }
-  .password-btn {
+  .red-btn {
     background-color: $red !important;
 
     &:disabled {
@@ -165,5 +169,84 @@ table {
       color: $orange500 !important;
       box-shadow: none;
     }
+  }
+}
+.avatar-upload {
+  position: relative;
+
+  .delete-upload-icon {
+    background-color: $red;
+    color: white;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    z-index: 99999;
+  }
+
+  img {
+    width: 102px;
+    height: 102px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hover-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: #00000050;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0.2s, opacity 0.2s linear;
+
+    .hover-icon {
+      color: white;
+      font-size: 20px;
+    }
+  }
+
+  .loading-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: #00000050;
+
+    .loading-icon {
+      color: white;
+      font-size: 20px;
+    }
+  }
+
+  &:hover {
+    .hover-layer {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+.back-btn {
+  background-color: #fff !important;
+  color: $orange500 !important;
+  width: 40px !important;
+  border-radius: 50px !important;
+  box-shadow: 0 0 10px #00000005 !important;
+
+  &:hover {
+    background-color: #fff !important;
+    color: $orange500 !important;
+    box-shadow: 0 0 10px #00000020 !important;
   }
 }

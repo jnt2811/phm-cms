@@ -1,11 +1,21 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { requestCreatePet, requestGetAllPets } from "../requests/petRequest";
-import { doCreatePet, doGetAllPets, donePet } from "../slices/petSlice";
+import {
+  requestCreatePet,
+  requestGetAllPets,
+  requestGetAPet,
+} from "../requests/petRequest";
+import {
+  doCreatePet,
+  doGetAllPets,
+  doGetAPet,
+  donePet,
+} from "../slices/petSlice";
 import { failMessages, successMessages } from "../../constances/messages";
 
 export function* watchDoPet() {
   yield takeLatest(doGetAllPets.type, handleGetAllPets);
   yield takeLatest(doCreatePet.type, handleCreatePet);
+  yield takeLatest(doGetAPet.type, handleGetAPet);
 }
 
 export function* handleGetAllPets(action) {
@@ -27,6 +37,40 @@ export function* handleGetAllPets(action) {
         donePet({
           isOk: false,
           message: failMessages.GET_ALL_PETS,
+        })
+      );
+    }
+  } catch (error) {
+    console.log("Error: " + JSON.stringify(error));
+
+    yield put(
+      donePet({
+        isOk: false,
+        message: JSON.stringify(error),
+      })
+    );
+  }
+}
+
+export function* handleGetAPet(action) {
+  try {
+    const response = yield call(() => requestGetAPet(action.payload));
+
+    const { status } = response.data;
+
+    if (status === "OK") {
+      yield put(
+        donePet({
+          isOk: true,
+          message: successMessages.GET_A_PET,
+          petList: [response.data.data],
+        })
+      );
+    } else {
+      yield put(
+        donePet({
+          isOk: false,
+          message: failMessages.GET_A_PET,
         })
       );
     }

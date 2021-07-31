@@ -13,6 +13,7 @@ import Chat from "./pages/chat/Chat";
 import Account from "./pages/account/Account";
 import NotFound from "../../pages/NotFound";
 import NewDonation from "./pages/donation/newDonation/NewDonation";
+import ViewPet from "./pages/pet/ViewPet";
 
 const Admin = () => {
   return (
@@ -48,6 +49,7 @@ const Admin = () => {
                 component={NewDonation}
               />
               <Route exact path={pathNames.ADMIN_PET} component={Pet} />
+              <Route path={pathNames.ADMIN_VIEW_PET_wId} component={ViewPet} />
               <Route exact path={pathNames.ADMIN_CLINIC} component={Clinic} />
               <Route
                 exact
