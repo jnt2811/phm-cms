@@ -2,10 +2,12 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import {
   requestCreateDonation,
   requestGetAllDonations,
+  requestGetAllDonators,
 } from "../requests/donationRequest";
 import {
   doCreateDonation,
   doGetAllDonations,
+  doGetAllDonators,
   doneDonation,
 } from "../slices/donationSlice";
 import { failMessages, successMessages } from "../../constances/messages";
@@ -13,6 +15,7 @@ import { failMessages, successMessages } from "../../constances/messages";
 export function* watchDoDonation() {
   yield takeLatest(doGetAllDonations.type, handleGetAllDonations);
   yield takeLatest(doCreateDonation.type, handleCreateDonation);
+  yield takeLatest(doGetAllDonators.type, handleGetAllDonators);
 }
 
 export function* handleGetAllDonations(action) {
@@ -72,6 +75,40 @@ export function* handleCreateDonation(action) {
         doneDonation({
           isOk: false,
           message: failMessages.CREATE_NEW_DONATION,
+        })
+      );
+    }
+  } catch (error) {
+    console.log("Error: " + JSON.stringify(error));
+
+    yield put(
+      doneDonation({
+        isOk: false,
+        message: JSON.stringify(error),
+      })
+    );
+  }
+}
+
+export function* handleGetAllDonators(action) {
+  try {
+    const response = yield call(() => requestGetAllDonators());
+
+    const { status } = response.data;
+
+    if (status === "OK") {
+      yield put(
+        doneDonation({
+          isOk: true,
+          message: successMessages.GET_ALL_DONATORS,
+          donatorList: response.data.data,
+        })
+      );
+    } else {
+      yield put(
+        doneDonation({
+          isOk: false,
+          message: failMessages.GET_ALL_DONATORS,
         })
       );
     }

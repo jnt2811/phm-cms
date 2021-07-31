@@ -1,0 +1,34 @@
+@import "../../../../../style/colors.scss";
+
+.new-donation {
+  .back-btn {
+    background-color: #fff !important;
+    color: $orange500 !important;
+    width: 40px;
+    border-radius: 50px !important;
+    box-shadow: 0 0 10px #00000005;
+
+    &:hover {
+      box-shadow: 0 0 10px #00000020;
+    }
+  }
+
+  .donator-btns {
+    width: fit-content;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+
+    button {
+      width: 150px;
+      background-color: #fff !important;
+      color: $orange500 !important;
+      border: 1px solid $orange500 !important;
+
+      &.active {
+        background-color: $orange500 !important;
+        color: #fff !important;
+      }
+    }
+  }
+}

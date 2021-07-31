@@ -8,3 +8,7 @@ export const requestGetAllDonations = () => {
 export const requestCreateDonation = (requestData) => {
   return httpRequestPost(apis.DONATION, requestData);
 };
+
+export const requestGetAllDonators = () => {
+  return httpRequestGet(apis.DONATOR);
+};

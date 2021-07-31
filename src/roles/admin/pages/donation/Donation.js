@@ -2,7 +2,7 @@ import { Button, Col, Form, Input, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DonationTable from "./DonationTable";
-import NewDonation from "./NewDonation";
+import NewDonation from "./newDonation/NewDonation";
 import {
   doGetAllDonations,
   resetDonation,
@@ -10,10 +10,14 @@ import {
 import { useForm } from "antd/lib/form/Form";
 import moment from "moment";
 import { isEmptyData, validateDate } from "../../../../utils";
+import { useHistory } from "react-router-dom";
+import pathNames from "../../../../router/pathNames";
 
 const Donation = () => {
   const donationReducer = useSelector((state) => state.donation);
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const [form] = useForm();
 
@@ -45,10 +49,6 @@ const Donation = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donationReducer]);
-
-  const onNewDonation = () => {
-    setVisibleNewModal(true);
-  };
 
   const onSearchDonation = () => {
     console.log(searchVal);
@@ -151,7 +151,9 @@ const Donation = () => {
         </Col>
 
         <Col>
-          <Button onClick={onNewDonation}>Tạo mới</Button>
+          <Button onClick={() => history.push(pathNames.ADMIN_NEW_DONATION)}>
+            Tạo mới
+          </Button>
         </Col>
       </Row>
 
@@ -239,7 +241,7 @@ const Donation = () => {
         />
       </div>
 
-      <NewDonation visible={visibleNewModal} setVisible={setVisibleNewModal} />
+      {/* <NewDonation visible={visibleNewModal} setVisible={setVisibleNewModal} /> */}
     </div>
   );
 };

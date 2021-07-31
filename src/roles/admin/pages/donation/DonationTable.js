@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import { formatPrice } from "../../../../utils";
+import { formatPhone, formatPrice } from "../../../../utils";
 import moment from "moment";
 
 const DonationTable = ({ dataSource, loading }) => {
@@ -13,6 +13,7 @@ const DonationTable = ({ dataSource, loading }) => {
       title: "Số điện thoại",
       dataIndex: "phone",
       key: "phone",
+      render: (phone) => formatPhone(phone),
     },
     {
       title: "Ngày quyên góp",

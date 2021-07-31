@@ -13,6 +13,7 @@ const pathNames = {
   ADMIN_VOLUNTEER: admin + "/volunteer",
   ADMIN_SCHEDULE: admin + "/schedule",
   ADMIN_DONATION: admin + "/donation",
+  ADMIN_NEW_DONATION: admin + "/new-donation",
   ADMIN_PET: admin + "/pet",
   ADMIN_CLINIC: admin + "/clinic",
   ADMIN_APPOINTMENT: admin + "/examination/appointment",

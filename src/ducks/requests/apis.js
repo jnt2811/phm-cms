@@ -5,6 +5,7 @@ const apis = {
   VOLUNTEER: apiUrl + "/volunteer",
   PET: apiUrl + "/pet",
   DONATION: apiUrl + "/donation",
+  DONATOR: apiUrl + "/donation/donator",
   CLINIC: apiUrl + "/clinic",
   APPOINTMENT: apiUrl + "/appointment",
 };

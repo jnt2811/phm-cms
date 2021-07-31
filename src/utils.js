@@ -50,14 +50,18 @@ export const validateDate = (dob) => {
 };
 
 export const formatPhone = (phone) => {
-  let tempVal = "";
+  if (!isEmptyData(phone)) {
+    let tempVal = "";
 
-  for (let i = 0; i < phone.length; i++) {
-    tempVal += phone.charAt(i);
-    if (i === 3 || i === 6) tempVal += " ";
+    for (let i = 0; i < phone.length; i++) {
+      tempVal += phone.charAt(i);
+      if (i === 3 || i === 6) tempVal += " ";
+    }
+
+    return tempVal;
   }
 
-  return tempVal;
+  return phone;
 };
 
 export const isEmptyData = (data) => {

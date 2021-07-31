@@ -4,6 +4,7 @@ const initState = {
   isOk: undefined,
   message: undefined,
   donationList: undefined,
+  donatorList: undefined,
 };
 
 const donationSlice = createSlice({
@@ -11,6 +12,7 @@ const donationSlice = createSlice({
   initialState: initState,
   reducers: {
     doGetAllDonations() {},
+    doGetAllDonators() {},
     doCreateDonation() {},
 
     doneDonation(state, action) {
@@ -31,6 +33,7 @@ export const {
   doGetAllDonations,
   doneDonation,
   resetDonation,
+  doGetAllDonators,
 } = donationSlice.actions;
 
 export default donationSlice.reducer;

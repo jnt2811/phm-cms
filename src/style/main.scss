@@ -78,6 +78,10 @@ table {
   .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
     background: $orange200;
   }
+
+  .ant-table-tbody > tr.ant-table-row-selected > td {
+    background: $orange200;
+  }
 }
 
 //common class

@@ -12,6 +12,7 @@ import { Appointment, History } from "./pages/examination";
 import Chat from "./pages/chat/Chat";
 import Account from "./pages/account/Account";
 import NotFound from "../../pages/NotFound";
+import NewDonation from "./pages/donation/newDonation/NewDonation";
 
 const Admin = () => {
   return (
@@ -40,6 +41,11 @@ const Admin = () => {
                 exact
                 path={pathNames.ADMIN_DONATION}
                 component={Donation}
+              />
+              <Route
+                exact
+                path={pathNames.ADMIN_NEW_DONATION}
+                component={NewDonation}
               />
               <Route exact path={pathNames.ADMIN_PET} component={Pet} />
               <Route exact path={pathNames.ADMIN_CLINIC} component={Clinic} />

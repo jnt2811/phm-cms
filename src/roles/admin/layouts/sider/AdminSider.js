@@ -18,7 +18,9 @@ const AdminSider = ({ location }) => {
 
   const isAtDashboard = pathname === pathNames.ADMIN;
   const isAtVolunteer = pathname === pathNames.ADMIN_VOLUNTEER;
-  const isAtDonation = pathname === pathNames.ADMIN_DONATION;
+  const isAtDonation =
+    pathname === pathNames.ADMIN_DONATION ||
+    pathname === pathNames.ADMIN_NEW_DONATION;
   const isAtPet = pathname === pathNames.ADMIN_PET;
   const isAtClinic = pathname === pathNames.ADMIN_CLINIC;
   const isAtExamination =
