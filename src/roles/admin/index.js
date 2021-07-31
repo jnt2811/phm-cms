@@ -8,7 +8,7 @@ import Volunteer from "./pages/volunteer/Volunteer";
 import Donation from "./pages/donation/Donation";
 import Pet from "./pages/pet/Pet";
 import Clinic from "./pages/clinic/Clinic";
-import { Appointment, History } from "./pages/examination";
+import { Appointment, Report } from "./pages/examination";
 import Chat from "./pages/chat/Chat";
 import Account from "./pages/account/Account";
 import NotFound from "../../pages/NotFound";
@@ -56,7 +56,7 @@ const Admin = () => {
                 path={pathNames.ADMIN_APPOINTMENT}
                 component={Appointment}
               />
-              <Route exact path={pathNames.ADMIN_HISTORY} component={History} />
+              <Route exact path={pathNames.ADMIN_REPORT} component={Report} />
               <Route exact path={pathNames.ADMIN_CHAT} component={Chat} />
               <Route exact path={pathNames.ADMIN_ACCOUNT} component={Account} />
 

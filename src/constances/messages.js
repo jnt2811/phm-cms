@@ -15,7 +15,12 @@ export const successMessages = {
   CREATE_NEW_CLINIC: "Tạo mới phòng khám thành công",
   EDIT_NEW_CLINIC: "Cập nhật thông tin phòng khám thành công",
   SWITCH_COLLAB_CLINIC: "Cập nhật trạng thái phòng khám thành công",
-  UPDATE_PASSWORD_CLINIC: "Cập nhật mật khẩu phòng khám thành công",
+  UPDATE_AUTH_CLINIC: "Cập nhật xác thực phòng khám thành công",
+  GET_ALL_APPOINTMENTS: "Cập nhật danh sách lịch hẹn thành công",
+  CREATE_NEW_APPOINTMENT: "Tạo mới lịch hẹn thành công",
+  DELETE_APPOINTMENT: "Xóa lịch hẹn thành công",
+  GET_ALL_REPORTS: "Cập nhật danh sách báo cáo sức khỏe thành công",
+  CREATE_NEW_REPORT: "Tạo mới báo cáo sức khỏe thành công",
 };
 
 export const failMessages = {
@@ -34,5 +39,10 @@ export const failMessages = {
   CREATE_NEW_CLINIC: "Tạo mới phòng khám thất bại",
   EDIT_NEW_CLINIC: "Cập nhật thông tin phòng khám thất bại",
   SWITCH_COLLAB_CLINIC: "Cập nhật trạng thái phòng khám thất bại",
-  UPDATE_PASSWORD_CLINIC: "Cập nhật mật khẩu phòng khám thất bại",
+  UPDATE_AUTH_CLINIC: "Cập nhật xác thực phòng khám thất bại",
+  GET_ALL_APPOINTMENTS: "Cập nhật danh sách lịch hẹn thất bại",
+  CREATE_NEW_APPOINTMENT: "Tạo mới lịch hẹn thất bại",
+  DELETE_APPOINTMENT: "Xóa lịch hẹn thất bại",
+  GET_ALL_REPORTS: "Cập nhật danh sách báo cáo sức khỏe thất bại",
+  CREATE_NEW_REPORT: "Tạo mới báo cáo sức khỏe thất bại",
 };

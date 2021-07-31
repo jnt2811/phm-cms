@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { doGetAPet, resetPet } from "../../../../ducks/slices/petSlice";
+import { doGetPet, resetPet } from "../../../../ducks/slices/petSlice";
 import pathNames from "../../../../router/pathNames";
 import "./viewPet.scss";
 import moment from "moment";
@@ -32,7 +32,7 @@ const ViewPet = () => {
   });
 
   useEffect(() => {
-    dispatch(doGetAPet(id));
+    dispatch(doGetPet(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

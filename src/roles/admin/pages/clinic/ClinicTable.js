@@ -1,10 +1,16 @@
-import { EditOutlined, SyncOutlined, UnlockOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  InfoOutlined,
+  SyncOutlined,
+  UnlockOutlined,
+} from "@ant-design/icons";
 import { Button, Col, Row, Table } from "antd";
 import { GreenTag, RedTag } from "../../../../commons/commonTag/CommonTag";
 
 const ClinicTable = ({
   loading = false,
   dataSource,
+  onViewClinic,
   onEditClinic,
   onSwitchCollab,
   onUpdatePassword,
@@ -49,7 +55,15 @@ const ClinicTable = ({
         <Row gutter={{ lg: 10 }}>
           <Col>
             <Button
-              className="edit-btn"
+              className="blue-btn"
+              icon={<InfoOutlined />}
+              onClick={() => onViewClinic(record)}
+            ></Button>
+          </Col>
+
+          <Col>
+            <Button
+              className="green-btn"
               icon={<EditOutlined />}
               disabled={!collab}
               onClick={() => onEditClinic(record)}
@@ -58,7 +72,6 @@ const ClinicTable = ({
 
           <Col>
             <Button
-              className="collab-btn"
               icon={<SyncOutlined />}
               onClick={() => onSwitchCollab(record)}
             ></Button>
@@ -66,7 +79,7 @@ const ClinicTable = ({
 
           <Col>
             <Button
-              className="password-btn"
+              className="red-btn"
               icon={<UnlockOutlined />}
               disabled={!collab}
               onClick={() => onUpdatePassword(record)}

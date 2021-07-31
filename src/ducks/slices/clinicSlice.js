@@ -13,7 +13,7 @@ const clinicSlice = createSlice({
     doGetAllClinics() {},
     doCreateClinic() {},
     doEditClinic() {},
-    doUpdatePassClinic() {},
+    doUpdateAuthClinic() {},
     doSwitchCollabClinic() {},
 
     doneClinic(state, action) {
@@ -33,7 +33,7 @@ export const {
   doGetAllClinics,
   doCreateClinic,
   doEditClinic,
-  doUpdatePassClinic,
+  doUpdateAuthClinic,
   doSwitchCollabClinic,
   doneClinic,
   resetClinic,

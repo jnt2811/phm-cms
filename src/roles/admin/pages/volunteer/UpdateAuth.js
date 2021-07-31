@@ -30,10 +30,6 @@ const UpdateAuth = ({ volunteer, visible, setVisible }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volunteerReducer]);
 
-  const onOk = () => {
-    form.submit();
-  };
-
   const onCancel = () => {
     setVisible(false);
     form.resetFields();
@@ -65,11 +61,10 @@ const UpdateAuth = ({ volunteer, visible, setVisible }) => {
     <div className="update-auth-volunteer">
       <FormModal
         visible={visible}
-        onOk={onOk}
+        onOk={() => form.submit()}
         onCancel={onCancel}
         okText="Cập nhật"
         cancelText="Quay lại"
-        // width={800}
       >
         <h1>Cập nhật xác thực</h1>
 

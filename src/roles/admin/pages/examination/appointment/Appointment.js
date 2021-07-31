@@ -1,30 +1,52 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import ExaminationHeader from "../header/ExaminationHeader";
-import { appointmentList } from "../../../../../constances/data";
 import AppointmentTable from "./AppointmentTable";
-import { FormModal } from "../../../../../commons/commonModal/CommonModal";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  doGetAllAppointments,
+  resetAppointment,
+} from "../../../../../ducks/slices/appointmentSlice";
+import DeleteAppointment from "./DeleteAppointment";
 
 const Appointment = () => {
-  const onCancelAppointment = (appointment) => {
+  const appointmentReducer = useSelector((state) => state.appointment);
+  const dispatch = useDispatch();
+
+  const onDeleteAppointment = (appointment) => {
     setVisibleModal(true);
     setSelectedAppointment(appointment);
-  };
-
-  const onOkModal = () => {
-    console.log(selectedAppointment);
-    setVisibleModal(false);
-    setSelectedAppointment();
-    // TODO
   };
 
   const [appointments, setAppointments] = useState([]);
   const [visibleModal, setVisibleModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setAppointments(appointmentList);
+    dispatch(doGetAllAppointments());
+    setIsLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const { isOk } = appointmentReducer;
+
+    if (isOk === true) {
+      const { appointmentList } = appointmentReducer;
+      setAppointments(
+        appointmentList.map((appointment) => ({
+          ...appointment,
+          key: appointment.id,
+        }))
+      );
+      setIsLoading(false);
+      dispatch(resetAppointment());
+    } else if (isOk === false) {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appointmentReducer]);
 
   return (
     <div className="appointment">
@@ -33,21 +55,16 @@ const Appointment = () => {
       <div className="table-container">
         <AppointmentTable
           dataSource={appointments}
-          onCancelAppointment={onCancelAppointment}
+          onDeleteAppointment={onDeleteAppointment}
+          loading={isLoading}
         />
       </div>
 
-      <FormModal
+      <DeleteAppointment
+        appointment={selectedAppointment}
         visible={visibleModal}
-        okText="Chắc chắn"
-        cancelText="Quay lại"
-        onCancel={() => setVisibleModal(false)}
-        onOk={onOkModal}
-      >
-        <p style={{ textAlign: "center", margin: "10px", fontSize: "18px" }}>
-          Bạn chắc chắn hủy lịch hẹn này chứ?
-        </p>
-      </FormModal>
+        setVisible={setVisibleModal}
+      />
     </div>
   );
 };

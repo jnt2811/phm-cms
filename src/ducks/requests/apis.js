@@ -8,6 +8,7 @@ const apis = {
   DONATOR: apiUrl + "/donation/donator",
   CLINIC: apiUrl + "/clinic",
   APPOINTMENT: apiUrl + "/appointment",
+  REPORT: apiUrl + "/report",
 };
 
 export default apis;

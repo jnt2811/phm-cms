@@ -1,36 +1,38 @@
 import { Button, Col, Row, Table } from "antd";
 import { InfoOutlined } from "@ant-design/icons";
+import moment from "moment";
 
-const HistoryTable = ({ dataSource, onInfoHistory }) => {
+const ReportTable = ({ loading, dataSource, onViewReport }) => {
   const columns = [
     {
       title: "Tên chó mèo",
       dataIndex: "pet",
       key: "pet",
-      render: (pet) => <>{pet.name}</>,
+      render: (pet) => <>{pet && pet.name}</>,
     },
     {
       title: "Tên phòng khám",
       dataIndex: "clinic",
       key: "clinic",
-      render: (clinic) => <>{clinic.name}</>,
+      render: (clinic) => <>{clinic && clinic.name}</>,
     },
     {
       title: "Thời gian hoàn thành",
-      dataIndex: "datetime",
-      key: "datetime",
+      dataIndex: "createAt",
+      key: "createAt",
+      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
     },
     {
       title: "",
       dataIndex: "id",
       key: "id",
-      render: (id, history) => (
+      render: (id, report) => (
         <Row gutter={{ lg: 10 }}>
           <Col>
             <Button
               className="blue-btn"
               icon={<InfoOutlined />}
-              onClick={() => onInfoHistory(history)}
+              onClick={() => onViewReport(report)}
             ></Button>
           </Col>
         </Row>
@@ -38,7 +40,14 @@ const HistoryTable = ({ dataSource, onInfoHistory }) => {
     },
   ];
 
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+  return (
+    <Table
+      loading={loading}
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+    />
+  );
 };
 
-export default HistoryTable;
+export default ReportTable;

@@ -1,4 +1,4 @@
-import { Col, Input, notification, Row, Form } from "antd";
+import { Input, notification, Form } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +23,8 @@ const EditClinic = ({ clinic, visible, setVisible }) => {
         address: clinic.address,
       });
     }
-  }, [form, clinic]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   useEffect(() => {
     const { isOk, message } = clinicReducer;
@@ -41,20 +42,12 @@ const EditClinic = ({ clinic, visible, setVisible }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clinicReducer]);
 
-  const onOk = () => {
-    form.submit();
-  };
-
-  const onCancel = () => {
-    setVisible(false);
-    form.resetFields();
-  };
-
   const onFinish = (values) => {
     const requestData = {
       ...values,
       id: clinic.id,
     };
+
     dispatch(doEditClinic(requestData));
     notification.open({ message: "Đang xử lý..." });
   };
@@ -63,11 +56,11 @@ const EditClinic = ({ clinic, visible, setVisible }) => {
     <div className="edit-clinic">
       <FormModal
         visible={visible}
-        onOk={onOk}
-        onCancel={onCancel}
+        onOk={() => form.submit()}
+        onCancel={() => setVisible(false)}
         okText="Lưu thay đổi"
         cancelText="Quay lại"
-        width={800}
+        width={600}
       >
         <h1>Chỉnh sửa phòng khám</h1>
 
@@ -82,9 +75,30 @@ const EditClinic = ({ clinic, visible, setVisible }) => {
             <Input />
           </Form.Item>
 
-          <Row gutter={{ lg: 20 }}>
-            <Col lg={12}>
-              <Form.Item
+          <Form.Item
+            label="Địa chỉ"
+            name="address"
+            rules={[{ required: true, message: "Hãy điền địa chỉ" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                pattern: /\S+@\S+\.\S+/,
+                message: "Hãy nhập đúng định dạng email",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </FormModal>
+
+      {/* <Form.Item
                 label="Số điện thoại"
                 name="phone"
                 rules={[
@@ -99,34 +113,7 @@ const EditClinic = ({ clinic, visible, setVisible }) => {
                 ]}
               >
                 <Input />
-              </Form.Item>
-            </Col>
-
-            <Col lg={12}>
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  {
-                    pattern: /\S+@\S+\.\S+/,
-                    message: "Hãy nhập đúng định dạng email",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Form.Item
-            label="Địa chỉ"
-            name="address"
-            rules={[{ required: true, message: "Hãy điền địa chỉ" }]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
-      </FormModal>
+              </Form.Item> */}
     </div>
   );
 };

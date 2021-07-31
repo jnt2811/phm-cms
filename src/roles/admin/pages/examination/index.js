@@ -1,5 +1,5 @@
 import Appointment from "./appointment/Appointment";
-import History from "./history/History";
+import Report from "./report/Report";
 import "./examination.scss";
 
-export { Appointment, History };
+export { Appointment, Report };

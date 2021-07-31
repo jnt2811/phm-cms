@@ -19,7 +19,7 @@ const pathNames = {
   ADMIN_VIEW_PET_nId: admin + "/pet/",
   ADMIN_CLINIC: admin + "/clinic",
   ADMIN_APPOINTMENT: admin + "/examination/appointment",
-  ADMIN_HISTORY: admin + "/examination/history",
+  ADMIN_REPORT: admin + "/examination/report",
   ADMIN_CHAT: admin + "/chat",
   ADMIN_ACCOUNT: admin + "/account",
 

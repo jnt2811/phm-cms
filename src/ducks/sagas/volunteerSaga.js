@@ -9,10 +9,8 @@ import {
 } from "../slices/volunteerSlice";
 import {
   requestCreateVolunteer,
-  requestEditVolunteer,
   requestGetAllVolunteers,
-  requestSwitchCollabVolunteer,
-  requestUpdateAuthVolunteer,
+  requestUpdateVolunteer,
 } from "../requests/volunteerRequest";
 import { failMessages, successMessages } from "../../constances/messages";
 
@@ -98,7 +96,9 @@ export function* handleCreateVolunteer(action) {
 
 export function* handleEditVolunteer(action) {
   try {
-    const responseEdit = yield call(() => requestEditVolunteer(action.payload));
+    const responseEdit = yield call(() =>
+      requestUpdateVolunteer(action.payload)
+    );
 
     const { status } = responseEdit.data;
 
@@ -135,7 +135,7 @@ export function* handleEditVolunteer(action) {
 export function* handleAuthVolunteer(action) {
   try {
     const responsePass = yield call(() =>
-      requestUpdateAuthVolunteer(action.payload)
+      requestUpdateVolunteer(action.payload)
     );
 
     const { status } = responsePass.data;
@@ -173,7 +173,7 @@ export function* handleAuthVolunteer(action) {
 export function* handleCollabVolunteer(action) {
   try {
     const responseCollab = yield call(() =>
-      requestSwitchCollabVolunteer(action.payload)
+      requestUpdateVolunteer(action.payload)
     );
 
     const { status } = responseCollab.data;

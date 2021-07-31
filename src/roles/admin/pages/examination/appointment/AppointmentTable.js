@@ -1,7 +1,8 @@
 import { Button, Col, Row, Table } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
+import moment from "moment";
 
-const AppointmentTable = ({ dataSource, onCancelAppointment }) => {
+const AppointmentTable = ({ loading, dataSource, onDeleteAppointment }) => {
   const columns = [
     {
       title: "Tên chó mèo",
@@ -17,8 +18,9 @@ const AppointmentTable = ({ dataSource, onCancelAppointment }) => {
     },
     {
       title: "Thời gian đặt khám",
-      dataIndex: "datetime",
-      key: "datetime",
+      dataIndex: "createAt",
+      key: "createAt",
+      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
     },
     {
       title: "Người đặt khám",
@@ -35,7 +37,7 @@ const AppointmentTable = ({ dataSource, onCancelAppointment }) => {
             <Button
               icon={<CloseOutlined />}
               className="cancel-btn"
-              onClick={() => onCancelAppointment(appointment)}
+              onClick={() => onDeleteAppointment(appointment)}
             ></Button>
           </Col>
         </Row>
@@ -43,7 +45,14 @@ const AppointmentTable = ({ dataSource, onCancelAppointment }) => {
     },
   ];
 
-  return <Table columns={columns} dataSource={dataSource} pagination={false} />;
+  return (
+    <Table
+      loading={loading}
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+    />
+  );
 };
 
 export default AppointmentTable;

@@ -10,6 +10,7 @@ import {
   petSlice,
   volunteerSlice,
 } from "./slices";
+import reportSlice from "./slices/reportSlice";
 
 const reducer = combineReducers({
   auth: authSlice,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   pet: petSlice,
   clinic: clinicSlice,
   appointment: appointmentSlice,
+  report: reportSlice,
 });
 
 const sagaMiddleware = createSagaMiddleware();

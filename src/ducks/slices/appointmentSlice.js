@@ -3,30 +3,36 @@ import { createSlice } from "@reduxjs/toolkit";
 const initState = {
   isOk: undefined,
   message: undefined,
-  examList: undefined,
+  appointmentList: undefined,
 };
 
 const examSlice = createSlice({
-  name: "exam",
+  name: "appointment",
   initialState: initState,
   reducers: {
-    doGetAllExams() {},
-    doCreateExam() {},
+    doGetAllAppointments() {},
+    doCreateAppointment() {},
+    doDeleteAppointment() {},
 
-    doneExam(state, action) {
+    doneAppointment(state, action) {
       return {
         ...state,
         ...action.payload,
       };
     },
 
-    resetExam() {
+    resetAppointment() {
       return initState;
     },
   },
 });
 
-export const { doCreateExam, doGetAllExams, doneExam, resetExam } =
-  examSlice.actions;
+export const {
+  doCreateAppointment,
+  doGetAllAppointments,
+  doneAppointment,
+  resetAppointment,
+  doDeleteAppointment,
+} = examSlice.actions;
 
 export default examSlice.reducer;

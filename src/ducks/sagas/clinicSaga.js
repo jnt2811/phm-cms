@@ -5,14 +5,12 @@ import {
   doGetAllClinics,
   doneClinic,
   doSwitchCollabClinic,
-  doUpdatePassClinic,
+  doUpdateAuthClinic,
 } from "../slices/clinicSlice";
 import {
   requestCreateClinic,
-  requestEditClinic,
   requestGetAllClinics,
-  requestSwitchCollabClinic,
-  requestUpdatePassClinic,
+  requestUpdateClinic,
 } from "../requests/clinicRequest";
 import { failMessages, successMessages } from "../../constances/messages";
 
@@ -20,7 +18,7 @@ export function* watchDoClinic() {
   yield takeLatest(doGetAllClinics.type, handleGetAllClinics);
   yield takeLatest(doCreateClinic.type, handleCreateClinic);
   yield takeLatest(doEditClinic.type, handleEditClinic);
-  yield takeLatest(doUpdatePassClinic.type, handlePasswordClinic);
+  yield takeLatest(doUpdateAuthClinic.type, handleAuthClinic);
   yield takeLatest(doSwitchCollabClinic.type, handleCollabClinic);
 }
 
@@ -98,7 +96,7 @@ export function* handleCreateClinic(action) {
 
 export function* handleEditClinic(action) {
   try {
-    const responseEdit = yield call(() => requestEditClinic(action.payload));
+    const responseEdit = yield call(() => requestUpdateClinic(action.payload));
 
     const { status } = responseEdit.data;
 
@@ -132,21 +130,21 @@ export function* handleEditClinic(action) {
   }
 }
 
-export function* handlePasswordClinic(action) {
+export function* handleAuthClinic(action) {
   try {
-    const responsePass = yield call(() =>
-      requestUpdatePassClinic(action.payload)
-    );
+    const responseAuth = yield call(() => requestUpdateClinic(action.payload));
 
-    const { status } = responsePass.data;
+    const { status } = responseAuth.data;
 
     if (status === "OK") {
       const responseGetAll = yield call(() => requestGetAllClinics());
 
+      yield console.log("object");
+
       yield put(
         doneClinic({
           isOk: true,
-          message: successMessages.UPDATE_PASSWORD_CLINIC,
+          message: successMessages.UPDATE_AUTH_CLINIC,
           clinicList: responseGetAll.data.data,
         })
       );
@@ -154,7 +152,7 @@ export function* handlePasswordClinic(action) {
       yield put(
         doneClinic({
           isOk: false,
-          message: failMessages.UPDATE_PASSWORD_CLINIC,
+          message: failMessages.UPDATE_AUTH_CLINIC,
         })
       );
     }
@@ -175,7 +173,7 @@ export function* handleCollabClinic(action) {
 
   try {
     const responseCollab = yield call(() =>
-      requestSwitchCollabClinic(action.payload)
+      requestUpdateClinic(action.payload)
     );
 
     const { status } = responseCollab.data;

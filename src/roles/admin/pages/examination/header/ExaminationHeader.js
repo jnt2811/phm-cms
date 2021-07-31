@@ -8,7 +8,7 @@ const ExaminationHeader = ({ location }) => {
   const { pathname } = location;
 
   const isAtAppointment = pathname === pathNames.ADMIN_APPOINTMENT;
-  const isAtHistory = pathname === pathNames.ADMIN_HISTORY;
+  const isAtReport = pathname === pathNames.ADMIN_REPORT;
 
   const [visibleModal, setVisibleModal] = useState();
 
@@ -39,8 +39,8 @@ const ExaminationHeader = ({ location }) => {
         </Col>
 
         <Col>
-          <Link to={pathNames.ADMIN_HISTORY}>
-            <Button className={"nav-item " + (isAtHistory && "active")}>
+          <Link to={pathNames.ADMIN_REPORT}>
+            <Button className={"nav-item " + (isAtReport && "active")}>
               Lịch sử khám bệnh
             </Button>
           </Link>

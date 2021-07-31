@@ -2,12 +2,12 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import {
   requestCreatePet,
   requestGetAllPets,
-  requestGetAPet,
+  requestGetPet,
 } from "../requests/petRequest";
 import {
   doCreatePet,
   doGetAllPets,
-  doGetAPet,
+  doGetPet,
   donePet,
 } from "../slices/petSlice";
 import { failMessages, successMessages } from "../../constances/messages";
@@ -15,7 +15,7 @@ import { failMessages, successMessages } from "../../constances/messages";
 export function* watchDoPet() {
   yield takeLatest(doGetAllPets.type, handleGetAllPets);
   yield takeLatest(doCreatePet.type, handleCreatePet);
-  yield takeLatest(doGetAPet.type, handleGetAPet);
+  yield takeLatest(doGetPet.type, handleGetPet);
 }
 
 export function* handleGetAllPets(action) {
@@ -52,9 +52,9 @@ export function* handleGetAllPets(action) {
   }
 }
 
-export function* handleGetAPet(action) {
+export function* handleGetPet(action) {
   try {
-    const response = yield call(() => requestGetAPet(action.payload));
+    const response = yield call(() => requestGetPet(action.payload));
 
     const { status } = response.data;
 

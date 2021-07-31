@@ -4,6 +4,8 @@ import { watchDoDonation } from "./donationSaga";
 import { watchDoPet } from "./petSaga";
 import { watchDoVolunteer } from "./volunteerSaga";
 import { watchDoClinic } from "./clinicSaga";
+import { watchDoReport } from "./reportSaga";
+import { watchDoAppointment } from "./appointmentSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -12,5 +14,7 @@ export default function* rootSaga() {
     fork(watchDoDonation),
     fork(watchDoPet),
     fork(watchDoClinic),
+    fork(watchDoAppointment),
+    fork(watchDoReport),
   ]);
 }
