@@ -59,7 +59,7 @@ const Pet = () => {
   };
 
   const onViewPet = (pet) => {
-    history.push(pathNames.ADMIN_VIEW_PET_nId + pet.id);
+    history.push(pathNames.VOLUNTEER_PET_nId + pet.id);
   };
 
   return (
@@ -70,7 +70,7 @@ const Pet = () => {
         </Col>
 
         <Col>
-          {/* <Button onClick={() => setVisibleNewModal(true)}>Tạo mới</Button> */}
+          <Button onClick={() => setVisibleNewModal(true)}>Tạo mới</Button>
         </Col>
       </Row>
 

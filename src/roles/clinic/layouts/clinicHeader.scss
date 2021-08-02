@@ -1,0 +1,45 @@
+@import "../../../style/colors.scss";
+
+.clinic-header {
+  background-color: $orange400;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1,
+  .logout {
+    width: 200px;
+  }
+
+  h1 {
+    color: $orange700;
+    margin-right: 50px;
+  }
+
+  .logout {
+    text-align: end;
+    font-size: 18px;
+    color: $orange700;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .nav-bar {
+    display: flex;
+
+    .nav-item {
+      color: $orange600;
+      font-size: 18px;
+      font-weight: 600;
+      margin-right: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover,
+      &.active {
+        color: $orange700;
+      }
+    }
+  }
+}

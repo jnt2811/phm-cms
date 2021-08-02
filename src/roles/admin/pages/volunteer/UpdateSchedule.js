@@ -2,16 +2,43 @@ import { Form, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
 
-const UpdateSchedule = ({ volunteer, visible, setVisble }) => {
+const UpdateSchedule = ({ volunteer, visible, setVisible }) => {
   const [form] = useForm();
 
   const onCancel = () => {
     form.resetFields();
-    setVisble(false);
+    setVisible(false);
   };
 
   const onFinish = (values) => {
     console.log(values);
+    setVisible(false);
+  };
+
+  const renderFormItems = () => {
+    let weekdays = [
+      { id: 2, name: "monday" },
+      { id: 3, name: "tuesday" },
+      { id: 4, name: "wednesday" },
+      { id: 5, name: "thursday" },
+      { id: 6, name: "friday" },
+      { id: 7, name: "saturday" },
+    ];
+
+    return weekdays.map((weekday) => (
+      <Form.Item
+        key={weekday.id}
+        name={weekday.name}
+        label={"Thứ " + weekday.id}
+      >
+        <Select className="select">
+          <Select.Option value={null}></Select.Option>
+          <Select.Option value="Sáng">Sáng</Select.Option>
+          <Select.Option value="Chiều">Chiều</Select.Option>
+          <Select.Option value="Cả ngày">Cả ngày</Select.Option>
+        </Select>
+      </Form.Item>
+    ));
   };
 
   return (
@@ -29,16 +56,8 @@ const UpdateSchedule = ({ volunteer, visible, setVisble }) => {
 
         <br />
 
-        <Form form={form} onFinish={onFinish} layout="vertical">
-          <Form.Item
-            name="schedule"
-            label="Ca làm việc"
-            rules={[{ required: true, message: "Hãy chọn ca làm việc" }]}
-          >
-            <Select className="select">
-              <Select.Option value="Ca 1">Ca 1</Select.Option>
-            </Select>
-          </Form.Item>
+        <Form form={form} onFinish={onFinish}>
+          {renderFormItems()}
         </Form>
       </FormModal>
     </div>

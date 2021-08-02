@@ -183,7 +183,7 @@ const Volunteer = () => {
       />
 
       <UpdateSchedule
-        setVisble={setVisibleScheduleModal}
+        setVisible={setVisibleScheduleModal}
         visible={visibleScheduleModal}
         volunteer={selectedVolunteer}
       />

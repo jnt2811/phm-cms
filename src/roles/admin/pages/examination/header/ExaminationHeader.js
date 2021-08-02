@@ -20,13 +20,12 @@ const ExaminationHeader = ({ location }) => {
         </Col>
 
         <Col>
-          <Button onClick={() => setVisibleModal(true)}>
+          {/* <Button onClick={() => setVisibleModal(true)}>
             Tạo mới lịch hẹn
-          </Button>
+          </Button> */}
         </Col>
       </Row>
 
-      <br />
       <br />
 
       <Row align="middle" gutter={{ lg: 10 }} className="nav-bar">

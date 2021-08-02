@@ -143,15 +143,25 @@ const Donation = () => {
 
   return (
     <div className="donation">
-      <Row align="middle" gutter={{ lg: 20 }}>
+      <Row justify="space-between">
         <Col>
-          <h1>Danh sách quyên góp</h1>
+          <Row align="middle" gutter={{ lg: 20 }}>
+            <Col>
+              <h1>Danh sách quyên góp</h1>
+            </Col>
+
+            <Col>
+              <Button
+                onClick={() => history.push(pathNames.ADMIN_NEW_DONATION)}
+              >
+                Tạo mới
+              </Button>
+            </Col>
+          </Row>
         </Col>
 
         <Col>
-          <Button onClick={() => history.push(pathNames.ADMIN_NEW_DONATION)}>
-            Tạo mới
-          </Button>
+          <Button>Xuất báo cáo</Button>
         </Col>
       </Row>
 

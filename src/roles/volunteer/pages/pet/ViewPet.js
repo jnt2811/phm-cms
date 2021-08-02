@@ -49,25 +49,17 @@ const ViewPet = () => {
 
   return (
     <div className="view-pet">
-      <Row justify="space-between">
+      <Row gutter={{ sm: 10 }} align="middle">
         <Col>
-          <Row gutter={{ sm: 10 }} align="middle">
-            <Col>
-              <Button
-                onClick={() => history.push(pathNames.ADMIN_PET)}
-                icon={<ArrowLeftOutlined />}
-                className="back-btn"
-              ></Button>
-            </Col>
-
-            <Col>
-              <h1>Chi tiết chó mèo</h1>
-            </Col>
-          </Row>
+          <Button
+            onClick={() => history.push(pathNames.VOLUNTEER_PET)}
+            icon={<ArrowLeftOutlined />}
+            className="back-btn"
+          ></Button>
         </Col>
 
         <Col>
-          <Button>Xuất báo cáo</Button>
+          <h1>Chi tiết chó mèo</h1>
         </Col>
       </Row>
 
@@ -75,7 +67,7 @@ const ViewPet = () => {
       <br />
 
       <Row gutter={{ sm: 50 }}>
-        <Col span={8}>
+        <Col span={7}>
           <div className="info">
             <div style={{ textAlign: "center" }}>
               <Avatar size={100} icon={<UserOutlined />} src={pet.avatar} />
@@ -109,7 +101,7 @@ const ViewPet = () => {
           </div>
         </Col>
 
-        <Col span={16}>
+        <Col span={17}>
           <h2>Báo cáo sức khỏe</h2>
 
           <br />

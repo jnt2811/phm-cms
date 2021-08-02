@@ -25,9 +25,17 @@ const pathNames = {
 
   // Volunteer
   VOLUNTEER: volunteer,
+  VOLUNTEER_PET: volunteer + "/pet",
+  VOLUNTEER_PET_wId: volunteer + "/pet/:id",
+  VOLUNTEER_PET_nId: volunteer + "/pet/",
+  VOLUNTEER_APPOINTMENT: volunteer + "/appointment",
+  VOLUNTEER_CHAT: volunteer + "/chat",
 
   // Clinic
   CLINIC: clinic,
+  CLINIC_APPOINTMENT: clinic + "/appointment",
+  CLINIC_REPORT: clinic + "/report",
+  CLINIC_CHAT: clinic + "/chat",
 };
 
 export default pathNames;

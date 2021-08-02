@@ -1,0 +1,23 @@
+@import "../../../../style/colors.scss";
+
+.account {
+  .row {
+    display: flex;
+
+    .col {
+      &.col-1 {
+        width: 350px;
+
+        .edit-info-btn {
+          width: 150px;
+        }
+      }
+
+      &.col-2 {
+        width: calc(100vw - 50px - 350px);
+        border-left: 1px solid #00000020;
+        padding-left: 50px;
+      }
+    }
+  }
+}

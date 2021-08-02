@@ -9,9 +9,16 @@ export const PublicRoute = ({ component: Component, ...remainingProps }) => {
     ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role ===
       "Quản trị viên"
     : false;
-  const isVolunteer =
-    localStorage.getItem(localKeys.ROLE) === "Tình nguyện viên";
-  const isClinic = localStorage.getItem(localKeys.ROLE) === "Phòng khám";
+  const isVolunteer = localStorage.getItem(localKeys.USER_DATA)
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role ===
+      "Tình nguyện viên"
+    : false;
+  const isClinic = localStorage.getItem(localKeys.USER_DATA)
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role ===
+      "Phòng khám"
+    : false;
+
+  console.log(isAuth && isVolunteer);
 
   return (
     <Route
