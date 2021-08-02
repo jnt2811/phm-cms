@@ -6,10 +6,12 @@ import NotAccess from "../pages/NotAccess";
 export const PublicRoute = ({ component: Component, ...remainingProps }) => {
   const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
   const isAdmin = localStorage.getItem(localKeys.USER_DATA)
-    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role === null
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role ===
+      "Quản trị viên"
     : false;
-  const isVolunteer = localStorage.getItem(localKeys.ROLE) === "volunteer";
-  const isClinic = localStorage.getItem(localKeys.ROLE) === "clinic";
+  const isVolunteer =
+    localStorage.getItem(localKeys.ROLE) === "Tình nguyện viên";
+  const isClinic = localStorage.getItem(localKeys.ROLE) === "Phòng khám";
 
   return (
     <Route
@@ -32,7 +34,8 @@ export const PublicRoute = ({ component: Component, ...remainingProps }) => {
 export const AdminRoute = ({ component: Component, ...remainingProps }) => {
   const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
   const isAdmin = localStorage.getItem(localKeys.USER_DATA)
-    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role === null
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role ===
+      "Quản trị viên"
     : false;
 
   return (
@@ -53,7 +56,10 @@ export const AdminRoute = ({ component: Component, ...remainingProps }) => {
 
 export const VolunteerRoute = ({ component: Component, ...remainingProps }) => {
   const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
-  const isVolunteer = localStorage.getItem(localKeys.ROLE) === "volunteer";
+  const isVolunteer = localStorage.getItem(localKeys.USER_DATA)
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role ===
+      "Tình nguyện viên"
+    : false;
 
   return (
     <Route
@@ -73,7 +79,10 @@ export const VolunteerRoute = ({ component: Component, ...remainingProps }) => {
 
 export const ClinicRoute = ({ component: Component, ...remainingProps }) => {
   const isAuth = localStorage.getItem(localKeys.ACCESS_TOKEN) !== null;
-  const isClinic = localStorage.getItem(localKeys.ROLE) === "clinic";
+  const isClinic = localStorage.getItem(localKeys.USER_DATA)
+    ? JSON.parse(localStorage.getItem(localKeys.USER_DATA)).rest.role ===
+      "Phòng khám"
+    : false;
 
   return (
     <Route

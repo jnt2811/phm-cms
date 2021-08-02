@@ -1,4 +1,5 @@
 import {
+  CalendarOutlined,
   EditOutlined,
   InfoOutlined,
   SyncOutlined,
@@ -14,7 +15,8 @@ const VolunteerTable = ({
   onViewVolunteer,
   onEditVolunteer,
   onSwitchCollab,
-  onUpdatePassword,
+  onUpdateAuth,
+  onUpdateSchedule,
 }) => {
   const columns = [
     {
@@ -80,7 +82,16 @@ const VolunteerTable = ({
               className="red-btn"
               icon={<UnlockOutlined />}
               disabled={!collab}
-              onClick={() => onUpdatePassword(record)}
+              onClick={() => onUpdateAuth(record)}
+            ></Button>
+          </Col>
+
+          <Col>
+            <Button
+              className="white-btn"
+              icon={<CalendarOutlined />}
+              disabled={!collab}
+              onClick={() => onUpdateSchedule(record)}
             ></Button>
           </Col>
         </Row>

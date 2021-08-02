@@ -1,0 +1,32 @@
+@import "../../../../style/colors.scss";
+
+.dashboard {
+  .board {
+    background-color: $orange300;
+    padding: 25px 50px;
+    border-radius: 20px;
+    text-align: center;
+    height: 100%;
+
+    h2 {
+      margin: 0;
+    }
+
+    .number {
+      font-size: 50px;
+      font-weight: bold;
+
+      .unit {
+        font-size: 18px;
+        font-weight: 500;
+        display: block;
+        margin-top: -10px;
+      }
+    }
+
+    p {
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+  }
+}

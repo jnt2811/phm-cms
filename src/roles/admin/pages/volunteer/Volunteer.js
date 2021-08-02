@@ -8,9 +8,10 @@ import {
 } from "../../../../ducks/slices/volunteerSlice";
 import NewVolunteer from "./NewVolunteer";
 import EditVolunteer from "./EditVolunteer";
-import UpdatePassword from "./UpdateAuth";
 import SwitchCollab from "./SwitchCollab";
 import ViewVolunteer from "./ViewVolunteer";
+import UpdateAuth from "./UpdateAuth";
+import UpdateSchedule from "./UpdateSchedule";
 
 const Volunteer = () => {
   const volunteerReducer = useSelector((state) => state.volunteer);
@@ -19,9 +20,10 @@ const Volunteer = () => {
   const [volunteers, setVolunteers] = useState([]);
   const [visibleNewModal, setVisibleNewModal] = useState(false);
   const [visibleEditModal, setVisibleEditModal] = useState(false);
-  const [visiblePassModal, setVisiblePassModal] = useState(false);
+  const [visibleAuthModal, setVisibleAuthModal] = useState(false);
   const [visibleSwitchModal, setVisibleSwitchModal] = useState(false);
   const [visibleViewModal, setVisibleViewModal] = useState(false);
+  const [visibleScheduleModal, setVisibleScheduleModal] = useState(false);
   const [selectedVolunteer, setSelectedVolunteer] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [searchVal, setSearchVal] = useState("");
@@ -61,14 +63,19 @@ const Volunteer = () => {
     setVisibleEditModal(true);
   };
 
-  const onUpdatePassword = (volunteer) => {
+  const onUpdateAuth = (volunteer) => {
     setSelectedVolunteer(volunteer);
-    setVisiblePassModal(true);
+    setVisibleAuthModal(true);
   };
 
   const onSwitchCollab = (volunteer) => {
     setSelectedVolunteer(volunteer);
     setVisibleSwitchModal(true);
+  };
+
+  const onUpdateSchedule = (volunteer) => {
+    setSelectedVolunteer(volunteer);
+    setVisibleScheduleModal(true);
   };
 
   const onSearchVolunteer = () => {
@@ -86,21 +93,13 @@ const Volunteer = () => {
 
   return (
     <div className="volunteer">
-      <Row justify="space-between" align="middle" gutter={{ lg: 20 }}>
+      <Row align="middle" gutter={{ lg: 20 }}>
         <Col>
-          <Row align="middle" gutter={{ lg: 20 }}>
-            <Col>
-              <h1>Danh sách tình nguyện viên</h1>
-            </Col>
-
-            <Col>
-              <Button onClick={onNewVolunteer}>Tạo mới</Button>
-            </Col>
-          </Row>
+          <h1>Danh sách tình nguyện viên</h1>
         </Col>
 
         <Col>
-          <Button>Lịch làm việc</Button>
+          <Button onClick={onNewVolunteer}>Tạo mới</Button>
         </Col>
       </Row>
 
@@ -150,8 +149,9 @@ const Volunteer = () => {
           dataSource={handleDataSource(volunteers)}
           onViewVolunteer={onViewVolunteer}
           onEditVolunteer={onEditVolunteer}
-          onUpdatePassword={onUpdatePassword}
+          onUpdateAuth={onUpdateAuth}
           onSwitchCollab={onSwitchCollab}
+          onUpdateSchedule={onUpdateSchedule}
           loading={isLoading}
         />
       </div>
@@ -176,10 +176,16 @@ const Volunteer = () => {
         setVisible={setVisibleSwitchModal}
       />
 
-      <UpdatePassword
+      <UpdateAuth
         volunteer={selectedVolunteer}
-        visible={visiblePassModal}
-        setVisible={setVisiblePassModal}
+        visible={visibleAuthModal}
+        setVisible={setVisibleAuthModal}
+      />
+
+      <UpdateSchedule
+        setVisble={setVisibleScheduleModal}
+        visible={visibleScheduleModal}
+        volunteer={selectedVolunteer}
       />
     </div>
   );

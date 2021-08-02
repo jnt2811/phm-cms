@@ -108,7 +108,9 @@ const ViewPet = () => {
 
           {pet.reports.map((report) => (
             <div className="report" key={report.id}>
-              <h3>Ngày {moment(report.createAt).utc().format("DD/MM/YYYY")}</h3>
+              <h3>
+                Ngày {moment(report.createAt).utc().format("DD/MM/YYYY HH:mm")}
+              </h3>
 
               <Divider className="divider" />
 
@@ -124,7 +126,7 @@ const ViewPet = () => {
                 <Image.PreviewGroup>
                   {!isEmptyData(report.images) &&
                     report.images.map((image) => (
-                      <Image key={image} width={200} src={image} />
+                      <Image key={image.id} width={100} src={image} />
                     ))}
                 </Image.PreviewGroup>
               </div>
