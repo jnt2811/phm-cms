@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DonationTable from "./DonationTable";
 import {
   doGetAllDonations,
+  doSearchDonation,
   resetDonation,
 } from "../../../../ducks/slices/donationSlice";
 import { useForm } from "antd/lib/form/Form";
@@ -35,21 +36,25 @@ const Donation = () => {
   }, []);
 
   useEffect(() => {
-    if (donationReducer.isOk === true) {
-      const { donationList } = donationReducer;
+    const { donationList = [], isOk } = donationReducer;
+    if (isOk === true) {
       setDonations(
         donationList.map((donation) => ({ ...donation, key: donation.id }))
       );
       setIsLoading(false);
       dispatch(resetDonation());
-    } else if (donationReducer.isOk === false) {
+    } else if (isOk === false) {
+      setDonations(donationList);
       setIsLoading(false);
+      dispatch(resetDonation());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donationReducer]);
 
   const onSearchDonation = () => {
-    console.log(searchVal);
+    const data = { search: searchVal };
+    dispatch(doSearchDonation(data));
+    setIsLoading(true);
   };
 
   const handleInputDateFrom = (e) => {

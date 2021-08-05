@@ -18,9 +18,9 @@ const AppointmentTable = ({ loading, dataSource, onDeleteAppointment }) => {
     },
     {
       title: "Thời gian đặt khám",
-      dataIndex: "createAt",
-      key: "createAt",
-      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
+      dataIndex: "date",
+      key: "date",
+      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY HH:mm"),
     },
     {
       title: "Người đặt khám",

@@ -6,6 +6,8 @@ import {
 } from "@ant-design/icons";
 import { Button, Col, Row, Table } from "antd";
 import { GreenTag, RedTag } from "../../../../commons/commonTag/CommonTag";
+import moment from "moment";
+import { formatPhone } from "../../../../utils";
 
 const ClinicTable = ({
   loading = false,
@@ -30,11 +32,13 @@ const ClinicTable = ({
       title: "Số điện thoại",
       dataIndex: "phone",
       key: "phone",
+      render: (phone) => formatPhone(phone),
     },
     {
       title: "Ngày hợp tác",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      dataIndex: "createAt",
+      key: "createAt",
+      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
     },
     {
       title: "Trạng thái",

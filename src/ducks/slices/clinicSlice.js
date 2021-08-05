@@ -15,6 +15,7 @@ const clinicSlice = createSlice({
     doEditClinic() {},
     doUpdateAuthClinic() {},
     doSwitchCollabClinic() {},
+    doSearchClinic() {},
 
     doneClinic(state, action) {
       return {
@@ -37,6 +38,7 @@ export const {
   doSwitchCollabClinic,
   doneClinic,
   resetClinic,
+  doSearchClinic,
 } = clinicSlice.actions;
 
 export default clinicSlice.reducer;

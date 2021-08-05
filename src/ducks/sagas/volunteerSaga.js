@@ -4,15 +4,20 @@ import {
   doEditVolunteer,
   doGetAllVolunteers,
   doneVolunteer,
+  doSearchVolunteer,
   doSwitchCollabVolunteer,
   doUpdateAuthVolunteer,
+  doUpdateSchedule,
 } from "../slices/volunteerSlice";
 import {
   requestCreateVolunteer,
   requestGetAllVolunteers,
+  requestSearchVolunteer,
+  requestUpdateSchedule,
   requestUpdateVolunteer,
 } from "../requests/volunteerRequest";
 import { failMessages, successMessages } from "../../constances/messages";
+import { isEmptyData } from "../../utils";
 
 export function* watchDoVolunteer() {
   yield takeLatest(doGetAllVolunteers.type, handleGetAllVolunteers);
@@ -20,6 +25,8 @@ export function* watchDoVolunteer() {
   yield takeLatest(doEditVolunteer.type, handleEditVolunteer);
   yield takeLatest(doUpdateAuthVolunteer.type, handleAuthVolunteer);
   yield takeLatest(doSwitchCollabVolunteer.type, handleCollabVolunteer);
+  yield takeLatest(doSearchVolunteer.type, handleSearchVolunteer);
+  yield takeLatest(doUpdateSchedule.type, handleUpdateSchedule);
 }
 
 export function* handleGetAllVolunteers(action) {
@@ -193,6 +200,105 @@ export function* handleCollabVolunteer(action) {
         doneVolunteer({
           isOk: false,
           message: failMessages.SWITCH_COLLAB_VOLUNTEER,
+        })
+      );
+    }
+  } catch (error) {
+    console.log("Error: " + JSON.stringify(error));
+
+    yield put(
+      doneVolunteer({
+        isOk: false,
+        message: JSON.stringify(error),
+      })
+    );
+  }
+}
+
+export function* handleSearchVolunteer(action) {
+  try {
+    if (!isEmptyData(action.payload.phone)) {
+      const responseSearch = yield call(() =>
+        requestSearchVolunteer(action.payload)
+      );
+
+      const { status } = responseSearch.data;
+
+      if (status === "OK") {
+        const { data } = responseSearch.data;
+        yield put(
+          doneVolunteer({
+            isOk: true,
+            message: successMessages.GET_ALL_VOLUNTEERS,
+            volunteerList: [data],
+          })
+        );
+      } else {
+        yield put(
+          doneVolunteer({
+            isOk: false,
+            message: failMessages.GET_ALL_VOLUNTEERS,
+            volunteerList: [],
+          })
+        );
+      }
+    } else {
+      const response = yield call(() => requestGetAllVolunteers());
+
+      const { status } = response.data;
+
+      if (status === "OK") {
+        yield put(
+          doneVolunteer({
+            isOk: true,
+            message: successMessages.GET_ALL_VOLUNTEERS,
+            volunteerList: response.data.data,
+          })
+        );
+      } else {
+        yield put(
+          doneVolunteer({
+            isOk: false,
+            message: failMessages.GET_ALL_VOLUNTEERS,
+          })
+        );
+      }
+    }
+  } catch (error) {
+    console.log("Error: " + JSON.stringify(error));
+
+    yield put(
+      doneVolunteer({
+        isOk: false,
+        message: JSON.stringify(error),
+      })
+    );
+  }
+}
+
+export function* handleUpdateSchedule(action) {
+  try {
+    const { id, body } = action.payload;
+
+    const responseSchedule = yield call(() => requestUpdateSchedule(id, body));
+
+    const { status } = responseSchedule.data;
+
+    if (status === "OK") {
+      const responseGetAll = yield call(() => requestGetAllVolunteers());
+
+      yield put(
+        doneVolunteer({
+          isOk: true,
+          message: successMessages.UPDATE_SCHEDULE_VOLUNTEER,
+          volunteerList: responseGetAll.data.data,
+        })
+      );
+    } else {
+      yield put(
+        doneVolunteer({
+          isOk: false,
+          message: failMessages.UPDATE_SCHEDULE_VOLUNTEER,
         })
       );
     }

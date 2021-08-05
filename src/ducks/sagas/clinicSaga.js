@@ -4,15 +4,18 @@ import {
   doEditClinic,
   doGetAllClinics,
   doneClinic,
+  doSearchClinic,
   doSwitchCollabClinic,
   doUpdateAuthClinic,
 } from "../slices/clinicSlice";
 import {
   requestCreateClinic,
   requestGetAllClinics,
+  requestSearchClinic,
   requestUpdateClinic,
 } from "../requests/clinicRequest";
 import { failMessages, successMessages } from "../../constances/messages";
+import { isEmptyData } from "../../utils";
 
 export function* watchDoClinic() {
   yield takeLatest(doGetAllClinics.type, handleGetAllClinics);
@@ -20,6 +23,7 @@ export function* watchDoClinic() {
   yield takeLatest(doEditClinic.type, handleEditClinic);
   yield takeLatest(doUpdateAuthClinic.type, handleAuthClinic);
   yield takeLatest(doSwitchCollabClinic.type, handleCollabClinic);
+  yield takeLatest(doSearchClinic.type, handleSearchClinic);
 }
 
 export function* handleGetAllClinics(action) {
@@ -139,8 +143,6 @@ export function* handleAuthClinic(action) {
     if (status === "OK") {
       const responseGetAll = yield call(() => requestGetAllClinics());
 
-      yield console.log("object");
-
       yield put(
         doneClinic({
           isOk: true,
@@ -195,6 +197,71 @@ export function* handleCollabClinic(action) {
           message: failMessages.SWITCH_COLLAB_CLINIC,
         })
       );
+    }
+  } catch (error) {
+    console.log("Error: " + JSON.stringify(error));
+
+    yield put(
+      doneClinic({
+        isOk: false,
+        message: JSON.stringify(error),
+      })
+    );
+  }
+}
+
+export function* handleSearchClinic(action) {
+  try {
+    const { search } = action.payload;
+
+    if (!isEmptyData(search)) {
+      const responseSearch = yield call(() =>
+        requestSearchClinic(action.payload)
+      );
+
+      const { status } = responseSearch.data;
+
+      if (status === "OK") {
+        const { data } = responseSearch.data;
+
+        yield put(
+          doneClinic({
+            isOk: true,
+            message: successMessages.GET_ALL_CLINICS,
+            clinicList: [data],
+          })
+        );
+      } else {
+        yield put(
+          doneClinic({
+            isOk: false,
+            message: failMessages.GET_ALL_CLINICS,
+            clinicList: [],
+          })
+        );
+      }
+    } else {
+      const response = yield call(() => requestGetAllClinics());
+
+      const { status } = response.data;
+
+      if (status === "OK") {
+        const { data } = response.data;
+        yield put(
+          doneClinic({
+            isOk: true,
+            message: successMessages.GET_ALL_CLINICS,
+            clinicList: data,
+          })
+        );
+      } else {
+        yield put(
+          doneClinic({
+            isOk: false,
+            message: failMessages.GET_ALL_CLINICS,
+          })
+        );
+      }
     }
   } catch (error) {
     console.log("Error: " + JSON.stringify(error));

@@ -1,16 +1,24 @@
 import { Button, Col, Input, notification, Row } from "antd";
 import NewDonator from "./NewDonator";
 import { Prompt, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./newDonation.scss";
 import OldDonator from "./OldDonator";
 import { useForm } from "antd/lib/form/Form";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import pathNames from "../../../../../router/pathNames";
 import { isEmptyData } from "../../../../../utils";
-import { successMessages } from "../../../../../constances/messages";
+import {
+  failMessages,
+  successMessages,
+} from "../../../../../constances/messages";
+import { useDispatch, useSelector } from "react-redux";
+import { doCreateDonation } from "../../../../../ducks/slices/donationSlice";
 
 const NewDonation = () => {
+  const donationReducer = useSelector((state) => state.donation);
+  const dispatch = useDispatch();
+
   const history = useHistory();
   const [form] = useForm();
 
@@ -18,14 +26,28 @@ const NewDonation = () => {
   const [isOldDonator, setIsOldDonator] = useState(true);
   const [amountVal, setAmountVal] = useState();
 
+  useEffect(() => {
+    const { isOk, message } = donationReducer;
+
+    const successMessage = successMessages.CREATE_NEW_DONATION;
+    const failMessage = failMessages.CREATE_NEW_DONATION;
+
+    if (isOk === true && message === successMessage) {
+      notification.success({ message: successMessage });
+      form.resetFields();
+      history.push(pathNames.ADMIN_DONATION);
+    } else if (isOk === false && message === failMessage) {
+      notification.error({ message: failMessage });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [donationReducer]);
+
   const onCreateNewDonation = () => {
     if (!isOldDonator) {
       form.submit();
     } else {
-      console.log(amountVal);
-      console.log(oldDonator);
-      notification.success({ message: successMessages.CREATE_NEW_DONATION });
-      history.push(pathNames.ADMIN_DONATION);
+      const data = { amount: amountVal, donator: oldDonator };
+      dispatch(doCreateDonation(data));
     }
   };
 
@@ -37,6 +59,11 @@ const NewDonation = () => {
         else return true;
       }
     } else return true;
+  };
+
+  const dispatchForNewDonator = (donator) => {
+    const data = { amount: amountVal, donator: donator };
+    dispatch(doCreateDonation(data));
   };
 
   return (
@@ -92,7 +119,10 @@ const NewDonation = () => {
             {isOldDonator ? (
               <OldDonator setDonator={setOldDonator} />
             ) : (
-              <NewDonator form={form} amountVal={amountVal} />
+              <NewDonator
+                form={form}
+                dispatchForNewDonator={dispatchForNewDonator}
+              />
             )}
           </Col>
 

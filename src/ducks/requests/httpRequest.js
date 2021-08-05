@@ -28,3 +28,11 @@ export const httpRequestPatch = async (api, data, headers = initHeaders) => {
     console.log("PATCH request error: " + JSON.stringify(error));
   }
 };
+
+export const httpRequestDelete = async (api, headers = initHeaders) => {
+  try {
+    return axios.delete(api, { headers: headers }, { timeout: 5000 });
+  } catch (error) {
+    console.log("DELETE request error: " + JSON.stringify(error));
+  }
+};

@@ -6,14 +6,15 @@ const DonationTable = ({ dataSource, loading }) => {
   const columns = [
     {
       title: "Họ và tên",
-      dataIndex: "name",
+      dataIndex: "donator",
       key: "name",
+      render: (donator) => donator.name,
     },
     {
       title: "Số điện thoại",
-      dataIndex: "phone",
+      dataIndex: "donator",
       key: "phone",
-      render: (phone) => formatPhone(phone),
+      render: (donator) => formatPhone(donator.phone),
     },
     {
       title: "Ngày quyên góp",

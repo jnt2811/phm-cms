@@ -4,6 +4,7 @@ import ClinicTable from "./ClinicTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
   doGetAllClinics,
+  doSearchClinic,
   resetClinic,
 } from "../../../../ducks/slices/clinicSlice";
 import NewClinic from "./NewClinic";
@@ -34,12 +35,14 @@ const Clinic = () => {
   }, []);
 
   useEffect(() => {
-    if (clinicReducer.isOk === true) {
-      const { clinicList } = clinicReducer;
+    const { isOk, clinicList = [] } = clinicReducer;
+
+    if (isOk === true) {
       setClinics(clinicList.map((clinic) => ({ ...clinic, key: clinic.id })));
       setIsLoading(false);
       dispatch(resetClinic());
     } else if (clinicReducer.isOk === false) {
+      setClinics(clinicList);
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,8 +72,10 @@ const Clinic = () => {
     setVisibleSwitchModal(true);
   };
 
-  const onSearchVolunteer = () => {
-    console.log(searchVal);
+  const onSearchClinic = () => {
+    const data = { search: searchVal };
+    dispatch(doSearchClinic(data));
+    setIsLoading(true);
   };
 
   const handleDataSource = (clinics) => {
@@ -106,12 +111,12 @@ const Clinic = () => {
                 style={{ width: "350px" }}
                 disabled={isLoading}
                 onChange={(e) => setSearchVal(e.target.value)}
-                onKeyUp={(e) => e.keyCode === 13 && onSearchVolunteer()}
+                onKeyUp={(e) => e.keyCode === 13 && onSearchClinic()}
               />
             </Col>
 
             <Col>
-              <Button disabled={isLoading} onClick={onSearchVolunteer}>
+              <Button disabled={isLoading} onClick={onSearchClinic}>
                 Tìm kiếm
               </Button>
             </Col>

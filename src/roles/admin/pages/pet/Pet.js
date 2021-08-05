@@ -3,10 +3,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NewPet from "./NewPet";
 import PetTable from "./PetTable";
-import { doGetAllPets, resetPet } from "../../../../ducks/slices/petSlice";
+import {
+  doGetAllPets,
+  doSearchPet,
+  resetPet,
+} from "../../../../ducks/slices/petSlice";
 import EditPet from "./EditPet";
 import { useHistory } from "react-router-dom";
 import pathNames from "../../../../router/pathNames";
+import { failMessages } from "../../../../constances/messages";
 
 const Pet = () => {
   const petReducer = useSelector((state) => state.pet);
@@ -29,19 +34,24 @@ const Pet = () => {
   }, []);
 
   useEffect(() => {
-    if (petReducer.isOk === true) {
-      const { petList } = petReducer;
+    const { isOk, message, petList = [] } = petReducer;
+
+    if (isOk === true) {
       setPets(petList.map((pet) => ({ ...pet, key: pet.id })));
       setIsLoading(false);
       dispatch(resetPet());
     } else if (petReducer.isOk === false) {
+      if (message === failMessages.SEARCH_PET) setPets(petList);
       setIsLoading(false);
+      dispatch(resetPet());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [petReducer]);
 
   const onSearchPet = () => {
-    console.log(searchVal);
+    const data = { search: searchVal };
+    dispatch(doSearchPet(data));
+    setIsLoading(true);
   };
 
   const handleDataSource = () => {
@@ -70,7 +80,7 @@ const Pet = () => {
         </Col>
 
         <Col>
-          {/* <Button onClick={() => setVisibleNewModal(true)}>Tạo mới</Button> */}
+          <Button onClick={() => setVisibleNewModal(true)}>Tạo mới</Button>
         </Col>
       </Row>
 

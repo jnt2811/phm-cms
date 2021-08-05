@@ -1,17 +1,20 @@
-import { Col, Form, Input, Row, Select } from "antd";
+import { Col, Form, Input, notification, Row, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
 import UploadAvatar from "../../../../commons/uploadImage/UploadAvatar";
-import { petKeys } from "../../../../constances/data";
 import { isEmptyData } from "../../../../utils";
+import { doEditPet } from "../../../../ducks/slices/petSlice";
+import { failMessages, successMessages } from "../../../../constances/messages";
 
 const EditPet = ({ pet, visible, setVisible }) => {
   const [form] = useForm();
 
-  const [avatarUrl, setAvatarUrl] = useState(
-    !isEmptyData(pet) ? pet.avatar : null
-  );
+  const petReducer = useSelector((state) => state.pet);
+  const dispatch = useDispatch();
+
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
@@ -23,23 +26,39 @@ const EditPet = ({ pet, visible, setVisible }) => {
         location: pet.location,
         description: pet.description,
       });
+      setAvatarUrl(pet.avatar);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
+  useEffect(() => {
+    const { isOk, message } = petReducer;
+
+    const successMessage = successMessages.EDIT_PET;
+    const failMessage = failMessages.EDIT_PET;
+
+    if (isOk === true && message === successMessage) {
+      notification.success({ message: successMessage });
+      form.resetFields();
+      setVisible(false);
+    } else if (isOk === false && message === failMessage) {
+      notification.error({ message: failMessage });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [petReducer]);
+
   const onFinish = (values) => {
-    console.log({ ...values, avatar: avatarUrl });
-    form.resetFields();
-    setAvatarUrl();
-    setVisible(false);
+    const data = { ...values, avatar: avatarUrl, id: pet.id };
+    dispatch(doEditPet(data));
+    notification.open({ message: "Đang xử lý..." });
   };
 
   return (
-    <div className="new-pet">
+    <div className="edit-pet">
       <FormModal
         visible={visible}
-        okText="Tạo mới"
-        cancelText="Hủy bỏ"
+        okText="Lưu thay đổi"
+        cancelText="Quay lại"
         onOk={() => form.submit()}
         onCancel={() => setVisible(false)}
         width={800}
@@ -76,8 +95,8 @@ const EditPet = ({ pet, visible, setVisible }) => {
                 rules={[{ required: true, message: "Hãy chọn loài" }]}
               >
                 <Select className="select">
-                  <Select.Option value={petKeys.DOG}>Chó</Select.Option>
-                  <Select.Option value={petKeys.CAT}>Mèo</Select.Option>
+                  <Select.Option value="Chó">Chó</Select.Option>
+                  <Select.Option value="Mèo">Mèo</Select.Option>
                 </Select>
               </Form.Item>
             </Col>

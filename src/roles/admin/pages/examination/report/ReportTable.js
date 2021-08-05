@@ -20,7 +20,7 @@ const ReportTable = ({ loading, dataSource, onViewReport }) => {
       title: "Thời gian hoàn thành",
       dataIndex: "createAt",
       key: "createAt",
-      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
+      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY HH:mm"),
     },
     {
       title: "",

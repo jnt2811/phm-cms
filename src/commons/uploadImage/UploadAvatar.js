@@ -18,7 +18,7 @@ const UploadAvatar = ({
 
     if (!isEmptyData(avatarUrl)) {
       const tempUrl = avatarUrl;
-      setAvatarUrl();
+      setAvatarUrl("");
 
       storage
         .refFromURL(tempUrl)
@@ -47,7 +47,9 @@ const UploadAvatar = ({
 
       setIsUploading(true);
       const storageRef = storage.ref();
-      const imgFile = storageRef.child(`image/avatar/${file.name}`);
+      const imgFile = storageRef.child(
+        `image/avatar/${file.name}_${new Date().getTime()}`
+      );
       const image = await imgFile.put(file);
 
       await imgFile.getDownloadURL().then((url) => {

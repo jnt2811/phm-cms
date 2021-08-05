@@ -16,3 +16,7 @@ export const requestCreateClinic = (requestData) => {
 export const requestUpdateClinic = (requestData) => {
   return httpRequestPatch(apis.CLINIC + "/" + requestData.id, requestData);
 };
+
+export const requestSearchClinic = (requestData) => {
+  return httpRequestPost(apis.CLINIS_SEARCH, requestData);
+};

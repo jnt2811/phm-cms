@@ -14,9 +14,14 @@ export const requestGetPet = (id) => {
 };
 
 export const requestCreatePet = (requestData) => {
+  console.log(requestData);
   return httpRequestPost(apis.PET, requestData);
 };
 
 export const requestUpdatePet = (requestData) => {
   return httpRequestPatch(apis.PET + "/" + requestData.id, requestData);
+};
+
+export const requestSearchPet = (requestData) => {
+  return httpRequestPost(apis.PET_SEARCH, requestData);
 };

@@ -15,6 +15,8 @@ const volunteerSlice = createSlice({
     doEditVolunteer() {},
     doSwitchCollabVolunteer() {},
     doUpdateAuthVolunteer() {},
+    doSearchVolunteer() {},
+    doUpdateSchedule() {},
 
     doneVolunteer(state, action) {
       return {
@@ -37,6 +39,8 @@ export const {
   doSwitchCollabVolunteer,
   doneVolunteer,
   resetVolunteer,
+  doSearchVolunteer,
+  doUpdateSchedule,
 } = volunteerSlice.actions;
 
 export default volunteerSlice.reducer;

@@ -20,9 +20,9 @@ const ExaminationHeader = ({ location }) => {
         </Col>
 
         <Col>
-          {/* <Button onClick={() => setVisibleModal(true)}>
+          <Button onClick={() => setVisibleModal(true)}>
             Tạo mới lịch hẹn
-          </Button> */}
+          </Button>
         </Col>
       </Row>
 

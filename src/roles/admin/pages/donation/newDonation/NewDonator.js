@@ -1,16 +1,8 @@
-import { Form, Input, notification } from "antd";
-import { useHistory } from "react-router-dom";
-import { successMessages } from "../../../../../constances/messages";
-import pathNames from "../../../../../router/pathNames";
+import { Form, Input } from "antd";
 
-const NewDonator = ({ form, amountVal }) => {
-  const history = useHistory();
-
+const NewDonator = ({ form, dispatchForNewDonator }) => {
   const onFinish = (values) => {
-    console.log(amountVal);
-    console.log(values);
-    notification.success({ message: successMessages.CREATE_NEW_DONATION });
-    history.push(pathNames.ADMIN_DONATION);
+    dispatchForNewDonator(values);
   };
 
   return (

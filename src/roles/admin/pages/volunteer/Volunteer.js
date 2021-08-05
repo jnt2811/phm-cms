@@ -4,6 +4,7 @@ import VolunteerTable from "./VolunteerTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
   doGetAllVolunteers,
+  doSearchVolunteer,
   resetVolunteer,
 } from "../../../../ducks/slices/volunteerSlice";
 import NewVolunteer from "./NewVolunteer";
@@ -44,7 +45,15 @@ const Volunteer = () => {
       setIsLoading(false);
       dispatch(resetVolunteer());
     } else if (volunteerReducer.isOk === false) {
+      if (volunteerReducer.volunteerList !== undefined)
+        setVolunteers(
+          volunteerReducer.volunteerList.map((volunteer) => ({
+            ...volunteer,
+            key: volunteer.id,
+          }))
+        );
       setIsLoading(false);
+      dispatch(resetVolunteer());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volunteerReducer]);
@@ -79,7 +88,9 @@ const Volunteer = () => {
   };
 
   const onSearchVolunteer = () => {
-    console.log(searchVal);
+    const data = { phone: searchVal };
+    dispatch(doSearchVolunteer(data));
+    setIsLoading(true);
   };
 
   const handleDataSource = (volunteers) => {

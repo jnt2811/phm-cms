@@ -1,4 +1,4 @@
-import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Image, Row } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import { useState } from "react";
@@ -10,6 +10,8 @@ import pathNames from "../../../../router/pathNames";
 import "./viewPet.scss";
 import moment from "moment";
 import { isEmptyData } from "../../../../utils";
+import DogFb from "../../../../assets/dog_fallback.svg";
+import CatFb from "../../../../assets/cat_fallback.svg";
 
 const ViewPet = () => {
   const { id } = useParams();
@@ -38,7 +40,6 @@ const ViewPet = () => {
 
   useEffect(() => {
     if (petReducer.isOk === true) {
-      console.log(petReducer.petList[0]);
       setPet(petReducer.petList[0]);
       dispatch(resetPet(id));
     } else if (petReducer.isOk === false) {
@@ -78,7 +79,37 @@ const ViewPet = () => {
         <Col span={8}>
           <div className="info">
             <div style={{ textAlign: "center" }}>
-              <Avatar size={100} icon={<UserOutlined />} src={pet.avatar} />
+              <Avatar
+                size={100}
+                icon={
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "100%",
+                      width: "100%",
+                    }}
+                  >
+                    <img
+                      src={
+                        pet.type === "Chó"
+                          ? DogFb
+                          : pet.type === "Chó"
+                          ? CatFb
+                          : ""
+                      }
+                      alt=""
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                }
+                src={!isEmptyData(pet.avatar) && pet.avatar}
+              />
 
               <br />
 
@@ -99,7 +130,10 @@ const ViewPet = () => {
               </p>
 
               <p>
-                Người cứu trợ: <strong>{pet.volunteer.name}</strong>
+                Người cứu trợ:{" "}
+                <strong>
+                  {!isEmptyData(pet.volunteer) ? pet.volunteer.name : "Admin"}
+                </strong>
               </p>
 
               <p>
@@ -122,22 +156,30 @@ const ViewPet = () => {
 
               <Divider className="divider" />
 
-              <p>Phòng khám: {}</p>
+              <p>
+                Phòng khám: <strong>{report.clinic.name}</strong>
+              </p>
 
               <p>
                 Cân nặng: <strong>{report.weight} kg</strong>
               </p>
 
-              <p>Ghi chú: {report.note}</p>
+              <p>
+                Ghi chú: <strong>{report.note}</strong>
+              </p>
 
-              <div className="gallery">
-                <Image.PreviewGroup>
-                  {!isEmptyData(report.images) &&
-                    report.images.map((image) => (
-                      <Image key={image.id} width={100} src={image} />
-                    ))}
-                </Image.PreviewGroup>
-              </div>
+              <Row className="gallery" gutter={{ lg: 20 }}>
+                {!isEmptyData(report.images) &&
+                  report.images.map((image) => (
+                    <Col key={image.id}>
+                      <Image
+                        width={100}
+                        src={image.url}
+                        style={{ borderRadius: "20px" }}
+                      />
+                    </Col>
+                  ))}
+              </Row>
             </div>
           ))}
         </Col>

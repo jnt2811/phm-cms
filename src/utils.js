@@ -66,7 +66,8 @@ export const formatPhone = (phone) => {
 
 export const isEmptyData = (data) => {
   if (data === null || data === undefined) return true;
-  if (typeof data === "object" && Object.keys(data).length === 0) return true;
+  if (JSON.stringify(data) === "{}") return true;
+  if (JSON.stringify(data) === "[]") return true;
   if (data === "") return true;
   return false;
 };

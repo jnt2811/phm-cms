@@ -1,5 +1,6 @@
 import { Col, Divider, Row } from "antd";
 import "./dashboard.scss";
+import ScheduleTable from "./ScheduleTable";
 
 const Dashboard = () => {
   return (
@@ -65,6 +66,12 @@ const Dashboard = () => {
       <Divider />
 
       <h2>Lịch làm việc</h2>
+
+      <br />
+
+      <ScheduleTable />
+
+      <br />
     </div>
   );
 };

@@ -14,6 +14,8 @@ const donationSlice = createSlice({
     doGetAllDonations() {},
     doGetAllDonators() {},
     doCreateDonation() {},
+    doSearchDonation() {},
+    doSearchDonator() {},
 
     doneDonation(state, action) {
       return {
@@ -34,6 +36,8 @@ export const {
   doneDonation,
   resetDonation,
   doGetAllDonators,
+  doSearchDonation,
+  doSearchDonator,
 } = donationSlice.actions;
 
 export default donationSlice.reducer;

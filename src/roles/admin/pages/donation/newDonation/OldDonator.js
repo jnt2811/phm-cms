@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   doGetAllDonators,
+  doSearchDonator,
   resetDonation,
 } from "../../../../../ducks/slices/donationSlice";
 import { formatPhone } from "../../../../../utils";
@@ -24,21 +25,25 @@ const OldDonator = ({ setDonator }) => {
   }, []);
 
   useEffect(() => {
-    if (donationReducer.isOk === true) {
-      const { donatorList } = donationReducer;
+    const { donatorList = [], isOk } = donationReducer;
+    if (isOk === true) {
       setDonators(
         donatorList.map((donator) => ({ ...donator, key: donator.id }))
       );
       setIsLoading(false);
       dispatch(resetDonation());
-    } else if (donationReducer.isOk === false) {
+    } else if (isOk === false) {
+      setDonators(donatorList);
       setIsLoading(false);
+      dispatch(resetDonation());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donationReducer]);
 
   const onSearchVal = () => {
-    console.log(searchVal);
+    const data = { search: searchVal };
+    dispatch(doSearchDonator(data));
+    setIsLoading(true);
   };
 
   const rowSelection = {

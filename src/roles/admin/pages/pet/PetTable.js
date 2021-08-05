@@ -1,8 +1,7 @@
 import { Button, Col, Row, Table } from "antd";
-import { petKeys } from "../../../../constances/data";
 import moment from "moment";
 import { isEmptyData } from "../../../../utils";
-import { InfoOutlined } from "@ant-design/icons";
+import { EditOutlined, InfoOutlined } from "@ant-design/icons";
 
 const PetTable = ({ dataSource, loading, onViewPet, onEditPet }) => {
   const columns = [
@@ -20,7 +19,6 @@ const PetTable = ({ dataSource, loading, onViewPet, onEditPet }) => {
       title: "Loài",
       dataIndex: "type",
       key: "type",
-      render: (type) => (type === petKeys.DOG ? "Chó" : "Mèo"),
     },
     {
       title: "Ngày cứu trợ",
@@ -32,7 +30,8 @@ const PetTable = ({ dataSource, loading, onViewPet, onEditPet }) => {
       title: "Người cứu trợ",
       dataIndex: "volunteer",
       key: "volunteer",
-      render: (volunteer) => (!isEmptyData(volunteer) ? volunteer.name : "---"),
+      render: (volunteer) =>
+        !isEmptyData(volunteer) ? volunteer.name : "Admin",
     },
     {
       title: "",
@@ -48,13 +47,13 @@ const PetTable = ({ dataSource, loading, onViewPet, onEditPet }) => {
             ></Button>
           </Col>
 
-          {/* <Col>
+          <Col>
             <Button
               className="green-btn"
               icon={<EditOutlined />}
               onClick={() => onEditPet(pet)}
             ></Button>
-          </Col> */}
+          </Col>
         </Row>
       ),
     },
