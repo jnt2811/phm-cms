@@ -2,18 +2,14 @@ import { Button, Col, Form, Input, Row, notification } from "antd";
 import "./login.scss";
 import CorgiImg from "../../assets/corgi.png";
 import { useForm } from "antd/lib/form/Form";
-import pathNames from "../../router/pathNames";
 import { useDispatch, useSelector } from "react-redux";
-import { doLogin, resetLogin } from "../../ducks/slices/authSlice";
+import { doLogin, resetAuth } from "../../ducks/slices/authSlice";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 const Login = () => {
   const authReducer = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
-  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,14 +17,14 @@ const Login = () => {
     if (authReducer.isOk === true) {
       setIsLoading(false);
       notification.success({ message: authReducer.message });
-      dispatch(resetLogin());
-      history.push(pathNames.MAIN);
+      dispatch(resetAuth());
+      window.location.reload();
     } else if (authReducer.isOk === false) {
       setIsLoading(false);
       notification.error({ message: authReducer.message });
-      dispatch(resetLogin());
+      dispatch(resetAuth());
     }
-  }, [authReducer, dispatch, history]);
+  }, [authReducer, dispatch]);
 
   const [form] = useForm();
 

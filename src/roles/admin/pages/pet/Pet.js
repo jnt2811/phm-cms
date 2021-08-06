@@ -1,4 +1,4 @@
-import { Button, Col, Input, Row, Select } from "antd";
+import { Button, Col, Input, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NewPet from "./NewPet";
@@ -12,6 +12,9 @@ import EditPet from "./EditPet";
 import { useHistory } from "react-router-dom";
 import pathNames from "../../../../router/pathNames";
 import { failMessages } from "../../../../constances/messages";
+import FilterPet from "./FilterPet";
+import { isEmptyData } from "../../../../utils";
+import moment from "moment";
 
 const Pet = () => {
   const petReducer = useSelector((state) => state.pet);
@@ -22,10 +25,16 @@ const Pet = () => {
   const [pets, setPets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchVal, setSearchVal] = useState("");
-  const [filterVal, setFilterVal] = useState(null);
   const [visibleNewModal, setVisibleNewModal] = useState(false);
   const [visibleEditModal, setVisibleEditModal] = useState(false);
   const [selectedPet, setSelectedPet] = useState();
+  const [visibleFilterModal, setVisibleFilterModal] = useState(false);
+  const [filterVal, setFilterVal] = useState({
+    type: null,
+    rescuer: null,
+    from: null,
+    to: null,
+  });
 
   useEffect(() => {
     dispatch(doGetAllPets());
@@ -55,12 +64,45 @@ const Pet = () => {
   };
 
   const handleDataSource = () => {
-    if (filterVal === "Chó" || filterVal === "Mèo") {
-      return pets.filter((pet) => {
-        if (pet.type === filterVal) return true;
+    const { from, rescuer, to, type } = filterVal;
+
+    let petList = [...pets];
+
+    if (type !== null) {
+      petList = petList.filter((pet) => pet.type === type);
+    }
+
+    if (rescuer !== null) {
+      if (rescuer.name === "admin") {
+        petList = petList.filter((pet) => pet.volunteer === null);
+      } else {
+        petList = petList.filter(
+          (pet) => pet.volunteer !== null && pet.volunteer.name === rescuer.name
+        );
+      }
+    }
+
+    if (!isEmptyData(from) && isEmptyData(to)) {
+      return petList.filter((pet) => {
+        const timeCreateAt = moment(pet.createAt)._d.getTime();
+        if (timeCreateAt >= from) return true;
         else return false;
       });
-    } else return pets;
+    } else if (isEmptyData(from) && !isEmptyData(to)) {
+      return petList.filter((pet) => {
+        const timeCreateAt = moment(pet.createAt)._d.getTime();
+        if (timeCreateAt <= to) return true;
+        else return false;
+      });
+    } else if (!isEmptyData(from) && !isEmptyData(to)) {
+      return petList.filter((pet) => {
+        const timeCreateAt = moment(pet.createAt)._d.getTime();
+        if (timeCreateAt >= from && timeCreateAt <= to) return true;
+        else return false;
+      });
+    }
+
+    return petList;
   };
 
   const onEditPet = (pet) => {
@@ -76,7 +118,7 @@ const Pet = () => {
     <div className="pet">
       <Row align="middle" gutter={{ lg: 20 }}>
         <Col>
-          <h1>Danh sách chó mèo</h1>
+          <h1>Danh sách động vật</h1>
         </Col>
 
         <Col>
@@ -92,7 +134,7 @@ const Pet = () => {
           <Row gutter={{ sm: 10 }}>
             <Col>
               <Input
-                placeholder="Nhập tên chó mèo..."
+                placeholder="Nhập tên động vật..."
                 style={{ width: "350px" }}
                 disabled={isLoading}
                 onChange={(e) => setSearchVal(e.target.value)}
@@ -109,17 +151,12 @@ const Pet = () => {
         </Col>
 
         <Col>
-          <Select
-            className="select"
-            style={{ width: "200px" }}
-            defaultValue={filterVal}
+          <Button
+            onClick={() => setVisibleFilterModal(true)}
             disabled={isLoading}
-            onChange={(val) => setFilterVal(val)}
           >
-            <Select.Option value={null}>Tất cả</Select.Option>
-            <Select.Option value="Chó">Chó</Select.Option>
-            <Select.Option value="Mèo">Mèo</Select.Option>
-          </Select>
+            Bộ lọc
+          </Button>
         </Col>
       </Row>
 
@@ -140,6 +177,13 @@ const Pet = () => {
         pet={selectedPet}
         visible={visibleEditModal}
         setVisible={setVisibleEditModal}
+      />
+
+      <FilterPet
+        filter={filterVal}
+        setFilter={setFilterVal}
+        visible={visibleFilterModal}
+        setVisible={setVisibleFilterModal}
       />
     </div>
   );

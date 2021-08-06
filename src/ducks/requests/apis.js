@@ -7,6 +7,7 @@ const apiUrl = switcher ? localhost : deploy;
 
 const apis = {
   LOGIN: apiUrl + "/login",
+  USER: apiUrl + "/user",
   VOLUNTEER: apiUrl + "/volunteer",
   VOLUNTEER_SEARCH: apiUrl + "/volunteer/search",
   SCHEDULE: apiUrl + "/schedule",

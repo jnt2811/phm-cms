@@ -77,9 +77,9 @@ const NewAppointment = ({ visible, setVisible }) => {
 
       <Form layout="vertical" form={form} onFinish={onFinish}>
         <Form.Item
-          label="Chọn chó mèo"
+          label="Chọn động vật"
           name="pet"
-          rules={[{ required: true, message: "Hãy chọn chó mèo" }]}
+          rules={[{ required: true, message: "Hãy chọn động vật" }]}
         >
           <Select className="select" showSearch>
             {pets.map((pet) => (

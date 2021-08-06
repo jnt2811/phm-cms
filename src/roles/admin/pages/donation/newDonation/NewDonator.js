@@ -1,8 +1,23 @@
 import { Form, Input } from "antd";
+import AddressSelector from "../AddressSelector";
 
-const NewDonator = ({ form, dispatchForNewDonator }) => {
+const NewDonator = ({ form, dispatchNewDonator }) => {
   const onFinish = (values) => {
-    dispatchForNewDonator(values);
+    const { name, phone, province, district, ward } = values;
+
+    const address = {
+      province: JSON.parse(province),
+      district: JSON.parse(district),
+      ward: JSON.parse(ward),
+    };
+
+    const donator = {
+      name: name,
+      phone: phone,
+      // address: JSON.stringify(address)
+    };
+
+    dispatchNewDonator(donator);
   };
 
   return (
@@ -32,6 +47,8 @@ const NewDonator = ({ form, dispatchForNewDonator }) => {
         >
           <Input />
         </Form.Item>
+
+        <AddressSelector form={form} />
       </Form>
     </div>
   );

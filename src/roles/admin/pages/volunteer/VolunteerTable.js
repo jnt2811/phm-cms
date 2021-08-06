@@ -52,7 +52,7 @@ const VolunteerTable = ({
       dataIndex: "collab",
       key: "collab",
       render: (collab, record) => (
-        <Row gutter={{ lg: 10 }}>
+        <Row gutter={[{ lg: 10 }, { lg: 10 }]}>
           <Col>
             <Button
               className="blue-btn"

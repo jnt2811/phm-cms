@@ -5,7 +5,7 @@ import moment from "moment";
 const ReportTable = ({ loading, dataSource, onViewReport }) => {
   const columns = [
     {
-      title: "Tên chó mèo",
+      title: "Tên động vật",
       dataIndex: "pet",
       key: "pet",
       render: (pet) => <>{pet && pet.name}</>,

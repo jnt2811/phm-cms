@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Input, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DonationTable from "./DonationTable";
@@ -7,11 +7,11 @@ import {
   doSearchDonation,
   resetDonation,
 } from "../../../../ducks/slices/donationSlice";
-import { useForm } from "antd/lib/form/Form";
 import moment from "moment";
-import { isEmptyData, validateDate } from "../../../../utils";
+import { isEmptyData } from "../../../../utils";
 import { useHistory } from "react-router-dom";
 import pathNames from "../../../../router/pathNames";
+import FilterDonation from "./FilterDonation";
 
 const Donation = () => {
   const donationReducer = useSelector((state) => state.donation);
@@ -19,15 +19,11 @@ const Donation = () => {
 
   const history = useHistory();
 
-  const [form] = useForm();
-
   const [donations, setDonations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchVal, setSearchVal] = useState("");
-  const [oldInputDateFrom, setOldInputDateFrom] = useState();
-  const [oldInputDateTo, setOldInputDateTo] = useState();
-  const [timeFrom, setTimeFrom] = useState(null);
-  const [timeTo, setTimeTo] = useState(null);
+  const [visibleFilter, setVisibleFilter] = useState(false);
+  const [filterVal, setFilterVal] = useState({});
 
   useEffect(() => {
     dispatch(doGetAllDonations());
@@ -57,93 +53,32 @@ const Donation = () => {
     setIsLoading(true);
   };
 
-  const handleInputDateFrom = (e) => {
-    const { value } = e.target;
-    setOldInputDateFrom(value);
-    if (
-      (value.length === 2 || value.length === 5) &&
-      value.length > oldInputDateFrom.length
-    ) {
-      form.setFieldsValue({ from: value + "/" });
-    }
-  };
+  const handleDataSource = (donations) => {
+    const { province, district, ward, from, to } = filterVal;
 
-  const handleInputDateTo = (e) => {
-    const { value } = e.target;
-    setOldInputDateTo(value);
-    if (
-      (value.length === 2 || value.length === 5) &&
-      value.length > oldInputDateTo.length
-    ) {
-      form.setFieldsValue({ to: value + "/" });
-    }
-  };
-
-  const onFilter = (values) => {
-    const { from, to } = values;
-    const bonusTimeTo = 86399000;
+    let donationList = [...donations];
 
     if (!isEmptyData(from) && isEmptyData(to)) {
-      if (!validateDate(from)) {
-        form.setFields([{ name: "from", errors: ["Ngày không hợp lệ"] }]);
-      } else {
-        const fromTime = moment(from, "DD/MM/YYYY")._d.getTime();
-        setTimeFrom(fromTime);
-        setTimeTo(null);
-      }
+      return donationList.filter((donation) => {
+        const timeCreateAt = moment(donation.createAt)._d.getTime();
+        if (timeCreateAt >= from) return true;
+        else return false;
+      });
     } else if (isEmptyData(from) && !isEmptyData(to)) {
-      if (!validateDate(to)) {
-        form.setFields([{ name: "to", errors: ["Ngày không hợp lệ"] }]);
-      } else {
-        const toTime = moment(to, "DD/MM/YYYY")._d.getTime() + bonusTimeTo;
-        setTimeFrom(null);
-        setTimeTo(toTime);
-      }
+      return donationList.filter((donation) => {
+        const timeCreateAt = moment(donation.createAt)._d.getTime();
+        if (timeCreateAt <= to) return true;
+        else return false;
+      });
     } else if (!isEmptyData(from) && !isEmptyData(to)) {
-      if (!validateDate(from) && validateDate(to)) {
-        form.setFields([{ name: "from", errors: ["Ngày không hợp lệ"] }]);
-      } else if (validateDate(from) && !validateDate(to)) {
-        form.setFields([{ name: "to", errors: ["Ngày không hợp lệ"] }]);
-      } else if (validateDate(from) && validateDate(to)) {
-        const fromTime = moment(from, "DD/MM/YYYY")._d.getTime();
-        const toTime = moment(to, "DD/MM/YYYY")._d.getTime() + bonusTimeTo;
-
-        if (fromTime > toTime) {
-          form.setFields([{ name: "from", errors: ["Lọc bị lỗi"] }]);
-        } else {
-          setTimeFrom(fromTime);
-          setTimeTo(toTime);
-        }
-      } else {
-        form.setFields([{ name: "from", errors: ["Ngày không hợp lệ"] }]);
-        form.setFields([{ name: "to", errors: ["Ngày không hợp lệ"] }]);
-      }
-    } else {
-      setTimeFrom(null);
-      setTimeTo(null);
+      return donationList.filter((donation) => {
+        const timeCreateAt = moment(donation.createAt)._d.getTime();
+        if (timeCreateAt >= from && timeCreateAt <= to) return true;
+        else return false;
+      });
     }
-  };
 
-  const handleDataSource = (donations) => {
-    if (!isEmptyData(timeFrom) && isEmptyData(timeTo)) {
-      return donations.filter((donation) => {
-        const timeCreateAt = moment(donation.createAt)._d.getTime();
-        if (timeCreateAt >= timeFrom) return true;
-        else return false;
-      });
-    } else if (isEmptyData(timeFrom) && !isEmptyData(timeTo)) {
-      return donations.filter((donation) => {
-        const timeCreateAt = moment(donation.createAt)._d.getTime();
-        if (timeCreateAt <= timeTo) return true;
-        else return false;
-      });
-    } else if (!isEmptyData(timeFrom) && !isEmptyData(timeTo)) {
-      return donations.filter((donation) => {
-        const timeCreateAt = moment(donation.createAt)._d.getTime();
-        if (timeCreateAt >= timeFrom && timeCreateAt <= timeTo) return true;
-        else return false;
-      });
-    } else return donations;
+    return donationList;
   };
 
   return (
@@ -195,57 +130,13 @@ const Donation = () => {
         </Col>
 
         <Col>
-          <Form form={form} onFinish={onFilter}>
-            <Row gutter={{ sm: 10 }}>
-              <Col>
-                <Form.Item
-                  name="from"
-                  rules={[
-                    {
-                      pattern: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/,
-                      message: "Sai DD/MM/YYYY",
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Từ ngày"
-                    style={{ width: "150px" }}
-                    disabled={isLoading}
-                    onChange={(e) => handleInputDateFrom(e)}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col>
-                <Form.Item
-                  name="to"
-                  rules={[
-                    {
-                      pattern: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/,
-                      message: "Sai DD/MM/YYYY",
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Đến ngày"
-                    style={{ width: "150px" }}
-                    disabled={isLoading}
-                    onChange={(e) => handleInputDateTo(e)}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col>
-                <Form.Item>
-                  <Button htmlType="submit" disabled={isLoading}>
-                    Lọc
-                  </Button>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
+          <Button onClick={() => setVisibleFilter(true)} disabled={isLoading}>
+            Bộ lọc
+          </Button>
         </Col>
       </Row>
+
+      <br />
 
       <div className="table-container">
         <DonationTable
@@ -254,7 +145,12 @@ const Donation = () => {
         />
       </div>
 
-      {/* <NewDonation visible={visibleNewModal} setVisible={setVisibleNewModal} /> */}
+      <FilterDonation
+        filter={filterVal}
+        setFilter={setFilterVal}
+        visible={visibleFilter}
+        setVisible={setVisibleFilter}
+      />
     </div>
   );
 };

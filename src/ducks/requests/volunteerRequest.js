@@ -21,6 +21,6 @@ export const requestSearchVolunteer = (requestData) => {
   return httpRequestPost(apis.VOLUNTEER_SEARCH, requestData);
 };
 
-export const requestUpdateSchedule = (id, body) => {
-  return httpRequestPost(apis.SCHEDULE_UPDATE + "/" + id, body);
+export const requestUpdateSchedule = (id, data) => {
+  return httpRequestPost(apis.SCHEDULE_UPDATE + "/" + id, { data: data });
 };

@@ -62,7 +62,7 @@ const AdminSider = ({ location }) => {
           <Link to={pathNames.ADMIN_PET}>
             <div className={"sider-item " + (isAtPet && "active")}>
               <img src={Pet_Icon} alt="" />
-              <span>Chó mèo</span>
+              <span>Động vật</span>
             </div>
           </Link>
 

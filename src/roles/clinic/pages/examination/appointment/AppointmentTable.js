@@ -10,7 +10,7 @@ const AppointmentTable = ({
 }) => {
   const columns = [
     {
-      title: "Tên chó mèo",
+      title: "Tên động vật",
       dataIndex: "pet",
       key: "pet",
       render: (pet) => <>{pet.name}</>,

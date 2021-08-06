@@ -5,13 +5,13 @@ import { EditOutlined, InfoOutlined } from "@ant-design/icons";
 
 const PetTable = ({ dataSource, loading, onViewPet, onEditPet }) => {
   const columns = [
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   key: "id",
+    // },
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Tên",
+      title: "Tên động vật",
       dataIndex: "name",
       key: "name",
     },

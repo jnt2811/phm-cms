@@ -5,7 +5,7 @@ import moment from "moment";
 const AppointmentTable = ({ loading, dataSource, onDeleteAppointment }) => {
   const columns = [
     {
-      title: "Tên chó mèo",
+      title: "Tên động vật",
       dataIndex: "pet",
       key: "pet",
       render: (pet) => <>{pet.name}</>,
@@ -22,11 +22,11 @@ const AppointmentTable = ({ loading, dataSource, onDeleteAppointment }) => {
       key: "date",
       render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY HH:mm"),
     },
-    {
-      title: "Người đặt khám",
-      dataIndex: "volunteer",
-      key: "volunteer",
-    },
+    // {
+    //   title: "Người đặt khám",
+    //   dataIndex: "volunteer",
+    //   key: "volunteer",
+    // },
     {
       title: "",
       dataIndex: "id",

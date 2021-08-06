@@ -65,7 +65,7 @@ const UpdateSchedule = ({ volunteer, visible, setVisible }) => {
 
     const data = {
       id: volunteer.id,
-      body: [
+      data: [
         { date: "2", shift: mon },
         { date: "3", shift: tue },
         { date: "4", shift: wed },

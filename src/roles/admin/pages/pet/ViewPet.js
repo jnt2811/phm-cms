@@ -62,7 +62,7 @@ const ViewPet = () => {
             </Col>
 
             <Col>
-              <h1>Chi tiết chó mèo</h1>
+              <h1>Chi tiết động vật</h1>
             </Col>
           </Row>
         </Col>

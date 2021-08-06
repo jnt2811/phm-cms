@@ -1,8 +1,37 @@
 import { Col, Divider, Row } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./dashboard.scss";
 import ScheduleTable from "./ScheduleTable";
+import { doGetAllPets } from "../../../../ducks/slices/petSlice";
+import { doGetAllDonations } from "../../../../ducks/slices/donationSlice";
+import { doGetAllVolunteers } from "../../../../ducks/slices/volunteerSlice";
+import { formatPrice } from "../../../../utils";
 
 const Dashboard = () => {
+  const { petList = [] } = useSelector((state) => state.pet);
+  const { donationList = [], donatorList = [] } = useSelector(
+    (state) => state.donation
+  );
+  const { volunteerList = [] } = useSelector((state) => state.volunteer);
+  const dispatch = useDispatch();
+
+  console.log(petList);
+
+  useEffect(() => {
+    dispatch(doGetAllPets());
+    dispatch(doGetAllDonations());
+    dispatch(doGetAllVolunteers());
+  }, [dispatch]);
+
+  const getDonationAmountSum = () => {
+    let sum = 0;
+
+    donationList.forEach((donation) => (sum += donation.amount));
+
+    return sum;
+  };
+
   return (
     <div className="dashboard">
       <h1>Bảng điều khiển</h1>
@@ -16,15 +45,18 @@ const Dashboard = () => {
       <Row gutter={{ sm: 50 }}>
         <Col span={8}>
           <div className="board">
-            <h2>Chó mèo</h2>
+            <h2>Động vật</h2>
 
             <div className="number">
-              100 <span className="unit">con</span>
+              {petList.length} <span className="unit">con</span>
             </div>
 
             <br />
 
-            <p>Chó: 50 con / Mèo: 50 con</p>
+            <p>
+              Chó: {petList.filter((pet) => pet.type === "Chó").length} con /
+              Mèo: {petList.filter((pet) => pet.type === "Mèo").length} con
+            </p>
           </div>
         </Col>
 
@@ -33,7 +65,9 @@ const Dashboard = () => {
             <h2>Quyên góp</h2>
 
             <div className="number">
-              3 <span className="unit">triệu VND</span>
+              {/* 3 <span className="unit">triệu VND</span> */}
+              {formatPrice(getDonationAmountSum(), "")}{" "}
+              <span className="unit">VND</span>
             </div>
 
             <br />
@@ -49,7 +83,7 @@ const Dashboard = () => {
             <h2>Tình nguyện viên</h2>
 
             <div className="number">
-              20 <span className="unit">người</span>
+              {volunteerList.length} <span className="unit">người</span>
             </div>
 
             <br />

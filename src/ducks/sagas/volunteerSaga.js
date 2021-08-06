@@ -278,9 +278,9 @@ export function* handleSearchVolunteer(action) {
 
 export function* handleUpdateSchedule(action) {
   try {
-    const { id, body } = action.payload;
+    const { id, data } = action.payload;
 
-    const responseSchedule = yield call(() => requestUpdateSchedule(id, body));
+    const responseSchedule = yield call(() => requestUpdateSchedule(id, data));
 
     const { status } = responseSchedule.data;
 

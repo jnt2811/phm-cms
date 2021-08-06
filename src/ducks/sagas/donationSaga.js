@@ -144,6 +144,7 @@ export function* handleSearchDonation(action) {
 
       if (status === "OK") {
         const { data } = responseSearch.data;
+
         yield put(
           doneDonation({
             isOk: true,

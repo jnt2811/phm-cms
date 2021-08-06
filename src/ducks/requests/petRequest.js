@@ -14,7 +14,6 @@ export const requestGetPet = (id) => {
 };
 
 export const requestCreatePet = (requestData) => {
-  console.log(requestData);
   return httpRequestPost(apis.PET, requestData);
 };
 

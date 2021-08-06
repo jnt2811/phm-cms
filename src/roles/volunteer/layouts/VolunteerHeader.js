@@ -30,7 +30,7 @@ const VolunteerHeader = ({ location }) => {
         </Link>
 
         <Link to={pathNames.VOLUNTEER_PET}>
-          <div className={"nav-item " + (isAtPet && "active")}>Chó mèo</div>
+          <div className={"nav-item " + (isAtPet && "active")}>động vật</div>
         </Link>
 
         <Link to={pathNames.VOLUNTEER_APPOINTMENT}>

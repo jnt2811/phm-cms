@@ -18,7 +18,7 @@ import ViewPet from "./pages/pet/ViewPet";
 const Admin = () => {
   return (
     <div className="admin">
-      <Row>
+      <Row wrap={false}>
         <Col flex="300px">
           <Affix offsetTop={0}>
             <AdminSider />

@@ -6,7 +6,6 @@ import {
 } from "@ant-design/icons";
 import { Button, Col, Row, Table } from "antd";
 import { GreenTag, RedTag } from "../../../../commons/commonTag/CommonTag";
-import moment from "moment";
 import { formatPhone } from "../../../../utils";
 
 const ClinicTable = ({
@@ -18,11 +17,11 @@ const ClinicTable = ({
   onUpdatePassword,
 }) => {
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   key: "id",
+    // },
     {
       title: "Tên phòng khám",
       dataIndex: "name",
@@ -34,11 +33,16 @@ const ClinicTable = ({
       key: "phone",
       render: (phone) => formatPhone(phone),
     },
+    // {
+    //   title: "Ngày hợp tác",
+    //   dataIndex: "createAt",
+    //   key: "createAt",
+    //   render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
+    // },
     {
-      title: "Ngày hợp tác",
-      dataIndex: "createAt",
-      key: "createAt",
-      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
+      title: "Địa chỉ",
+      dataIndex: "address",
+      key: "address",
     },
     {
       title: "Trạng thái",
@@ -56,7 +60,7 @@ const ClinicTable = ({
       dataIndex: "collab",
       key: "collab",
       render: (collab, record) => (
-        <Row gutter={{ lg: 10 }}>
+        <Row gutter={[{ lg: 10 }, { lg: 10 }]}>
           <Col>
             <Button
               className="blue-btn"

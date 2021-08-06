@@ -1,9 +1,31 @@
 import { useForm } from "antd/lib/form/Form";
-
-const { Divider, Input, Form, Button, notification } = require("antd");
+import { Input, Form, Button, notification } from "antd";
+import localKeys from "../../../../constances/localKeys";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  doUpdateUserPass,
+  resetAuth,
+} from "../../../../ducks/slices/authSlice";
+import { useEffect } from "react";
 
 const Account = () => {
+  const { id } = JSON.parse(localStorage.getItem(localKeys.USER_DATA));
+
   const [form] = useForm();
+  const authReducer = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (authReducer.isOk === true) {
+      notification.success({ message: authReducer.message });
+      dispatch(resetAuth());
+      window.location.reload();
+    } else if (authReducer.isOk === false) {
+      notification.error({ message: authReducer.message });
+      dispatch(resetAuth());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authReducer]);
 
   const onFinish = (values) => {
     if (values.password !== values.retype) {
@@ -11,8 +33,8 @@ const Account = () => {
         { name: "retype", errors: ["Mật khẩu gõ lại không khớp"] },
       ]);
     } else {
-      console.log(values);
-      notification.success({ message: "Success" });
+      dispatch(doUpdateUserPass({ id: id, password: values.password }));
+      notification.open({ message: "Đang xử lý..." });
     }
   };
 
@@ -21,13 +43,6 @@ const Account = () => {
       <h1>Tài khoản</h1>
 
       <br />
-
-      <h2>Thông tin cơ bản</h2>
-
-      <p>Số điện thoại: </p>
-      <p>Vai trò: </p>
-
-      <Divider />
 
       <h2>Đổi mật khẩu</h2>
 

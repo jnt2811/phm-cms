@@ -106,17 +106,18 @@ const UpdatePassword = ({ clinic, visible, setVisible }) => {
               <Form.Item
                 label="Mật khẩu mới"
                 name="password"
-                rules={[
-                  {
-                    required: "true",
-                    message: "Hãy nhập mật khẩu mới",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: "true",
+                //     message: "Hãy nhập mật khẩu mới",
+                //   },
+                // ]}
+                initialValue={clinic.phone}
               >
-                <Input.Password className="input-password" />
+                <Input disabled />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 label="Nhập lại mật khẩu mới"
                 name="retype"
                 rules={[
@@ -127,7 +128,7 @@ const UpdatePassword = ({ clinic, visible, setVisible }) => {
                 ]}
               >
                 <Input.Password className="input-password" />
-              </Form.Item>
+              </Form.Item> */}
             </>
           )}
         </Form>

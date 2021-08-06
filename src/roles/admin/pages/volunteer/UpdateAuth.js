@@ -41,15 +41,15 @@ const UpdateAuth = ({ volunteer, visible, setVisible }) => {
     };
 
     if (!isPhoneSelected) {
-      if (values.password !== values.retype) {
-        form.setFields([
-          { name: "retype", errors: ["Mật khẩu gõ lại không khớp"] },
-        ]);
-      } else {
-        requestData.password = values.password;
-        dispatch(doUpdateAuthVolunteer(requestData));
-        notification.open({ message: "Đang xử lý..." });
-      }
+      // if (values.password !== values.retype) {
+      //   form.setFields([
+      //     { name: "retype", errors: ["Mật khẩu gõ lại không khớp"] },
+      //   ]);
+      // } else {
+      requestData.password = values.password;
+      dispatch(doUpdateAuthVolunteer(requestData));
+      notification.open({ message: "Đang xử lý..." });
+      // }
     } else {
       requestData.phone = values.phone;
       dispatch(doUpdateAuthVolunteer(requestData));
@@ -106,17 +106,18 @@ const UpdateAuth = ({ volunteer, visible, setVisible }) => {
               <Form.Item
                 label="Mật khẩu mới"
                 name="password"
-                rules={[
-                  {
-                    required: "true",
-                    message: "Hãy nhập mật khẩu mới",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: "true",
+                //     message: "Hãy nhập mật khẩu mới",
+                //   },
+                // ]}
+                initialValue={volunteer.phone}
               >
-                <Input.Password className="input-password" />
+                <Input disabled />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 label="Nhập lại mật khẩu mới"
                 name="retype"
                 rules={[
@@ -127,7 +128,7 @@ const UpdateAuth = ({ volunteer, visible, setVisible }) => {
                 ]}
               >
                 <Input.Password className="input-password" />
-              </Form.Item>
+              </Form.Item> */}
             </>
           )}
         </Form>

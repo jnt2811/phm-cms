@@ -66,7 +66,7 @@ const Pet = () => {
     <div className="pet">
       <Row align="middle" gutter={{ lg: 20 }}>
         <Col>
-          <h1>Danh sách chó mèo</h1>
+          <h1>Danh sách động vật</h1>
         </Col>
 
         <Col>
@@ -82,7 +82,7 @@ const Pet = () => {
           <Row gutter={{ sm: 10 }}>
             <Col>
               <Input
-                placeholder="Nhập tên chó mèo..."
+                placeholder="Nhập tên động vật..."
                 style={{ width: "350px" }}
                 disabled={isLoading}
                 onChange={(e) => setSearchVal(e.target.value)}

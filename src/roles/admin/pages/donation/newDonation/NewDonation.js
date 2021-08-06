@@ -48,6 +48,7 @@ const NewDonation = () => {
     } else {
       const data = { amount: amountVal, donator: oldDonator };
       dispatch(doCreateDonation(data));
+      notification.open({ message: "Đang xử lý..." });
     }
   };
 
@@ -61,9 +62,14 @@ const NewDonation = () => {
     } else return true;
   };
 
-  const dispatchForNewDonator = (donator) => {
-    const data = { amount: amountVal, donator: donator };
+  const dispatchNewDonator = (donator) => {
+    const data = {
+      amount: amountVal,
+      donator,
+    };
+
     dispatch(doCreateDonation(data));
+    notification.open({ message: "Đang xử lý..." });
   };
 
   return (
@@ -119,10 +125,7 @@ const NewDonation = () => {
             {isOldDonator ? (
               <OldDonator setDonator={setOldDonator} />
             ) : (
-              <NewDonator
-                form={form}
-                dispatchForNewDonator={dispatchForNewDonator}
-              />
+              <NewDonator form={form} dispatchNewDonator={dispatchNewDonator} />
             )}
           </Col>
 

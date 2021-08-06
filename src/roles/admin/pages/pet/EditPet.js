@@ -63,7 +63,7 @@ const EditPet = ({ pet, visible, setVisible }) => {
         onCancel={() => setVisible(false)}
         width={800}
       >
-        <h1>Chỉnh sửa chó mèo</h1>
+        <h1>Chỉnh sửa động vật</h1>
 
         <br />
 
