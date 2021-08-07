@@ -3,7 +3,7 @@ import { useState } from "react";
 import AppointmentTable from "./AppointmentTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  doGetAllAppointments,
+  doGetAllAppointmentsByClinic,
   resetAppointment,
 } from "../../../../../ducks/slices/appointmentSlice";
 import DeleteAppointment from "./DeleteAppointment";
@@ -20,7 +20,7 @@ const Appointment = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(doGetAllAppointments());
+    dispatch(doGetAllAppointmentsByClinic());
     setIsLoading(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

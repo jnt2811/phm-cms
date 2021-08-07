@@ -17,14 +17,7 @@ const UploadAvatar = ({
     if (e) e.stopPropagation();
 
     if (!isEmptyData(avatarUrl)) {
-      const tempUrl = avatarUrl;
       setAvatarUrl("");
-
-      storage
-        .refFromURL(tempUrl)
-        .delete()
-        .then(() => console.log("Delete image success"))
-        .catch((error) => console.log(error));
     }
   };
 

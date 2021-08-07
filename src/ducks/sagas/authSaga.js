@@ -1,14 +1,16 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
+  doGetUserInfo,
   doLogin,
   doLogout,
   doneAuth,
-  doUpdateUserPass,
+  doUpdateUserInfo,
 } from "../slices/authSlice";
 import localKeys from "../../constances/localKeys";
 import {
   requestDoLogin,
-  requestDoUpdateUserPass,
+  requestGetUserInfo,
+  requestUpdateUserInfo,
 } from "../requests/authRequest";
 import { convertErrorCodeToMessage } from "../../utils";
 import { failMessages, successMessages } from "../../constances/messages";
@@ -16,7 +18,8 @@ import { failMessages, successMessages } from "../../constances/messages";
 export function* watchDoAuth() {
   yield takeLatest(doLogin.type, handleLogin);
   yield takeLatest(doLogout.type, handleLogout);
-  yield takeLatest(doUpdateUserPass.type, handleUpdateUserPass);
+  yield takeLatest(doGetUserInfo.type, handleGetUserInfo);
+  yield takeLatest(doUpdateUserInfo.type, handleUpdateUserInfo);
 }
 
 export function* handleLogout() {
@@ -65,9 +68,59 @@ export function* handleLogin(action) {
   }
 }
 
-export function* handleUpdateUserPass(action) {
+export function* handleUpdateUserInfo(action) {
   try {
-    const response = yield call(() => requestDoUpdateUserPass(action.payload));
+    const { id } = JSON.parse(localStorage.getItem(localKeys.USER_DATA));
+
+    const data = { ...action.payload, id };
+
+    const response = yield call(() => requestUpdateUserInfo(data));
+
+    const { status } = response.data;
+
+    if (status === "OK") {
+      const newUserInfo = yield call(() => requestGetUserInfo(id));
+
+      localStorage.setItem(
+        localKeys.USER_DATA,
+        JSON.stringify({
+          id: newUserInfo.data.data.id,
+          rest: newUserInfo.data.data,
+        })
+      );
+
+      yield put(
+        doneAuth({
+          isOk: true,
+          message: successMessages.UPDATE_USER_INFO,
+          userData: newUserInfo.data.data,
+        })
+      );
+    } else {
+      yield put(
+        doneAuth({
+          isOk: false,
+          message: failMessages.UPDATE_USER_INFO,
+        })
+      );
+    }
+  } catch (error) {
+    console.log("Error: " + JSON.stringify(error));
+
+    yield put(
+      doneAuth({
+        isOk: false,
+        message: error.message,
+      })
+    );
+  }
+}
+
+export function* handleGetUserInfo(action) {
+  try {
+    const { id } = JSON.parse(localStorage.getItem(localKeys.USER_DATA));
+
+    const response = yield call(() => requestGetUserInfo(id));
 
     const { status } = response.data;
 
@@ -75,14 +128,15 @@ export function* handleUpdateUserPass(action) {
       yield put(
         doneAuth({
           isOk: true,
-          message: successMessages.UPDATE_USER_PASS,
+          message: successMessages.GET_USER_INFO,
+          userData: response.data.data,
         })
       );
     } else {
       yield put(
         doneAuth({
           isOk: false,
-          message: failMessages.UPDATE_USER_PASS,
+          message: failMessages.GET_USER_INFO,
         })
       );
     }

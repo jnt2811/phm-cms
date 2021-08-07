@@ -1,4 +1,4 @@
-import { Col, DatePicker, Form, Row, Select } from "antd";
+import { Col, DatePicker, Form, notification, Row, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,10 +8,13 @@ import {
   doGetAllClinics,
   resetClinic,
 } from "../../../../ducks/slices/clinicSlice";
+import { failMessages, successMessages } from "../../../../constances/messages";
+import { doCreateAppointment } from "../../../../ducks/slices/appointmentSlice";
 
 const NewAppointment = ({ visible, setVisible }) => {
   const petReducer = useSelector((state) => state.pet);
   const clinicReducer = useSelector((state) => state.clinic);
+  const appointmentReducer = useSelector((state) => state.appointment);
   const dispatch = useDispatch();
 
   const [form] = useForm();
@@ -47,22 +50,41 @@ const NewAppointment = ({ visible, setVisible }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clinicReducer]);
 
+  useEffect(() => {
+    const { isOk, message = "" } = appointmentReducer;
+
+    const successMessage = successMessages.CREATE_NEW_APPOINTMENT;
+    const failMessage = failMessages.CREATE_NEW_APPOINTMENT;
+
+    if (isOk === true && message === successMessage) {
+      notification.success({ message: successMessage });
+      form.resetFields();
+      setVisible(false);
+    } else if (isOk === false && message === failMessage) {
+      notification.error({ message: failMessage });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appointmentReducer]);
+
   const onCancel = () => {
     form.resetFields();
     setVisible(false);
   };
 
   const onFinish = (values) => {
-    const appointment = {
-      ...values,
-      pet: JSON.parse(values.pet),
-      clinic: JSON.parse(values.clinic),
-    };
-    console.log(appointment);
-    form.resetFields();
-    setVisible(false);
-  };
+    const petId = JSON.parse(values.pet).id;
+    const clinicId = JSON.parse(values.clinic).id;
+    const date =
+      values.date.format("YYYY-MM-DD") +
+      " " +
+      values.time.format("HH:mm:ss") +
+      "Z";
 
+    const data = { date, petId, clinicId };
+
+    dispatch(doCreateAppointment(data));
+    notification.open({ message: "Đang xử lý..." });
+  };
   return (
     <FormModal
       visible={visible}
@@ -77,9 +99,9 @@ const NewAppointment = ({ visible, setVisible }) => {
 
       <Form layout="vertical" form={form} onFinish={onFinish}>
         <Form.Item
-          label="Chọn động vật"
+          label="Chọn vật nuôi"
           name="pet"
-          rules={[{ required: true, message: "Hãy chọn động vật" }]}
+          rules={[{ required: true, message: "Hãy chọn vật nuôi" }]}
         >
           <Select className="select" showSearch>
             {pets.map((pet) => (

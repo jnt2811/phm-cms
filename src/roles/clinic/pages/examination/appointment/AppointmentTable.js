@@ -10,7 +10,7 @@ const AppointmentTable = ({
 }) => {
   const columns = [
     {
-      title: "Tên động vật",
+      title: "Tên vật nuôi",
       dataIndex: "pet",
       key: "pet",
       render: (pet) => <>{pet.name}</>,
@@ -27,11 +27,11 @@ const AppointmentTable = ({
       key: "createAt",
       render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
     },
-    {
-      title: "Người đặt khám",
-      dataIndex: "volunteer",
-      key: "volunteer",
-    },
+    // {
+    //   title: "Người đặt khám",
+    //   dataIndex: "volunteer",
+    //   key: "volunteer",
+    // },
     {
       title: "",
       dataIndex: "id",

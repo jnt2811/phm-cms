@@ -4,17 +4,23 @@ import {
   doCreateAppointment,
   doDeleteAppointment,
   doGetAllAppointments,
+  doGetAllAppointmentsByClinic,
   doneAppointment,
-  // doDeleteAppointment,
 } from "../slices/appointmentSlice";
 import {
   requestCreateAppointment,
   requestDeleteAppointment,
   requestGetAllAppointments,
+  requestGetAllAppointmentsByClinic,
 } from "../requests/appointmentRequest";
+import localKeys from "../../constances/localKeys";
 
 export function* watchDoAppointment() {
   yield takeLatest(doGetAllAppointments.type, handleGetAllAppointments);
+  yield takeLatest(
+    doGetAllAppointmentsByClinic.type,
+    handleGetAllAppointmentsByClinic
+  );
   yield takeLatest(doCreateAppointment.type, handleCreateAppointment);
   yield takeLatest(doDeleteAppointment.type, handleDeleteAppointment);
 }
@@ -22,6 +28,42 @@ export function* watchDoAppointment() {
 export function* handleGetAllAppointments(action) {
   try {
     const response = yield call(() => requestGetAllAppointments());
+
+    const { status } = response.data;
+
+    if (status === "OK") {
+      yield put(
+        doneAppointment({
+          isOk: true,
+          message: successMessages.GET_ALL_APPOINTMENTS,
+          appointmentList: response.data.data,
+        })
+      );
+    } else {
+      yield put(
+        doneAppointment({
+          isOk: false,
+          message: failMessages.GET_ALL_APPOINTMENTS,
+        })
+      );
+    }
+  } catch (error) {
+    console.log("Error: " + JSON.stringify(error));
+
+    yield put(
+      doneAppointment({
+        isOk: false,
+        message: JSON.stringify(error),
+      })
+    );
+  }
+}
+
+export function* handleGetAllAppointmentsByClinic(action) {
+  try {
+    const { id } = JSON.parse(localStorage.getItem(localKeys.USER_DATA));
+
+    const response = yield call(() => requestGetAllAppointmentsByClinic(id));
 
     const { status } = response.data;
 

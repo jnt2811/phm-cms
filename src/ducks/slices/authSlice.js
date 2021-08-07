@@ -11,7 +11,8 @@ const authSlice = createSlice({
   initialState: initState,
   reducers: {
     doLogin() {},
-    doUpdateUserPass() {},
+    doUpdateUserInfo() {},
+    doGetUserInfo() {},
 
     doneAuth(state, action) {
       return action.payload;
@@ -25,7 +26,13 @@ const authSlice = createSlice({
   },
 });
 
-export const { doLogout, doLogin, doneAuth, resetAuth, doUpdateUserPass } =
-  authSlice.actions;
+export const {
+  doLogout,
+  doLogin,
+  doneAuth,
+  resetAuth,
+  doUpdateUserInfo,
+  doGetUserInfo,
+} = authSlice.actions;
 
 export default authSlice.reducer;

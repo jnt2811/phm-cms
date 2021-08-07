@@ -1,16 +1,41 @@
 import { Avatar, Button } from "antd";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import "./account.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditInfo from "./EditInfo";
 import UpdatePass from "./UpdatePass";
+import { useDispatch, useSelector } from "react-redux";
+import { doGetUserInfo, resetAuth } from "../../../../ducks/slices/authSlice";
+import { formatPhone } from "../../../../utils";
 
 const Account = () => {
   const [visibleEditModal, setVisibleEditModal] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+
+  const dispatch = useDispatch();
+  const authReducer = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(doGetUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const { isOk, userData } = authReducer;
+
+    if (isOk === true) {
+      setUserInfo(userData);
+      dispatch(resetAuth());
+    } else if (isOk === false) {
+      setUserInfo({});
+      dispatch(resetAuth());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authReducer]);
 
   return (
     <div className="account">
-      <h1>Xin chào, Phòng khám</h1>
+      <h1>Xin chào, {userInfo.name}</h1>
 
       <br />
       <br />
@@ -18,28 +43,27 @@ const Account = () => {
       <div className="row">
         <div className="col col-1">
           <div style={{ textAlign: "center" }}>
-            <Avatar size={120} icon={<UserOutlined />} />
+            <Avatar size={120} icon={<UserOutlined />} src={userInfo.avatar} />
 
             <br />
             <br />
 
-            <h2>Phòng khám</h2>
-            <h4>- Phòng khám -</h4>
+            <h2>{userInfo.name}</h2>
+            <h4>- {userInfo.role} -</h4>
           </div>
 
           <br />
 
           <p>
-            Số điện thoại: <strong>0123456789</strong>
+            Số điện thoại: <strong>{formatPhone(userInfo.phone)}</strong>
           </p>
 
           <p>
-            Email: <strong>pk@gmail.com</strong>
+            Email: <strong>{userInfo.email}</strong>
           </p>
 
           <p>
-            Địa chỉ:{" "}
-            <strong>Lê Văn Thiêm, Thanh Xuân Trung, Thanh Xuân, Hà Nội</strong>
+            Địa chỉ: <strong>{userInfo.address}</strong>
           </p>
 
           <br />
@@ -60,7 +84,11 @@ const Account = () => {
         </div>
       </div>
 
-      <EditInfo visible={visibleEditModal} setVisible={setVisibleEditModal} />
+      <EditInfo
+        info={userInfo}
+        visible={visibleEditModal}
+        setVisible={setVisibleEditModal}
+      />
     </div>
   );
 };

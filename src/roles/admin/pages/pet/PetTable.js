@@ -11,7 +11,7 @@ const PetTable = ({ dataSource, loading, onViewPet, onEditPet }) => {
     //   key: "id",
     // },
     {
-      title: "Tên động vật",
+      title: "Tên vật nuôi",
       dataIndex: "name",
       key: "name",
     },

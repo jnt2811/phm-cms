@@ -16,3 +16,7 @@ export const requestCreateAppointment = (requestData) => {
 export const requestDeleteAppointment = (id) => {
   return httpRequestDelete(apis.APPOINTMENT + "/" + id);
 };
+
+export const requestGetAllAppointmentsByClinic = (clinicId) => {
+  return httpRequestGet(apis.APPOINTMENT + "/clinic/" + clinicId);
+};

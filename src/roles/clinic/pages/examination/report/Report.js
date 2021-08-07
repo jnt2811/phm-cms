@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReportTable from "./ReportTable";
 import ViewReport from "./ViewReport";
 import {
-  doGetAllReports,
+  doGetAllReportsByClinic,
   resetReport,
 } from "../../../../../ducks/slices/reportSlice";
 
@@ -23,7 +23,7 @@ const Report = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(doGetAllReports());
+    dispatch(doGetAllReportsByClinic());
     setIsLoading(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

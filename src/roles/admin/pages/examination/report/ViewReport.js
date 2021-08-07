@@ -14,7 +14,7 @@ const ViewReport = ({ report, visible, setVisible }) => {
             <br />
 
             <p>
-              Tên động vật: <strong>{report.pet.name}</strong>
+              Tên vật nuôi: <strong>{report.pet.name}</strong>
             </p>
 
             <p>

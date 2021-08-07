@@ -1,9 +1,9 @@
 import { useForm } from "antd/lib/form/Form";
-import { Input, Form, Button, notification } from "antd";
+import { Input, Form, Button, notification, Row, Col } from "antd";
 import localKeys from "../../../../constances/localKeys";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  doUpdateUserPass,
+  doUpdateUserInfo,
   resetAuth,
 } from "../../../../ducks/slices/authSlice";
 import { useEffect } from "react";
@@ -19,7 +19,6 @@ const Account = () => {
     if (authReducer.isOk === true) {
       notification.success({ message: authReducer.message });
       dispatch(resetAuth());
-      window.location.reload();
     } else if (authReducer.isOk === false) {
       notification.error({ message: authReducer.message });
       dispatch(resetAuth());
@@ -33,8 +32,8 @@ const Account = () => {
         { name: "retype", errors: ["Mật khẩu gõ lại không khớp"] },
       ]);
     } else {
-      dispatch(doUpdateUserPass({ id: id, password: values.password }));
       notification.open({ message: "Đang xử lý..." });
+      dispatch(doUpdateUserInfo({ id: id, password: values.password }));
     }
   };
 
@@ -47,31 +46,37 @@ const Account = () => {
       <h2>Đổi mật khẩu</h2>
 
       <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item
-          label="Mật khẩu mới"
-          name="password"
-          rules={[
-            {
-              required: "true",
-              message: "Hãy nhập mật khẩu mới",
-            },
-          ]}
-        >
-          <Input.Password className="input-password" />
-        </Form.Item>
+        <Row gutter={[{ md: 20 }, { sm: 20 }]}>
+          <Col md={12}>
+            <Form.Item
+              label="Mật khẩu mới"
+              name="password"
+              rules={[
+                {
+                  required: "true",
+                  message: "Hãy nhập mật khẩu mới",
+                },
+              ]}
+            >
+              <Input.Password className="input-password" />
+            </Form.Item>
+          </Col>
 
-        <Form.Item
-          label="Nhập lại mật khẩu mới"
-          name="retype"
-          rules={[
-            {
-              required: "true",
-              message: "Hãy nhập lại mật khẩu mới",
-            },
-          ]}
-        >
-          <Input.Password className="input-password" />
-        </Form.Item>
+          <Col md={12}>
+            <Form.Item
+              label="Nhập lại mật khẩu mới"
+              name="retype"
+              rules={[
+                {
+                  required: "true",
+                  message: "Hãy nhập lại mật khẩu mới",
+                },
+              ]}
+            >
+              <Input.Password className="input-password" />
+            </Form.Item>
+          </Col>
+        </Row>
 
         <Form.Item>
           <Button htmlType="submit">Cập nhật</Button>

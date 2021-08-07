@@ -11,6 +11,7 @@ const examSlice = createSlice({
   initialState: initState,
   reducers: {
     doGetAllAppointments() {},
+    doGetAllAppointmentsByClinic() {},
     doCreateAppointment() {},
     doDeleteAppointment() {},
 
@@ -33,6 +34,7 @@ export const {
   doneAppointment,
   resetAppointment,
   doDeleteAppointment,
+  doGetAllAppointmentsByClinic,
 } = examSlice.actions;
 
 export default examSlice.reducer;

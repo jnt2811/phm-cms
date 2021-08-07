@@ -11,6 +11,7 @@ const examSlice = createSlice({
   initialState: initState,
   reducers: {
     doGetAllReports() {},
+    doGetAllReportsByClinic() {},
     doCreateReport() {},
 
     doneReport(state, action) {
@@ -26,7 +27,12 @@ const examSlice = createSlice({
   },
 });
 
-export const { doCreateReport, doGetAllReports, doneReport, resetReport } =
-  examSlice.actions;
+export const {
+  doCreateReport,
+  doGetAllReports,
+  doneReport,
+  resetReport,
+  doGetAllReportsByClinic,
+} = examSlice.actions;
 
 export default examSlice.reducer;

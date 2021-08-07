@@ -45,18 +45,18 @@ const Dashboard = () => {
       <Row gutter={{ sm: 50 }}>
         <Col span={8}>
           <div className="board">
-            <h2>Động vật</h2>
+            <h2>Vật nuôi</h2>
 
             <div className="number">
               {petList.length} <span className="unit">con</span>
             </div>
 
-            <br />
+            {/* <br />
 
             <p>
               Chó: {petList.filter((pet) => pet.type === "Chó").length} con /
               Mèo: {petList.filter((pet) => pet.type === "Mèo").length} con
-            </p>
+            </p> */}
           </div>
         </Col>
 
@@ -70,11 +70,11 @@ const Dashboard = () => {
               <span className="unit">VND</span>
             </div>
 
-            <br />
+            {/* <br />
 
             <p>
               Top 1: Nguyen Van A <br /> (1 triệu VND)
-            </p>
+            </p> */}
           </div>
         </Col>
 
@@ -86,11 +86,11 @@ const Dashboard = () => {
               {volunteerList.length} <span className="unit">người</span>
             </div>
 
-            <br />
+            {/* <br />
 
             <p>
               Top 1: Nguyen Van B <br /> (10 con)
-            </p>
+            </p> */}
           </div>
         </Col>
       </Row>

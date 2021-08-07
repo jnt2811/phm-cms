@@ -54,7 +54,7 @@ const NewPet = ({ visible, setVisible }) => {
         onCancel={onCancel}
         width={800}
       >
-        <h1>Tạo mới động vật</h1>
+        <h1>Tạo mới vật nuôi</h1>
 
         <br />
 

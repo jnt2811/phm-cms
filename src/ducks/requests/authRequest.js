@@ -1,4 +1,8 @@
-import { httpRequestPatch, httpRequestPost } from "./httpRequest";
+import {
+  httpRequestGet,
+  httpRequestPatch,
+  httpRequestPost,
+} from "./httpRequest";
 import apis from "./apis";
 
 export const requestDoLogin = (requestData) => {
@@ -7,6 +11,10 @@ export const requestDoLogin = (requestData) => {
   return httpRequestPost(apis.LOGIN, requestData, headers);
 };
 
-export const requestDoUpdateUserPass = (requestData) => {
+export const requestUpdateUserInfo = (requestData) => {
   return httpRequestPatch(apis.USER + "/" + requestData.id, requestData);
+};
+
+export const requestGetUserInfo = (id) => {
+  return httpRequestGet(apis.USER + "/" + id);
 };

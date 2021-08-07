@@ -5,13 +5,39 @@ import { useState } from "react";
 import EditInfo from "./EditInfo";
 import ScheduleTable from "./ScheduleTable";
 import UpdatePass from "./UpdatePass";
+import { formatPhone } from "../../../../utils";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { doGetUserInfo, resetAuth } from "../../../../ducks/slices/authSlice";
 
 const Account = () => {
   const [visibleEditModal, setVisibleEditModal] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+
+  const dispatch = useDispatch();
+  const authReducer = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(doGetUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const { isOk, userData } = authReducer;
+
+    if (isOk === true) {
+      setUserInfo(userData);
+      dispatch(resetAuth());
+    } else if (isOk === false) {
+      setUserInfo({});
+      dispatch(resetAuth());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authReducer]);
 
   return (
     <div className="account">
-      <h1>Xin chào, Tình nguyện viên</h1>
+      <h1>Xin chào, {userInfo.name}</h1>
 
       <br />
       <br />
@@ -19,36 +45,35 @@ const Account = () => {
       <div className="row">
         <div className="col col-1">
           <div style={{ textAlign: "center" }}>
-            <Avatar size={120} icon={<UserOutlined />} />
+            <Avatar size={120} icon={<UserOutlined />} src={userInfo.avatar} />
 
             <br />
             <br />
 
-            <h2>Tình nguyện viên</h2>
-            <h4>- Tình nguyện viên -</h4>
+            <h2>{userInfo.name}</h2>
+            <h4>- {userInfo.role} -</h4>
           </div>
 
           <br />
 
           <p>
-            Ngày sinh: <strong>28/11/2000</strong>
+            Ngày sinh: <strong>{userInfo.dob}</strong>
           </p>
 
           <p>
-            Giới tính: <strong>Nam</strong>
+            Giới tính: <strong>{userInfo.gender}</strong>
           </p>
 
           <p>
-            Địa chỉ:{" "}
-            <strong>Lê Văn Thiêm, Thanh Xuân Trung, Thanh Xuân, Hà Nội</strong>
+            Địa chỉ: <strong>{userInfo.address}</strong>
           </p>
 
           <p>
-            Số điện thoại: <strong>0123456789</strong>
+            Số điện thoại: <strong>{formatPhone(userInfo.phone)}</strong>
           </p>
 
           <p>
-            Email: <strong>tnv@gmail.com</strong>
+            Email: <strong>{userInfo.email}</strong>
           </p>
 
           <br />
@@ -65,7 +90,7 @@ const Account = () => {
         </div>
 
         <div className="col col-2">
-          <ScheduleTable />
+          <ScheduleTable schedule={userInfo.schedules} />
 
           <Divider />
 
@@ -73,7 +98,11 @@ const Account = () => {
         </div>
       </div>
 
-      <EditInfo visible={visibleEditModal} setVisible={setVisibleEditModal} />
+      <EditInfo
+        info={userInfo}
+        visible={visibleEditModal}
+        setVisible={setVisibleEditModal}
+      />
     </div>
   );
 };

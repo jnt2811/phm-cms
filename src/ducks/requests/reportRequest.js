@@ -8,3 +8,7 @@ export const requestGetAllReports = () => {
 export const requestCreateReport = (requestData) => {
   return httpRequestPost(apis.REPORT, requestData);
 };
+
+export const requestGetAllReportsByClinic = (clinicId) => {
+  return httpRequestGet(apis.REPORT + "/clinic/" + clinicId);
+};

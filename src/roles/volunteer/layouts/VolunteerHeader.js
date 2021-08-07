@@ -11,7 +11,7 @@ const VolunteerHeader = ({ location }) => {
   const isAtHome = pathname === pathNames.VOLUNTEER;
   const isAtPet =
     pathname === pathNames.VOLUNTEER_PET ||
-    pathname.slice(0, pathNames.VOLUNTEER_PET_nId) ===
+    pathname.slice(0, pathNames.VOLUNTEER_PET_nId.length) ===
       pathNames.VOLUNTEER_PET_nId;
   const isAtAppointment = pathname === pathNames.VOLUNTEER_APPOINTMENT;
   const isAtChat = pathname === pathNames.VOLUNTEER_CHAT;
@@ -30,7 +30,7 @@ const VolunteerHeader = ({ location }) => {
         </Link>
 
         <Link to={pathNames.VOLUNTEER_PET}>
-          <div className={"nav-item " + (isAtPet && "active")}>động vật</div>
+          <div className={"nav-item " + (isAtPet && "active")}>Vật nuôi</div>
         </Link>
 
         <Link to={pathNames.VOLUNTEER_APPOINTMENT}>

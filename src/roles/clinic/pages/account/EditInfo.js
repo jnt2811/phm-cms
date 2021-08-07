@@ -1,10 +1,22 @@
-import { Col, Form, Input, Row } from "antd";
+import { Col, Form, Input, notification, Row } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
+import UploadAvatar from "../../../../commons/uploadImage/UploadAvatar";
+import { failMessages, successMessages } from "../../../../constances/messages";
+import {
+  doUpdateUserInfo,
+  resetAuth,
+} from "../../../../ducks/slices/authSlice";
 
 const EditInfo = ({ info, visible, setVisible }) => {
   const [form] = useForm();
+  const authReducer = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (info) {
@@ -14,13 +26,36 @@ const EditInfo = ({ info, visible, setVisible }) => {
         email: info.email,
         address: info.address,
       });
+      setAvatarUrl(info.avatar);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
+  useEffect(() => {
+    const { isOk, message } = authReducer;
+
+    const successMSg = successMessages.UPDATE_USER_INFO;
+    const failMSg = failMessages.UPDATE_USER_INFO;
+
+    if (isOk === true && message === successMSg) {
+      notification.success({ message: successMSg });
+      dispatch(resetAuth());
+      setVisible(false);
+    } else if (isOk === false && message === failMSg) {
+      notification.error({ message: failMSg });
+      dispatch(resetAuth());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authReducer]);
+
   const onFinish = (values) => {
-    console.log(values);
-    setVisible(false);
+    const data = {
+      avatar: avatarUrl,
+      email: values.email,
+      address: values.address,
+    };
+    notification.open({ message: "Đang xử lý..." });
+    dispatch(doUpdateUserInfo(data));
   };
 
   return (
@@ -33,9 +68,18 @@ const EditInfo = ({ info, visible, setVisible }) => {
         cancelText="Quay lại"
         width={800}
       >
-        <h1>Chỉnh sửa thông tin</h1>
+        <h1>Chỉnh sửa thông tin phòng khám</h1>
 
         <br />
+
+        <Form.Item name="avatar" style={{ textAlign: "center" }}>
+          <UploadAvatar
+            avatarUrl={avatarUrl}
+            isUploading={isUploading}
+            setAvatarUrl={setAvatarUrl}
+            setIsUploading={setIsUploading}
+          />
+        </Form.Item>
 
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Form.Item label="Tên phòng khám" name="name">

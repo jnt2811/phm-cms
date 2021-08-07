@@ -1,31 +1,47 @@
-import { Col, Form, Input, Row, Select } from "antd";
+import { Col, Form, Input, notification, Row, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FormModal } from "../../../../commons/commonModal/CommonModal";
 import UploadAvatar from "../../../../commons/uploadImage/UploadAvatar";
-import { petKeys } from "../../../../constances/data";
+import { failMessages, successMessages } from "../../../../constances/messages";
+import { doCreatePet } from "../../../../ducks/slices/petSlice";
 
 const NewPet = ({ visible, setVisible }) => {
   const [form] = useForm();
 
-  const [avatarUrl, setAvatarUrl] = useState();
+  const petReducer = useSelector((state) => state.pet);
+  const dispatch = useDispatch();
+
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
-  const onOk = () => {
-    form.submit();
-  };
+  useEffect(() => {
+    const { isOk, message } = petReducer;
+
+    const successMessage = successMessages.CREATE_NEW_PET;
+    const failMessage = failMessages.CREATE_NEW_PET;
+
+    if (isOk === true && message === successMessage) {
+      notification.success({ message: successMessage });
+      form.resetFields();
+      setVisible(false);
+    } else if (isOk === false && message === failMessage) {
+      notification.error({ message: failMessage });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [petReducer]);
 
   const onCancel = () => {
     form.resetFields();
-    setAvatarUrl();
+    setAvatarUrl("");
     setVisible(false);
   };
 
   const onFinish = (values) => {
-    console.log({ ...values, avatar: avatarUrl });
-    form.resetFields();
-    setAvatarUrl();
-    setVisible(false);
+    const data = { ...values, avatar: avatarUrl };
+    dispatch(doCreatePet(data));
+    notification.open({ message: "Đang xử lý..." });
   };
 
   return (
@@ -34,11 +50,11 @@ const NewPet = ({ visible, setVisible }) => {
         visible={visible}
         okText="Tạo mới"
         cancelText="Hủy bỏ"
-        onOk={onOk}
+        onOk={() => form.submit()}
         onCancel={onCancel}
         width={800}
       >
-        <h1>Tạo mới động vật</h1>
+        <h1>Tạo mới vật nuôi</h1>
 
         <br />
 
@@ -70,8 +86,8 @@ const NewPet = ({ visible, setVisible }) => {
                 rules={[{ required: true, message: "Hãy chọn loài" }]}
               >
                 <Select className="select">
-                  <Select.Option value={petKeys.DOG}>Chó</Select.Option>
-                  <Select.Option value={petKeys.CAT}>Mèo</Select.Option>
+                  <Select.Option value="Chó">Chó</Select.Option>
+                  <Select.Option value="Mèo">Mèo</Select.Option>
                 </Select>
               </Form.Item>
             </Col>

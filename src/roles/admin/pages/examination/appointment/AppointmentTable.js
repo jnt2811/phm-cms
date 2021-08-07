@@ -5,7 +5,7 @@ import moment from "moment";
 const AppointmentTable = ({ loading, dataSource, onDeleteAppointment }) => {
   const columns = [
     {
-      title: "Tên động vật",
+      title: "Tên vật nuôi",
       dataIndex: "pet",
       key: "pet",
       render: (pet) => <>{pet.name}</>,

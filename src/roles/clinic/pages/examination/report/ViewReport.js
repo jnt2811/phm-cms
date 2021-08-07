@@ -1,4 +1,4 @@
-import { Divider, Image } from "antd";
+import { Col, Divider, Image, Row } from "antd";
 import { InfoModal } from "../../../../../commons/commonModal/CommonModal";
 import { isEmptyData } from "../../../../../utils";
 import moment from "moment";
@@ -14,7 +14,7 @@ const ViewReport = ({ report, visible, setVisible }) => {
             <br />
 
             <p>
-              Tên động vật: <strong>{report.pet.name}</strong>
+              Tên vật nuôi: <strong>{report.pet.name}</strong>
             </p>
 
             <p>
@@ -44,14 +44,18 @@ const ViewReport = ({ report, visible, setVisible }) => {
 
             <Divider />
 
-            <div className="gallery">
-              <Image.PreviewGroup>
-                {!isEmptyData(report.images) &&
-                  report.images.map((image) => (
-                    <Image key={image.id} width={100} src={image} />
-                  ))}
-              </Image.PreviewGroup>
-            </div>
+            <Row className="gallery" gutter={{ lg: 20 }}>
+              {!isEmptyData(report.images) &&
+                report.images.map((image) => (
+                  <Col key={image.id}>
+                    <Image
+                      width={100}
+                      src={image.url}
+                      style={{ borderRadius: "20px" }}
+                    />
+                  </Col>
+                ))}
+            </Row>
           </>
         )}
       </InfoModal>
