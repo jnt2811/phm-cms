@@ -12,6 +12,7 @@ import { isEmptyData } from "../../../../utils";
 import { useHistory } from "react-router-dom";
 import pathNames from "../../../../router/pathNames";
 import FilterDonation from "./FilterDonation";
+import ExportCSV from "./ExportCSV";
 
 const Donation = () => {
   const donationReducer = useSelector((state) => state.donation);
@@ -24,6 +25,7 @@ const Donation = () => {
   const [searchVal, setSearchVal] = useState("");
   const [visibleFilter, setVisibleFilter] = useState(false);
   const [filterVal, setFilterVal] = useState({});
+  const [filterCount, setFilterCount] = useState(0);
 
   useEffect(() => {
     dispatch(doGetAllDonations());
@@ -33,6 +35,7 @@ const Donation = () => {
 
   useEffect(() => {
     const { donationList = [], isOk } = donationReducer;
+
     if (isOk === true) {
       setDonations(
         donationList.map((donation) => ({ ...donation, key: donation.id }))
@@ -47,6 +50,17 @@ const Donation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donationReducer]);
 
+  useEffect(() => {
+    let count = 0;
+
+    for (const prop in filterVal) {
+      console.log(prop);
+      if (filterVal[prop] !== null) count++;
+    }
+
+    setFilterCount(count);
+  }, [filterVal]);
+
   const onSearchDonation = () => {
     const data = { search: searchVal };
     dispatch(doSearchDonation(data));
@@ -58,23 +72,69 @@ const Donation = () => {
 
     let donationList = [...donations];
 
+    // lọc theo ngày
     if (!isEmptyData(from) && isEmptyData(to)) {
-      return donationList.filter((donation) => {
+      donationList = donationList.filter((donation) => {
         const timeCreateAt = moment(donation.createAt)._d.getTime();
         if (timeCreateAt >= from) return true;
         else return false;
       });
     } else if (isEmptyData(from) && !isEmptyData(to)) {
-      return donationList.filter((donation) => {
+      donationList = donationList.filter((donation) => {
         const timeCreateAt = moment(donation.createAt)._d.getTime();
         if (timeCreateAt <= to) return true;
         else return false;
       });
     } else if (!isEmptyData(from) && !isEmptyData(to)) {
-      return donationList.filter((donation) => {
+      donationList = donationList.filter((donation) => {
         const timeCreateAt = moment(donation.createAt)._d.getTime();
         if (timeCreateAt >= from && timeCreateAt <= to) return true;
         else return false;
+      });
+    }
+
+    // lọc theo tỉnh thành
+    if (!isEmptyData(donationList) && !isEmptyData(province)) {
+      donationList = donationList.filter((donation) => {
+        const address = JSON.parse(donation.donator.address);
+
+        if (
+          !isEmptyData(address) &&
+          JSON.stringify(province) === JSON.stringify(address.province)
+        )
+          return true;
+
+        return false;
+      });
+    }
+
+    // lọc theo quận huyện
+    if (!isEmptyData(donationList) && !isEmptyData(district)) {
+      donationList = donationList.filter((donation) => {
+        const address = JSON.parse(donation.donator.address);
+
+        if (
+          !isEmptyData(address) &&
+          JSON.stringify(district) === JSON.stringify(address.district)
+        )
+          return true;
+
+        return false;
+      });
+    }
+
+    // lọc theo xã phường
+    if (!isEmptyData(donationList) && !isEmptyData(ward)) {
+      donationList = donationList.filter((donation) => {
+        const address = JSON.parse(donation.donator.address);
+
+        if (
+          !isEmptyData(address) &&
+          JSON.stringify(ward) === JSON.stringify(address.ward)
+        )
+          return true;
+
+        return false;
       });
     }
 
@@ -101,7 +161,9 @@ const Donation = () => {
         </Col>
 
         <Col>
-          <Button>Xuất báo cáo</Button>
+          <Button>
+            <ExportCSV donations={handleDataSource(donations)} />
+          </Button>
         </Col>
       </Row>
 
@@ -131,7 +193,7 @@ const Donation = () => {
 
         <Col>
           <Button onClick={() => setVisibleFilter(true)} disabled={isLoading}>
-            Bộ lọc
+            Bộ lọc ({filterCount})
           </Button>
         </Col>
       </Row>

@@ -35,6 +35,7 @@ const Pet = () => {
     from: null,
     to: null,
   });
+  const [filterCount, setFilterCount] = useState(0);
 
   useEffect(() => {
     dispatch(doGetAllPets());
@@ -56,6 +57,17 @@ const Pet = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [petReducer]);
+
+  useEffect(() => {
+    let count = 0;
+
+    for (const prop in filterVal) {
+      console.log(prop);
+      if (filterVal[prop] !== null) count++;
+    }
+
+    setFilterCount(count);
+  }, [filterVal]);
 
   const onSearchPet = () => {
     const data = { search: searchVal };
@@ -155,7 +167,7 @@ const Pet = () => {
             onClick={() => setVisibleFilterModal(true)}
             disabled={isLoading}
           >
-            Bộ lọc
+            Bộ lọc ({filterCount})
           </Button>
         </Col>
       </Row>

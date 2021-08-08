@@ -41,7 +41,7 @@ const UploadAvatar = ({
       setIsUploading(true);
       const storageRef = storage.ref();
       const imgFile = storageRef.child(
-        `image/avatar/${file.name}_${new Date().getTime()}`
+        `images/avatars/${file.name}_${new Date().getTime()}`
       );
       const image = await imgFile.put(file);
 

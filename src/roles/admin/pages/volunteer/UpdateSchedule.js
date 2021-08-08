@@ -98,6 +98,10 @@ const UpdateSchedule = ({ volunteer, visible, setVisible }) => {
         <Select className="select">
           <Select.Option value="Sáng">Sáng</Select.Option>
           <Select.Option value="Chiều">Chiều</Select.Option>
+          <Select.Option value="Tối">Tối</Select.Option>
+          <Select.Option value="Sáng & Chiều">Sáng & Chiều</Select.Option>
+          <Select.Option value="Sáng & Tối">Sáng & Tối</Select.Option>
+          <Select.Option value="Chiều & Tối">Chiều & Tối</Select.Option>
           <Select.Option value="Cả ngày">Cả ngày</Select.Option>
           <Select.Option value="Nghỉ">Nghỉ</Select.Option>
         </Select>

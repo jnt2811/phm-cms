@@ -1,9 +1,9 @@
+// import localKeys from "../../../../constances/localKeys";
+
 const Chat = () => {
-  return (
-    <div className="chat">
-      <h1>Chat</h1>
-    </div>
-  );
+  // const userData = JSON.parse(localStorage.getItem(localKeys.USER_DATA));
+
+  return <div className="chat"></div>;
 };
 
 export default Chat;

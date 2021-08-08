@@ -46,7 +46,11 @@ const NewDonation = () => {
     if (!isOldDonator) {
       form.submit();
     } else {
-      const data = { amount: amountVal, donator: oldDonator };
+      const data = {
+        amount: amountVal,
+        donator: oldDonator,
+        address: oldDonator.address, // not sure...
+      };
       dispatch(doCreateDonation(data));
       notification.open({ message: "Đang xử lý..." });
     }
@@ -66,6 +70,7 @@ const NewDonation = () => {
     const data = {
       amount: amountVal,
       donator,
+      address: donator.address, // not sure...
     };
 
     dispatch(doCreateDonation(data));

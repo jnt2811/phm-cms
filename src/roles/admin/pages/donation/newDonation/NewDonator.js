@@ -14,7 +14,7 @@ const NewDonator = ({ form, dispatchNewDonator }) => {
     const donator = {
       name: name,
       phone: phone,
-      // address: JSON.stringify(address)
+      address: JSON.stringify(address),
     };
 
     dispatchNewDonator(donator);

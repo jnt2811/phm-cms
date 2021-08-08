@@ -10,9 +10,7 @@ import { formatPrice } from "../../../../utils";
 
 const Dashboard = () => {
   const { petList = [] } = useSelector((state) => state.pet);
-  const { donationList = [], donatorList = [] } = useSelector(
-    (state) => state.donation
-  );
+  const { donationList = [] } = useSelector((state) => state.donation);
   const { volunteerList = [] } = useSelector((state) => state.volunteer);
   const dispatch = useDispatch();
 

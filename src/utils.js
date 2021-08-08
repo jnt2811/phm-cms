@@ -71,3 +71,13 @@ export const isEmptyData = (data) => {
   if (data === "") return true;
   return false;
 };
+
+export const formatAddress = (address) => {
+  if (!isEmptyData(address)) {
+    // console.log(address);
+
+    const { province, district, ward } = JSON.parse(address);
+    return ward.name + ", " + district.name + ", " + province.name;
+  }
+  return address;
+};

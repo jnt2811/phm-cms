@@ -2,13 +2,13 @@ import firebase from "firebase/app";
 import "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBgcR9Q12H6gwADriLsIAY7aERUYHWHkyU",
-  authDomain: "pet-house-management.firebaseapp.com",
-  projectId: "pet-house-management",
-  storageBucket: "pet-house-management.appspot.com",
-  messagingSenderId: "1014585467876",
-  appId: "1:1014585467876:web:3138df194475ccb9a95df1",
-  measurementId: "G-91DTD7Y6QP",
+  apiKey: "AIzaSyDsi7Pi-Q-tNlTyRqQD1r3PWxIaibFGz6k",
+  authDomain: "phm-cms.firebaseapp.com",
+  projectId: "phm-cms",
+  storageBucket: "phm-cms.appspot.com",
+  messagingSenderId: "600076669446",
+  appId: "1:600076669446:web:d9f0fbe7735d19a2eee987",
+  measurementId: "G-2XZEKRVLLP",
 };
 
 firebase.initializeApp(firebaseConfig);
