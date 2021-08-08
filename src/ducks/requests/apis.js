@@ -1,7 +1,7 @@
 const localhost = "http://localhost:3000";
 const deploy = "https://nha-cho-thu-cung.herokuapp.com";
 
-const switcher = true;
+const switcher = false;
 
 const apiUrl = switcher ? localhost : deploy;
 

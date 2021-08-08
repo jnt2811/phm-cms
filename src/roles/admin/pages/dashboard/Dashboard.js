@@ -14,8 +14,6 @@ const Dashboard = () => {
   const { volunteerList = [] } = useSelector((state) => state.volunteer);
   const dispatch = useDispatch();
 
-  console.log(petList);
-
   useEffect(() => {
     dispatch(doGetAllPets());
     dispatch(doGetAllDonations());
