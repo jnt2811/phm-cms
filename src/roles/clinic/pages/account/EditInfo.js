@@ -72,16 +72,16 @@ const EditInfo = ({ info, visible, setVisible }) => {
 
         <br />
 
-        <Form.Item name="avatar" style={{ textAlign: "center" }}>
-          <UploadAvatar
-            avatarUrl={avatarUrl}
-            isUploading={isUploading}
-            setAvatarUrl={setAvatarUrl}
-            setIsUploading={setIsUploading}
-          />
-        </Form.Item>
-
         <Form layout="vertical" form={form} onFinish={onFinish}>
+          <Form.Item name="avatar" style={{ textAlign: "center" }}>
+            <UploadAvatar
+              avatarUrl={avatarUrl}
+              isUploading={isUploading}
+              setAvatarUrl={setAvatarUrl}
+              setIsUploading={setIsUploading}
+            />
+          </Form.Item>
+
           <Form.Item label="Tên phòng khám" name="name">
             <Input disabled />
           </Form.Item>

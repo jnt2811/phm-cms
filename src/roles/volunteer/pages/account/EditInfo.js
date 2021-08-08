@@ -74,16 +74,16 @@ const EditInfo = ({ info, visible, setVisible }) => {
 
         <br />
 
-        <Form.Item name="avatar" style={{ textAlign: "center" }}>
-          <UploadAvatar
-            avatarUrl={avatarUrl}
-            isUploading={isUploading}
-            setAvatarUrl={setAvatarUrl}
-            setIsUploading={setIsUploading}
-          />
-        </Form.Item>
-
         <Form layout="vertical" form={form} onFinish={onFinish}>
+          <Form.Item name="avatar" style={{ textAlign: "center" }}>
+            <UploadAvatar
+              avatarUrl={avatarUrl}
+              isUploading={isUploading}
+              setAvatarUrl={setAvatarUrl}
+              setIsUploading={setIsUploading}
+            />
+          </Form.Item>
+
           <Row gutter={{ lg: 20 }}>
             <Col lg={10}>
               <Form.Item label="Họ và tên" name="name">
