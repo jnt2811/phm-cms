@@ -31,17 +31,23 @@ const FilterPet = ({ filter, setFilter, visible, setVisible }) => {
       const { volunteerList = [] } = volunteerReducer;
 
       setVolunteers(
-        volunteerList.map((volunteer) => ({ ...volunteer, key: volunteer.id }))
+        volunteerList
+          .slice(0)
+          .reverse()
+          .map((volunteer) => ({ ...volunteer, key: volunteer.id }))
       );
 
       dispatch(resetVolunteer());
     } else if (volunteerReducer.isOk === false) {
       if (volunteerReducer.volunteerList !== undefined)
         setVolunteers(
-          volunteerReducer.volunteerList.map((volunteer) => ({
-            ...volunteer,
-            key: volunteer.id,
-          }))
+          volunteerReducer.volunteerList
+            .slice(0)
+            .reverse()
+            .map((volunteer) => ({
+              ...volunteer,
+              key: volunteer.id,
+            }))
         );
 
       dispatch(resetVolunteer());
@@ -161,6 +167,15 @@ const FilterPet = ({ filter, setFilter, visible, setVisible }) => {
               <Select.Option value={null}>Tất cả</Select.Option>
               <Select.Option value="Chó">Chó</Select.Option>
               <Select.Option value="Mèo">Mèo</Select.Option>
+            </Select>
+          </Form.Item>
+
+          {/* Chọn giới tính */}
+          <Form.Item label="Giới tính" name="gender" initialValue={null}>
+            <Select className="select" style={{ width: "100%" }} showSearch>
+              <Select.Option value={null}>Tất cả</Select.Option>
+              <Select.Option value="Đực">Đực</Select.Option>
+              <Select.Option value="Cái">Cái</Select.Option>
             </Select>
           </Form.Item>
 

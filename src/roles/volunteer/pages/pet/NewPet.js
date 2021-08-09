@@ -85,7 +85,7 @@ const NewPet = ({ visible, setVisible }) => {
                 name="type"
                 rules={[{ required: true, message: "Hãy chọn loài" }]}
               >
-                <Select className="select">
+                <Select className="select" showSearch>
                   <Select.Option value="Chó">Chó</Select.Option>
                   <Select.Option value="Mèo">Mèo</Select.Option>
                 </Select>
@@ -94,6 +94,19 @@ const NewPet = ({ visible, setVisible }) => {
           </Row>
 
           <Row gutter={{ lg: 20 }}>
+            <Col lg={12}>
+              <Form.Item
+                label="Giới tính"
+                name="gender"
+                rules={[{ required: true, message: "Hãy chọn giới tính" }]}
+              >
+                <Select className="select" showSearch>
+                  <Select.Option value="Đực">Đực</Select.Option>
+                  <Select.Option value="Cái">Cái</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+
             <Col lg={12}>
               <Form.Item
                 label="Màu lông"
@@ -108,20 +121,14 @@ const NewPet = ({ visible, setVisible }) => {
                 <Input />
               </Form.Item>
             </Col>
-
-            <Col lg={12}>
-              <Form.Item
-                label="Nơi tìm thấy"
-                name="location"
-                rules={[{ required: true, message: "Hãy điền nơi tìm thấy" }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
           </Row>
 
-          <Form.Item label="Mô tả" name="description">
-            <Input.TextArea rows={4} />
+          <Form.Item
+            label="Nơi tìm thấy"
+            name="location"
+            rules={[{ required: true, message: "Hãy điền nơi tìm thấy" }]}
+          >
+            <Input />
           </Form.Item>
         </Form>
       </FormModal>

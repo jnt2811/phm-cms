@@ -40,17 +40,23 @@ const Volunteer = () => {
     if (volunteerReducer.isOk === true) {
       const { volunteerList } = volunteerReducer;
       setVolunteers(
-        volunteerList.map((volunteer) => ({ ...volunteer, key: volunteer.id }))
+        volunteerList
+          .slice(0)
+          .reverse()
+          .map((volunteer) => ({ ...volunteer, key: volunteer.id }))
       );
       setIsLoading(false);
       dispatch(resetVolunteer());
     } else if (volunteerReducer.isOk === false) {
       if (volunteerReducer.volunteerList !== undefined)
         setVolunteers(
-          volunteerReducer.volunteerList.map((volunteer) => ({
-            ...volunteer,
-            key: volunteer.id,
-          }))
+          volunteerReducer.volunteerList
+            .slice(0)
+            .reverse()
+            .map((volunteer) => ({
+              ...volunteer,
+              key: volunteer.id,
+            }))
         );
       setIsLoading(false);
       dispatch(resetVolunteer());

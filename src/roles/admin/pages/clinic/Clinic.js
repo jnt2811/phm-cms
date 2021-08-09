@@ -38,7 +38,12 @@ const Clinic = () => {
     const { isOk, clinicList = [] } = clinicReducer;
 
     if (isOk === true) {
-      setClinics(clinicList.map((clinic) => ({ ...clinic, key: clinic.id })));
+      setClinics(
+        clinicList
+          .slice(0)
+          .reverse()
+          .map((clinic) => ({ ...clinic, key: clinic.id }))
+      );
       setIsLoading(false);
       dispatch(resetClinic());
     } else if (clinicReducer.isOk === false) {

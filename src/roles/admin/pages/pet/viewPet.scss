@@ -17,5 +17,18 @@
       margin: 0;
       margin-bottom: 20px;
     }
+
+    .gallery {
+      img {
+        object-fit: cover;
+        object-position: center;
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .report-btn {
+      margin: -10px 0 10px 0;
+    }
   }
 }

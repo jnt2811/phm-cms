@@ -1,0 +1,64 @@
+@import "../../../../../../style/colors.scss";
+
+.new-report {
+  .add-field-btn {
+    border: 1px dashed #00000020 !important;
+    background-color: #fff !important;
+    color: $orange500 !important;
+  }
+
+  .minus-btn {
+    color: $orange500;
+    font-size: 20px;
+  }
+
+  label {
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .pet-info {
+    padding: 25px 50px;
+    border-radius: 20px;
+    background-color: $orange400;
+    margin: 0 !important;
+
+    p {
+      margin: 10px 0;
+    }
+  }
+
+  .upload-report-imgs {
+    button {
+      height: unset !important;
+      border-radius: unset !important;
+      border: none !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      background-color: unset !important;
+      color: unset !important;
+
+      &:hover {
+        background-color: unset !important;
+        color: unset !important;
+      }
+    }
+  }
+}
+
+.preview-report-img {
+  button {
+    height: unset !important;
+    border-radius: unset !important;
+    border: none !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    background-color: unset !important;
+    color: unset !important;
+
+    &:hover {
+      background-color: unset !important;
+      color: unset !important;
+    }
+  }
+}

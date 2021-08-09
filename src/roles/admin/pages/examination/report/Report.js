@@ -35,10 +35,13 @@ const Report = () => {
     if (isOk === true) {
       const { reportList } = reportReducer;
       setReports(
-        reportList.map((report) => ({
-          ...report,
-          key: report.id,
-        }))
+        reportList
+          .slice(0)
+          .reverse()
+          .map((report) => ({
+            ...report,
+            key: report.id,
+          }))
       );
       setIsLoading(false);
       dispatch(resetReport());
@@ -61,7 +64,7 @@ const Report = () => {
       </div>
 
       <ViewReport
-        report={selectedReport}
+        reportData={selectedReport}
         visible={visibleModal}
         setVisible={setVisibleModal}
       />

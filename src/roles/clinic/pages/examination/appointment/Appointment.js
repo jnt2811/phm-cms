@@ -7,14 +7,15 @@ import {
   resetAppointment,
 } from "../../../../../ducks/slices/appointmentSlice";
 import DeleteAppointment from "./DeleteAppointment";
-import NewReport from "./NewReport";
+import { useHistory } from "react-router-dom";
+import pathNames from "../../../../../router/pathNames";
 
 const Appointment = () => {
   const appointmentReducer = useSelector((state) => state.appointment);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [appointments, setAppointments] = useState([]);
-  const [visibleNewModal, setVisibleNewModal] = useState(false);
   const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,10 +32,13 @@ const Appointment = () => {
     if (isOk === true) {
       const { appointmentList } = appointmentReducer;
       setAppointments(
-        appointmentList.map((appointment) => ({
-          ...appointment,
-          key: appointment.id,
-        }))
+        appointmentList
+          .slice(0)
+          .reverse()
+          .map((appointment) => ({
+            ...appointment,
+            key: appointment.id,
+          }))
       );
       setIsLoading(false);
       dispatch(resetAppointment());
@@ -45,8 +49,7 @@ const Appointment = () => {
   }, [appointmentReducer]);
 
   const onNewReport = (appointment) => {
-    setVisibleNewModal(true);
-    setSelectedAppointment(appointment);
+    history.push(pathNames.CLINIC_NEW_REPORT_nId + appointment.id);
   };
 
   const onDeleteAppointment = (appointment) => {
@@ -69,12 +72,6 @@ const Appointment = () => {
           loading={isLoading}
         />
       </div>
-
-      <NewReport
-        appointment={selectedAppointment}
-        visible={visibleNewModal}
-        setVisible={setVisibleNewModal}
-      />
 
       <DeleteAppointment
         appointment={selectedAppointment}

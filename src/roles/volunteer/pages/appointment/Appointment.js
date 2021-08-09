@@ -37,10 +37,13 @@ const Appointment = () => {
     if (isOk === true) {
       const { appointmentList } = appointmentReducer;
       setAppointments(
-        appointmentList.map((appointment) => ({
-          ...appointment,
-          key: appointment.id,
-        }))
+        appointmentList
+          .slice(0)
+          .reverse()
+          .map((appointment) => ({
+            ...appointment,
+            key: appointment.id,
+          }))
       );
       setIsLoading(false);
       dispatch(resetAppointment());

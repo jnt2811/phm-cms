@@ -35,6 +35,8 @@ const pathNames = {
   CLINIC: clinic,
   CLINIC_APPOINTMENT: clinic + "/appointment",
   CLINIC_REPORT: clinic + "/report",
+  CLINIC_NEW_REPORT_wId: clinic + "/new-report/:id",
+  CLINIC_NEW_REPORT_nId: clinic + "/new-report/",
   CLINIC_CHAT: clinic + "/chat",
 };
 

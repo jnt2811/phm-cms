@@ -12,6 +12,7 @@ import moment from "moment";
 import { isEmptyData } from "../../../../utils";
 import DogFb from "../../../../assets/dog_fallback.svg";
 import CatFb from "../../../../assets/cat_fallback.svg";
+import DetailReport from "./DetailReport";
 
 const ViewPet = () => {
   const { id } = useParams();
@@ -32,6 +33,8 @@ const ViewPet = () => {
     },
     reports: [],
   });
+  const [selectedReport, setSelectedReport] = useState(null);
+  const [visibleModal, setVisibleModal] = useState(false);
 
   useEffect(() => {
     dispatch(doGetPet(id));
@@ -40,7 +43,24 @@ const ViewPet = () => {
 
   useEffect(() => {
     if (petReducer.isOk === true) {
-      setPet(petReducer.petList[0]);
+      const pet = petReducer.petList[0];
+      let tempReports = [...pet.reports];
+
+      tempReports = tempReports.reverse().map((report) => ({
+        ...report,
+        images: JSON.parse(report.images),
+        vaccines: JSON.parse(report.vaccines),
+        allergies: JSON.parse(report.allergies),
+        surgeries: JSON.parse(report.surgeries),
+        prescription: JSON.parse(report.prescription),
+        diagnosis: JSON.parse(report.diagnosis),
+      }));
+
+      setPet({
+        ...pet,
+        reports: tempReports,
+      });
+
       dispatch(resetPet(id));
     } else if (petReducer.isOk === false) {
       console.log(petReducer.message);
@@ -119,7 +139,15 @@ const ViewPet = () => {
 
             <div>
               <p>
+                Giới tính: <strong>{pet.gender}</strong>
+              </p>
+
+              <p>
                 Màu lông: <strong>{pet.color}</strong>
+              </p>
+
+              <p>
+                Nơi tìm thấy: <strong>{pet.location}</strong>
               </p>
 
               <p>
@@ -135,10 +163,6 @@ const ViewPet = () => {
                   {!isEmptyData(pet.volunteer) ? pet.volunteer.name : "Admin"}
                 </strong>
               </p>
-
-              <p>
-                Mô tả: <strong>{pet.description}</strong>
-              </p>
             </div>
           </div>
         </Col>
@@ -150,9 +174,22 @@ const ViewPet = () => {
 
           {pet.reports.map((report) => (
             <div className="report" key={report.id}>
-              <h3>
-                Ngày {moment(report.createAt).utc().format("DD/MM/YYYY HH:mm")}
-              </h3>
+              <Row justify="space-between" align="middle">
+                <h3>
+                  Ngày{" "}
+                  {moment(report.createAt).utc().format("DD/MM/YYYY HH:mm")}
+                </h3>
+
+                <Button
+                  onClick={() => {
+                    setSelectedReport(report);
+                    setVisibleModal(true);
+                  }}
+                  className="report-btn"
+                >
+                  Chi tiết
+                </Button>
+              </Row>
 
               <Divider className="divider" />
 
@@ -161,22 +198,22 @@ const ViewPet = () => {
               </p>
 
               <p>
+                Tình trạng tổng quan: <strong>{report.overall}</strong>
+              </p>
+
+              <p>
                 Cân nặng: <strong>{report.weight} kg</strong>
               </p>
 
               <p>
-                Ghi chú: <strong>{report.note}</strong>
+                Lời dặn: <strong>{report.note}</strong>
               </p>
 
-              <Row className="gallery" gutter={{ lg: 20 }}>
+              <Row className="gallery" gutter={{ sm: 10 }}>
                 {!isEmptyData(report.images) &&
                   report.images.map((image) => (
-                    <Col key={image.id}>
-                      <Image
-                        width={100}
-                        src={image.url}
-                        style={{ borderRadius: "20px" }}
-                      />
+                    <Col key={image}>
+                      <Image src={image} style={{ borderRadius: "20px" }} />
                     </Col>
                   ))}
               </Row>
@@ -184,6 +221,12 @@ const ViewPet = () => {
           ))}
         </Col>
       </Row>
+
+      <DetailReport
+        reportList={selectedReport}
+        onClose={() => setVisibleModal(false)}
+        visible={visibleModal}
+      />
     </div>
   );
 };

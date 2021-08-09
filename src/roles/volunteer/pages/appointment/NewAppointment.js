@@ -76,12 +76,13 @@ const NewAppointment = ({ visible, setVisible }) => {
     const clinicId = JSON.parse(values.clinic).id;
     const date =
       values.date.format("YYYY-MM-DD") +
-      " " +
+      "T" +
       values.time.format("HH:mm:ss") +
       "Z";
 
     const data = { date, petId, clinicId };
 
+    console.log(date);
     dispatch(doCreateAppointment(data));
     notification.open({ message: "Đang xử lý..." });
   };

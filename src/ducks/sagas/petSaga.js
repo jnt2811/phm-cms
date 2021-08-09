@@ -16,6 +16,7 @@ import {
 } from "../slices/petSlice";
 import { failMessages, successMessages } from "../../constances/messages";
 import { isEmptyData } from "../../utils";
+import localKeys from "../../constances/localKeys";
 
 export function* watchDoPet() {
   yield takeLatest(doGetAllPets.type, handleGetAllPets);
@@ -95,7 +96,10 @@ export function* handleGetPet(action) {
 
 export function* handleCreatePet(action) {
   try {
-    const responseCreate = yield call(() => requestCreatePet(action.payload));
+    const { id } = JSON.parse(localStorage.getItem(localKeys.USER_DATA));
+    const requestData = { ...action.payload, volunteerId: id };
+
+    const responseCreate = yield call(() => requestCreatePet(requestData));
 
     const { status } = responseCreate.data;
 

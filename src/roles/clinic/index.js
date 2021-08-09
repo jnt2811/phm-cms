@@ -5,6 +5,7 @@ import ClinicHeader from "./layouts/ClinicHeader";
 import Account from "./pages/account/Account";
 import Chat from "./pages/chat/Chat";
 import Appointment from "./pages/examination/appointment/Appointment";
+import NewReport from "./pages/examination/appointment/newReport/NewReport";
 import Report from "./pages/examination/report/Report";
 
 const Clinic = () => {
@@ -21,6 +22,11 @@ const Clinic = () => {
             component={Appointment}
           />
           <Route exact path={pathNames.CLINIC_REPORT} component={Report} />
+          <Route
+            exact
+            path={pathNames.CLINIC_NEW_REPORT_wId}
+            component={NewReport}
+          />
           <Route exact path={pathNames.CLINIC_CHAT} component={Chat} />
 
           <Route component={NotFound} />

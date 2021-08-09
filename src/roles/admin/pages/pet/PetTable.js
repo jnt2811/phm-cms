@@ -21,6 +21,11 @@ const PetTable = ({ dataSource, loading, onViewPet, onEditPet }) => {
       key: "type",
     },
     {
+      title: "Giới tính",
+      dataIndex: "gender",
+      key: "gender",
+    },
+    {
       title: "Ngày cứu trợ",
       dataIndex: "createAt",
       key: "createAt",

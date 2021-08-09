@@ -91,20 +91,15 @@ export function* handleGetAllReportsByClinic(action) {
 
 export function* handleCreateReport(action) {
   try {
-    const responseCreate = yield call(() =>
-      requestCreateReport(action.payload)
-    );
+    const response = yield call(() => requestCreateReport(action.payload));
 
-    const { status } = responseCreate.data;
+    const { status } = response.data;
 
     if (status === "OK") {
-      const responseGetAll = yield call(() => requestGetAllReports());
-
       yield put(
         doneReport({
           isOk: true,
           message: successMessages.CREATE_NEW_REPORT,
-          reportList: responseGetAll.data.data,
         })
       );
     } else {

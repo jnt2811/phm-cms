@@ -28,7 +28,10 @@ const OldDonator = ({ setDonator }) => {
     const { donatorList = [], isOk } = donationReducer;
     if (isOk === true) {
       setDonators(
-        donatorList.map((donator) => ({ ...donator, key: donator.id }))
+        donatorList
+          .slice(0)
+          .reverse()
+          .map((donator) => ({ ...donator, key: donator.id }))
       );
       setIsLoading(false);
       dispatch(resetDonation());

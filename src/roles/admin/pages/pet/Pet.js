@@ -34,6 +34,7 @@ const Pet = () => {
     rescuer: null,
     from: null,
     to: null,
+    gender: null,
   });
   const [filterCount, setFilterCount] = useState(0);
 
@@ -47,7 +48,12 @@ const Pet = () => {
     const { isOk, message, petList = [] } = petReducer;
 
     if (isOk === true) {
-      setPets(petList.map((pet) => ({ ...pet, key: pet.id })));
+      setPets(
+        petList
+          .slice(0)
+          .reverse()
+          .map((pet) => ({ ...pet, key: pet.id }))
+      );
       setIsLoading(false);
       dispatch(resetPet());
     } else if (petReducer.isOk === false) {
@@ -62,7 +68,6 @@ const Pet = () => {
     let count = 0;
 
     for (const prop in filterVal) {
-      console.log(prop);
       if (filterVal[prop] !== null) count++;
     }
 
@@ -76,12 +81,16 @@ const Pet = () => {
   };
 
   const handleDataSource = () => {
-    const { from, rescuer, to, type } = filterVal;
+    const { from, rescuer, to, type, gender } = filterVal;
 
     let petList = [...pets];
 
     if (type !== null) {
       petList = petList.filter((pet) => pet.type === type);
+    }
+
+    if (gender !== null) {
+      petList = petList.filter((pet) => pet.gender === gender);
     }
 
     if (rescuer !== null) {

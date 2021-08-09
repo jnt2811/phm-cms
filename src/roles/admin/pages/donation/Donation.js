@@ -38,7 +38,10 @@ const Donation = () => {
 
     if (isOk === true) {
       setDonations(
-        donationList.map((donation) => ({ ...donation, key: donation.id }))
+        donationList
+          .slice(0)
+          .reverse()
+          .map((donation) => ({ ...donation, key: donation.id }))
       );
       setIsLoading(false);
       dispatch(resetDonation());

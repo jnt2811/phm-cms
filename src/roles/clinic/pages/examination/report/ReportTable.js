@@ -11,16 +11,27 @@ const ReportTable = ({ loading, dataSource, onViewReport }) => {
       render: (pet) => <>{pet && pet.name}</>,
     },
     {
-      title: "Tên phòng khám",
-      dataIndex: "clinic",
-      key: "clinic",
-      render: (clinic) => <>{clinic && clinic.name}</>,
+      title: "Loài",
+      dataIndex: "pet",
+      key: "pet",
+      render: (pet) => <>{pet && pet.type}</>,
     },
     {
-      title: "Thời gian hoàn thành",
+      title: "Giới tính",
+      dataIndex: "pet",
+      key: "pet",
+      render: (pet) => <>{pet && pet.gender}</>,
+    },
+    {
+      title: "Tình trạng tổng quan",
+      dataIndex: "overall",
+      key: "overall",
+    },
+    {
+      title: "Thời gian khám",
       dataIndex: "createAt",
       key: "createAt",
-      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY"),
+      render: (createAt) => moment(createAt).utc().format("DD/MM/YYYY HH:mm"),
     },
     {
       title: "",
