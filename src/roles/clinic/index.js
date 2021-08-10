@@ -1,9 +1,9 @@
 import { Route, Switch } from "react-router-dom";
+import Chat from "../../pages/chat/Chat";
 import NotFound from "../../pages/NotFound";
 import pathNames from "../../router/pathNames";
 import ClinicHeader from "./layouts/ClinicHeader";
 import Account from "./pages/account/Account";
-import Chat from "./pages/chat/Chat";
 import Appointment from "./pages/examination/appointment/Appointment";
 import NewReport from "./pages/examination/appointment/newReport/NewReport";
 import Report from "./pages/examination/report/Report";

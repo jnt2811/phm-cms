@@ -9,14 +9,15 @@ import Donation from "./pages/donation/Donation";
 import Pet from "./pages/pet/Pet";
 import Clinic from "./pages/clinic/Clinic";
 import { Appointment, Report } from "./pages/examination";
-import Chat from "./pages/chat/Chat";
 import Account from "./pages/account/Account";
 import NotFound from "../../pages/NotFound";
 import NewDonation from "./pages/donation/newDonation/NewDonation";
 import ViewPet from "./pages/pet/ViewPet";
+import Chat from "../../pages/chat/Chat";
 
 const Admin = () => {
   return (
+    // <ChatProvider>
     <div className="admin">
       <Row wrap={false}>
         <Col flex="300px">
@@ -66,6 +67,7 @@ const Admin = () => {
         </Col>
       </Row>
     </div>
+    // </ChatProvider>
   );
 };
 

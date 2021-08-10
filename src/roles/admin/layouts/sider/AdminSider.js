@@ -83,7 +83,7 @@ const AdminSider = ({ location }) => {
           <Link to={pathNames.ADMIN_CHAT}>
             <div className={"sider-item " + (isAtChat && "active")}>
               <img src={Chat_Icon} alt="" />
-              <span>Nhắn tin</span>
+              <span>Tin nhắn</span>
             </div>
           </Link>
 

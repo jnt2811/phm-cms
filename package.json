@@ -11,6 +11,7 @@
     "antd": "^4.16.7",
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
+    "date-fns": "^2.23.0",
     "dotenv": "^8.2.0",
     "firebase": "^8.8.1",
     "node-sass": "^6.0.1",
@@ -28,7 +29,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && firebase deploy --only hosting"
+    "deploy": "npm run build && firebase deploy --only hosting",
+    "emulators": "firebase emulators:start"
   },
   "eslintConfig": {
     "extends": [

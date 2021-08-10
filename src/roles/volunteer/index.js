@@ -5,8 +5,8 @@ import Account from "./pages/account/Account";
 import Pet from "./pages/pet/Pet";
 import ViewPet from "./pages/pet/ViewPet";
 import Appointment from "./pages/appointment/Appointment";
-import Chat from "./pages/chat/Chat";
 import NotFound from "../../pages/NotFound";
+import Chat from "../../pages/chat/Chat";
 
 const Volunteer = () => {
   return (

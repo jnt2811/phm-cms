@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { doLogin, resetAuth } from "../../ducks/slices/authSlice";
 import { useEffect } from "react";
 import { useState } from "react";
+import { firestore } from "../../firebase";
 
 const Login = () => {
   const authReducer = useSelector((state) => state.auth);
@@ -15,10 +16,56 @@ const Login = () => {
 
   useEffect(() => {
     if (authReducer.isOk === true) {
-      setIsLoading(false);
-      notification.success({ message: authReducer.message });
-      dispatch(resetAuth());
-      window.location.reload();
+      const { userData } = authReducer;
+
+      const usersRef = firestore.collection("users");
+
+      usersRef
+        .where("uid", "==", `${userData.id}`)
+        .get()
+        .then((docs) => {
+          if (docs.size === 0) {
+            usersRef
+              .add({
+                uid: `${userData.id}`,
+                name: userData.rest.name,
+                avatar: userData.rest.avatar,
+              })
+              .then(() => {
+                console.log("created");
+
+                setIsLoading(false);
+                notification.success({ message: authReducer.message });
+                dispatch(resetAuth());
+                window.location.reload();
+              });
+          } else {
+            let uid = "";
+            docs.forEach((doc) => {
+              uid = doc.id;
+              localStorage.setItem(
+                "user-firebase",
+                JSON.stringify({ id: doc.id, ...doc.data() })
+              );
+            });
+
+            usersRef
+              .doc(uid)
+              .update({
+                name: userData.rest.name,
+                avatar: userData.rest.avatar,
+              })
+              .then(() => {
+                console.log("updated");
+
+                setIsLoading(false);
+                notification.success({ message: authReducer.message });
+                dispatch(resetAuth());
+                window.location.reload();
+              });
+          }
+        })
+        .catch((e) => console.log(e));
     } else if (authReducer.isOk === false) {
       setIsLoading(false);
       notification.error({ message: authReducer.message });

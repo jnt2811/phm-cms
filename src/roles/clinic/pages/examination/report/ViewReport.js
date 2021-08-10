@@ -41,6 +41,7 @@ const ViewReport = ({ reportData, visible, setVisible }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -52,6 +53,7 @@ const ViewReport = ({ reportData, visible, setVisible }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -63,6 +65,7 @@ const ViewReport = ({ reportData, visible, setVisible }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -74,6 +77,7 @@ const ViewReport = ({ reportData, visible, setVisible }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -85,6 +89,7 @@ const ViewReport = ({ reportData, visible, setVisible }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -99,8 +104,6 @@ const ViewReport = ({ reportData, visible, setVisible }) => {
       });
     }
   }, [reportData]);
-
-  console.log(report);
 
   return (
     <div className="view-report">

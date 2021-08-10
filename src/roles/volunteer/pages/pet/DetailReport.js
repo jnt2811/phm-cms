@@ -39,6 +39,7 @@ const DetailReport = ({ reportList, visible, onClose }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -50,6 +51,7 @@ const DetailReport = ({ reportList, visible, onClose }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -61,6 +63,7 @@ const DetailReport = ({ reportList, visible, onClose }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -72,6 +75,7 @@ const DetailReport = ({ reportList, visible, onClose }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 
@@ -83,6 +87,7 @@ const DetailReport = ({ reportList, visible, onClose }) => {
             return {
               ...item,
               stt: count,
+              key: count,
             };
           });
 

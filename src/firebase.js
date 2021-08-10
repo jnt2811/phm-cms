@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/storage";
+import "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDsi7Pi-Q-tNlTyRqQD1r3PWxIaibFGz6k",
@@ -14,5 +15,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const storage = firebase.storage();
+const firestore = firebase.firestore();
 
-export { storage, firebase as default };
+if (window.location.hostname === "localhost") {
+  firestore.useEmulator("localhost", 3088);
+}
+
+export { storage, firestore, firebase as default };

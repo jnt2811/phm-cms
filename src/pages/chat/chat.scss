@@ -1,0 +1,93 @@
+@import "../../style/colors.scss";
+
+.chat {
+  .chat-sider {
+    background-color: $orange200;
+    padding: 20px;
+    border-radius: 20px;
+    height: calc(100vh - 100px);
+    overflow: auto;
+
+    .plus-btn {
+      width: 40px;
+      border-radius: 50px !important;
+    }
+
+    .room-list {
+      .room {
+        background-color: $orange200;
+        border: 1px solid $orange500;
+        padding: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        h4 {
+          font-weight: 600;
+          margin: 0;
+        }
+
+        p {
+          color: #00000050;
+          margin: 0;
+          font-size: 14px;
+        }
+
+        &.active,
+        &:hover {
+          border: 1px solid $orange400;
+          background-color: $orange400;
+        }
+      }
+    }
+  }
+
+  .chat-room {
+    background-color: $orange200;
+    padding: 20px;
+    border-radius: 20px;
+    height: calc(100vh - 100px);
+
+    .chat-header {
+      height: 58px;
+      background-color: $orange200;
+      z-index: 999;
+    }
+
+    .chat-wrap {
+      height: calc(100% - 60px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow-x: hidden;
+      overflow-y: hidden;
+
+      .chat-msg-list {
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-bottom: 20px;
+
+        .chat-msg-item {
+          .content {
+            display: inline-block;
+            background-color: $orange300;
+            padding: 10px 20px;
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .chat-input {
+        height: 65px;
+        background-color: $orange200;
+        z-index: 999;
+        text-align: end;
+
+        .send-btn {
+          width: 40px;
+          border-radius: 50px !important;
+        }
+      }
+    }
+  }
+}
