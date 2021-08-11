@@ -8,6 +8,7 @@ import {
   setUserList,
 } from "../ducks/slices/chatSlice";
 import { firestore } from "../firebase";
+import ExportReport from "../pages/exportReport/ExportReport";
 import Login from "../pages/login/Login";
 import NotFound from "../pages/NotFound";
 import { Admin, Clinic, Volunteer } from "../roles";
@@ -85,6 +86,8 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path={pathNames.EXPORT_REPORT} component={ExportReport} />
+
         <PublicRoute path={pathNames.LOGIN} component={Login} />
 
         <AdminRoute path={pathNames.ADMIN} component={Admin} />

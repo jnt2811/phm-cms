@@ -5,7 +5,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { doGetPet, resetPet } from "../../../../ducks/slices/petSlice";
+import {
+  doGetPet,
+  resetPet,
+  setSelectedReport as setReport,
+} from "../../../../ducks/slices/petSlice";
 import pathNames from "../../../../router/pathNames";
 import "./viewPet.scss";
 import moment from "moment";
@@ -68,6 +72,11 @@ const ViewPet = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [petReducer]);
 
+  const handleExport = () => {
+    dispatch(setReport(pet));
+    history.push(pathNames.EXPORT_REPORT);
+  };
+
   return (
     <div className="view-pet">
       <Row justify="space-between">
@@ -88,7 +97,7 @@ const ViewPet = () => {
         </Col>
 
         <Col>
-          <Button>Xuất báo cáo</Button>
+          <Button onClick={handleExport}>Xuất báo cáo</Button>
         </Col>
       </Row>
 

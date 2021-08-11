@@ -4,6 +4,7 @@ const initState = {
   isOk: undefined,
   message: undefined,
   petList: undefined,
+  selectedReport: undefined,
 };
 
 const petSlice = createSlice({
@@ -26,6 +27,13 @@ const petSlice = createSlice({
     resetPet() {
       return initState;
     },
+
+    setSelectedReport(state, action) {
+      return {
+        ...state,
+        selectedReport: action.payload,
+      };
+    },
   },
 });
 
@@ -37,6 +45,7 @@ export const {
   doGetPet,
   doSearchPet,
   doEditPet,
+  setSelectedReport,
 } = petSlice.actions;
 
 export default petSlice.reducer;

@@ -5,6 +5,8 @@ const clinic = "/clinic";
 const pathNames = {
   MAIN: "/",
 
+  EXPORT_REPORT: "/export-report",
+
   // Auth
   LOGIN: "/login",
 
