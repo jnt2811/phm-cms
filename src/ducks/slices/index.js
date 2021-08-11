@@ -4,6 +4,7 @@ import petSlice from "./petSlice";
 import donationSlice from "./donationSlice";
 import appointmentSlice from "./appointmentSlice";
 import clinicSlice from "./clinicSlice";
+import chatSlice from "./chatSlice";
 
 export {
   authSlice,
@@ -12,4 +13,5 @@ export {
   donationSlice,
   clinicSlice,
   appointmentSlice,
+  chatSlice,
 };

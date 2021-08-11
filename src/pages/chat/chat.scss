@@ -1,11 +1,11 @@
 @import "../../style/colors.scss";
 
 .chat {
-  .chat-sider {
+  .sider {
     background-color: $orange200;
     padding: 20px;
     border-radius: 20px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 120px);
     overflow: auto;
 
     .plus-btn {
@@ -46,46 +46,57 @@
     background-color: $orange200;
     padding: 20px;
     border-radius: 20px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 120px);
 
-    .chat-header {
-      height: 58px;
-      background-color: $orange200;
-      z-index: 999;
-    }
-
-    .chat-wrap {
-      height: calc(100% - 60px);
+    .inner {
+      height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      overflow-x: hidden;
-      overflow-y: hidden;
+      justify-content: space-between;
 
-      .chat-msg-list {
-        overflow-x: hidden;
-        overflow-y: auto;
-        padding-bottom: 20px;
-
-        .chat-msg-item {
-          .content {
-            display: inline-block;
-            background-color: $orange300;
-            padding: 10px 20px;
-            border-radius: 10px;
-          }
-        }
-      }
-
-      .chat-input {
-        height: 65px;
+      .room-header {
+        height: 58px;
         background-color: $orange200;
         z-index: 999;
-        text-align: end;
+      }
 
-        .send-btn {
-          width: 40px;
-          border-radius: 50px !important;
+      .room-body {
+        height: calc(100% - 60px);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+        .msg-list {
+          overflow-x: hidden;
+          overflow-y: auto;
+          padding-bottom: 20px;
+
+          .chat-msg-item {
+            .content {
+              display: inline-block;
+              background-color: $orange300;
+              padding: 10px 20px;
+              border-radius: 10px;
+            }
+          }
+        }
+
+        .send-msg {
+          background-color: $orange200;
+          z-index: 999;
+          text-align: end;
+          margin: 0 2px;
+
+          .ant-form-item {
+            margin-bottom: 0 !important;
+          }
+
+          .send-btn {
+            width: 40px;
+            border-radius: 50px !important;
+          }
         }
       }
     }

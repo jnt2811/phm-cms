@@ -154,7 +154,7 @@ const Volunteer = () => {
           >
             <Select.Option value={null}>Tất cả</Select.Option>
             <Select.Option value={true}>Đang làm</Select.Option>
-            <Select.Option value={false}>Đã làm</Select.Option>
+            <Select.Option value={false}>Nghỉ làm</Select.Option>
           </Select>
         </Col>
       </Row>

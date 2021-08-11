@@ -36,8 +36,8 @@ const Appointment = () => {
       const { appointmentList } = appointmentReducer;
       setAppointments(
         appointmentList
-          .slice(0)
-          .reverse()
+          // .slice(0)
+          // .reverse()
           .map((appointment) => ({
             ...appointment,
             key: appointment.id,

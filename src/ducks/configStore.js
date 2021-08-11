@@ -9,6 +9,7 @@ import {
   donationSlice,
   petSlice,
   volunteerSlice,
+  chatSlice,
 } from "./slices";
 import reportSlice from "./slices/reportSlice";
 
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   clinic: clinicSlice,
   appointment: appointmentSlice,
   report: reportSlice,
+  chat: chatSlice,
 });
 
 const sagaMiddleware = createSagaMiddleware();

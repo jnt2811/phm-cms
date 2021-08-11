@@ -57,7 +57,6 @@ const Donation = () => {
     let count = 0;
 
     for (const prop in filterVal) {
-      console.log(prop);
       if (filterVal[prop] !== null) count++;
     }
 

@@ -1,176 +1,104 @@
-import { Button, Col, Divider, Form, Input, Row, Select } from "antd";
-import ChatRoom from "./ChatRoom";
-import "./chat.scss";
-import { useContext, useMemo, useState } from "react";
-import { ChatContext } from "./ChatProvider";
 import { PlusOutlined } from "@ant-design/icons";
-import { FormModal } from "../../commons/commonModal/CommonModal";
-import { useForm } from "antd/lib/form/Form";
-import { firestore } from "../../firebase";
+import { Button, Col, Divider, Row } from "antd";
+import { useState } from "react";
+import "./chat.scss";
+import RoomList from "./RoomList";
+import NewRoom from "./NewRoom";
+import InviteUsers from "./InviteUsers";
+import RoomHeader from "./RoomHeader";
+import RoomBody from "./RoomBody";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import localKeys from "../../constances/localKeys";
+import { setMessageList, setSelectedRoom } from "../../ducks/slices/chatSlice";
+import { firestore } from "../../firebase";
 
 const Chat = () => {
+  const { roomList, selectedRoom } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
+
+  const [visibleNewRoom, setVisibleNewRoom] = useState(false);
+  const [visibleInviteUsers, setVisibleInviteUsers] = useState(false);
+
+  // update selectedRoom right after inviting new users successfully
+  useEffect(() => {
+    if (roomList && selectedRoom) {
+      const selectedRoom_array = roomList.filter(
+        (room) => room.id === selectedRoom.id
+      );
+
+      if (selectedRoom_array.length === 1) {
+        dispatch(setSelectedRoom(selectedRoom_array[0]));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomList]);
+
+  // query messages by selected room
+  useEffect(() => {
+    if (selectedRoom) {
+      firestore
+        .collection("messages")
+        .where("roomId", "==", selectedRoom.id)
+        .orderBy("createdAt")
+        .onSnapshot((snapshot) => {
+          const docs = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+
+          dispatch(setMessageList(JSON.stringify(docs)));
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRoom]);
+
   return (
     <div className="chat">
       <Row gutter={{ sm: 20 }} wrap={false}>
         <Col flex="370px">
-          <ChatSider />
+          <div className="sider">
+            <Row justify="space-between">
+              <h2>Tin nhắn</h2>
+
+              <Button
+                icon={<PlusOutlined />}
+                className="plus-btn"
+                onClick={() => setVisibleNewRoom(true)}
+              ></Button>
+            </Row>
+
+            <Divider style={{ margin: "5px 0" }} />
+
+            <br />
+
+            <RoomList />
+
+            <NewRoom visible={visibleNewRoom} setVisible={setVisibleNewRoom} />
+          </div>
         </Col>
 
         <Col flex="auto">
-          <ChatRoom />
+          <div className="chat-room">
+            {selectedRoom && (
+              <div className="inner">
+                <RoomHeader
+                  selectedRoom={selectedRoom}
+                  setVisibleInviteUsers={setVisibleInviteUsers}
+                />
+
+                <RoomBody />
+              </div>
+            )}
+          </div>
         </Col>
       </Row>
+
+      <InviteUsers
+        visible={visibleInviteUsers}
+        setVisible={setVisibleInviteUsers}
+      />
     </div>
   );
 };
 
 export default Chat;
-
-const ChatSider = () => {
-  const { id } = JSON.parse(localStorage.getItem(localKeys.USER_DATA));
-  const roomsRef = firestore.collection("rooms");
-
-  const [rooms, setRooms] = useState([]);
-
-  const condition = useMemo(() => {
-    return {
-      fieldName: "members",
-      operator: "array-contains",
-      compareVal: `${id}`,
-    };
-  }, [id]);
-
-  useEffect(() => {
-    roomsRef
-      .where(condition.fieldName, condition.operator, condition.compareVal)
-      .onSnapshot((snapshot) => {
-        const docs = snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-
-        setRooms(docs);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, condition]);
-
-  const [visibleNewModal, setVisibleNewModal] = useState(false);
-
-  return (
-    <div className="chat-sider">
-      <Row justify="space-between">
-        <h2>Tin nhắn</h2>
-
-        <Button
-          icon={<PlusOutlined />}
-          className="plus-btn"
-          onClick={() => setVisibleNewModal(true)}
-        ></Button>
-      </Row>
-
-      <Divider style={{ margin: "5px 0" }} />
-
-      <br />
-
-      <RoomList list={rooms} />
-
-      <NewRoomModal visible={visibleNewModal} setVisible={setVisibleNewModal} />
-    </div>
-  );
-};
-
-const RoomList = ({ list }) => {
-  const { selectedRoomId, setSelectedRoomId } = useContext(ChatContext);
-
-  return (
-    <Row className="room-list" gutter={[{}, { sm: 20 }]}>
-      {list.map((room) => (
-        <Col key={room.id} span={24} onClick={() => setSelectedRoomId(room.id)}>
-          <div className={"room " + (selectedRoomId === room.id && "active")}>
-            <h4>{room.name}</h4>
-            {/* <p>{room.newestMsg}</p> */}
-          </div>
-        </Col>
-      ))}
-    </Row>
-  );
-};
-
-const NewRoomModal = ({ visible, setVisible }) => {
-  const [form] = useForm();
-  const { users } = useContext(ChatContext);
-  const roomsRef = firestore.collection("rooms");
-
-  const onFinish = (values) => {
-    const data = {
-      ...values,
-      members: values.members.map((member) => JSON.parse(member).uid),
-    };
-
-    checkRoomNameExist(data.name).then((exist) => {
-      if (exist) {
-        form.setFields([{ name: "name", errors: ["Tên phòng đã tồn tại"] }]);
-      } else {
-        createNewRoom(data).then(() => {
-          console.log("Room created!");
-          form.resetFields();
-          setVisible(false);
-        });
-      }
-    });
-  };
-
-  const onCancel = () => {
-    form.resetFields();
-    setVisible(false);
-  };
-
-  const checkRoomNameExist = async (name) => {
-    const docs = await roomsRef.where("name", "==", name).get();
-    return docs.size !== 0;
-  };
-
-  const createNewRoom = async (data) => {
-    return await roomsRef.add(data);
-  };
-
-  return (
-    <FormModal
-      visible={visible}
-      onOk={() => form.submit()}
-      onCancel={onCancel}
-      okText="Tạo mới"
-      cancelText="Hủy bỏ"
-    >
-      <h1>Tạo phòng</h1>
-
-      <br />
-
-      <Form form={form} layout="vertical" onFinish={onFinish}>
-        <Form.Item
-          label="Tên phòng"
-          name="name"
-          rules={[{ required: true, message: "Hãy nhập tên phòng" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Thêm thành viên"
-          name="members"
-          rules={[{ required: true, message: "Hãy chọn ít nhất 1 thành viên" }]}
-        >
-          <Select mode="multiple" allowClear showSearch>
-            {users.map((user) => (
-              <Select.Option key={user.id} value={JSON.stringify(user)}>
-                {user.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </Form>
-    </FormModal>
-  );
-};

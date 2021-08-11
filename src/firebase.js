@@ -17,8 +17,8 @@ firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 const firestore = firebase.firestore();
 
-if (window.location.hostname === "localhost") {
-  firestore.useEmulator("localhost", 3088);
-}
+// if (window.location.hostname === "localhost") {
+//   firestore.useEmulator("localhost", 3088);
+// }
 
 export { storage, firestore, firebase as default };

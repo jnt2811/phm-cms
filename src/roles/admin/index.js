@@ -17,7 +17,6 @@ import Chat from "../../pages/chat/Chat";
 
 const Admin = () => {
   return (
-    // <ChatProvider>
     <div className="admin">
       <Row wrap={false}>
         <Col flex="300px">
@@ -67,7 +66,6 @@ const Admin = () => {
         </Col>
       </Row>
     </div>
-    // </ChatProvider>
   );
 };
 
