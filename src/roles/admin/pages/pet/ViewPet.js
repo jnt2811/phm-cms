@@ -172,6 +172,10 @@ const ViewPet = () => {
                   {!isEmptyData(pet.volunteer) ? pet.volunteer.name : "Admin"}
                 </strong>
               </p>
+
+              <p>
+                Tình trạng lúc được cứu: <strong>{pet.description}</strong>
+              </p>
             </div>
           </div>
         </Col>

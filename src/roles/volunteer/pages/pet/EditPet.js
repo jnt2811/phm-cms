@@ -141,6 +141,14 @@ const EditPet = ({ pet, visible, setVisible }) => {
           >
             <Input />
           </Form.Item>
+
+          <Form.Item
+            label="Tình trạng lúc được cứu"
+            name="description"
+            rules={[{ required: true, message: "Hãy điền tình trạng" }]}
+          >
+            <Input.TextArea rows={3} />
+          </Form.Item>
         </Form>
       </FormModal>
     </div>

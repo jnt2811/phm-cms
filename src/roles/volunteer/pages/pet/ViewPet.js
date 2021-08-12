@@ -87,9 +87,7 @@ const ViewPet = () => {
           </Row>
         </Col>
 
-        <Col>
-          <Button>Xuất báo cáo</Button>
-        </Col>
+        <Col>{/* <Button>Xuất báo cáo</Button> */}</Col>
       </Row>
 
       <br />
@@ -162,6 +160,10 @@ const ViewPet = () => {
                 <strong>
                   {!isEmptyData(pet.volunteer) ? pet.volunteer.name : "Admin"}
                 </strong>
+              </p>
+
+              <p>
+                Tình trạng lúc được cứu: <strong>{pet.description}</strong>
               </p>
             </div>
           </div>

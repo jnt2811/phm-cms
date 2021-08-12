@@ -2,8 +2,8 @@ POST https://nha-cho-thu-cung.herokuapp.com/login
 Content-Type: application/json
 
 {
-    "phone": "admin",
-    "password": "admin"
+    "phone": "0826571937",
+    "password": "0826571937"
 }
 
 # example below
